@@ -1,0 +1,5 @@
+.app {
+  box-sizing: border-box;
+  height: 100vh;
+  composes: bg from "../../global-styles/interface.module.css";
+}
