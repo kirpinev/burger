@@ -1,23 +1,26 @@
 .header {
-  box-sizing: border-box;
   composes: modal-bg from "../../global-styles/interface.module.css";
 }
 
 .ul {
-  margin: 0 auto;
-  padding: 0;
-  list-style-type: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  margin: 0 auto;
+  padding: 0;
   width: 100%;
   max-width: 1280px;
+
+  list-style-type: none;
+
   color: white;
 }
 
 .link {
   display: flex;
   align-items: center;
+
   text-decoration: none;
 }
 

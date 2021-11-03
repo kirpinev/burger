@@ -1,9 +1,10 @@
 .section {
-  width: 100%;
-  max-width: 600px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+
+  width: 100%;
+  max-width: 600px;
 }
 
 .priceButtonContainer {
@@ -18,13 +19,9 @@
 .ingredientsList {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 524px);
-  overflow-y: scroll;
   gap: 16px;
-}
 
-.ingredientContainer {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  overflow-y: scroll;
+
+  height: calc(100vh - 524px);
 }

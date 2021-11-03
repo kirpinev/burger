@@ -4,15 +4,11 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { IngredientCard } from "../ingredient-card/ingredient-card";
 
-import { ingredients } from "../../utils/data";
+import { ingredients } from "../../mocks/data";
+import { ingredientTypes } from "../../constants/ingredient-type";
 import styles from "./burger-ingredients.module.css";
 
 const groupedIngredients = Object.entries(_.groupBy(ingredients, "type"));
-const ingredientTypes = {
-  bun: "Булки",
-  main: "Начинка",
-  sauce: "Соусы",
-};
 
 export const BurgerIngredients = () => {
   const [current, setCurrent] = useState(ingredientTypes.bun);

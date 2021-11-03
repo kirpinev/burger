@@ -7,19 +7,17 @@ import {
 
 import styles from "./ingredient-card.module.css";
 
-export const IngredientCard = ({ name, imageLink, price }) => {
-  return (
-    <div className={styles.container}>
-      <Counter count={1} size="default" />
-      <img className={`${styles.image} mb-2`} src={imageLink} alt={name} />
-      <div className={`${styles.group} mb-2`}>
-        <p className="text text_type_digits-default mr-1">{price}</p>
-        <CurrencyIcon type="primary" />
-      </div>
-      <h3 className={`${styles.name} text text_type_main-default`}>{name}</h3>
+export const IngredientCard = ({ name, imageLink, price }) => (
+  <div className={styles.container}>
+    <Counter count={1} size="default" />
+    <img className={`${styles.image} mb-2`} src={imageLink} alt={name} />
+    <div className={`${styles.group} mb-2`}>
+      <p className="text text_type_digits-default mr-1">{price}</p>
+      <CurrencyIcon type="primary" />
     </div>
-  );
-};
+    <h3 className={`${styles.name} text text_type_main-default`}>{name}</h3>
+  </div>
+);
 
 IngredientCard.propTypes = {
   name: PropTypes.string.isRequired,

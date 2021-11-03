@@ -6,14 +6,12 @@ import { BurgerConstructor } from "../burger-constructor/burger-constructor";
 
 import styles from "./app.module.css";
 
-export const App = () => {
-  return (
-    <div className={`${styles.app} body`}>
-      <AppHeader />
-      <main className={styles.main}>
-        <BurgerIngredients />
-        <BurgerConstructor />
-      </main>
-    </div>
-  );
-};
+export const App = () => (
+  <div className={`${styles.container} body`}>
+    <AppHeader />
+    <main className={styles.main}>
+      <BurgerIngredients />
+      <BurgerConstructor />
+    </main>
+  </div>
+);

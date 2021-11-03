@@ -10,19 +10,23 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 331px);
+
   overflow-y: scroll;
+
+  height: calc(100vh - 331px);
 }
 
 .ingredientsList {
   margin: 0;
   padding: 0;
+
   list-style-type: none;
 }
 
 .ingredientsListByType {
-  composes: ingredientsList;
   display: flex;
   flex-wrap: wrap;
   gap: 32px 24px;
+
+  composes: ingredientsList;
 }
