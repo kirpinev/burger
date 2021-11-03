@@ -43,26 +43,27 @@ export const BurgerIngredients = () => {
           {ingredientTypes.main}
         </Tab>
       </div>
-      <div className={`${styles.list} custom-scroll`}>
-        <>
+      <div className={`${styles.container} custom-scroll`}>
+        <ul className={styles.ingredientsList}>
           {groupedIngredients.map(([type, ingredients]) => (
-            <React.Fragment key={type}>
+            <li className="mb-10" key={type}>
               <h2 className="text text_type_main-medium mb-6">
                 {ingredientTypes[type]}
               </h2>
-              <div className={`${styles.ingredients} mb-10`}>
+              <ul className={`${styles.ingredientsListByType}`}>
                 {ingredients.map((ingredient) => (
-                  <IngredientCard
-                    key={ingredient._id}
-                    name={ingredient.name}
-                    imageLink={ingredient.image}
-                    price={ingredient.price}
-                  />
+                  <li key={ingredient._id}>
+                    <IngredientCard
+                      name={ingredient.name}
+                      imageLink={ingredient.image}
+                      price={ingredient.price}
+                    />
+                  </li>
                 ))}
-              </div>
-            </React.Fragment>
+              </ul>
+            </li>
           ))}
-        </>
+        </ul>
       </div>
     </section>
   );
