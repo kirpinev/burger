@@ -1,5 +1,14 @@
 .app {
   box-sizing: border-box;
   height: 100vh;
+  padding-bottom: 40px;
   composes: bg from "../../global-styles/interface.module.css";
+}
+
+.main {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1240px;
+  display: flex;
+  justify-content: space-between;
 }
