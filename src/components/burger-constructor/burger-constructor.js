@@ -7,8 +7,11 @@ import {
 
 import { BurgerItem } from "../burger-item/burger-item";
 
+import { ingredientTypes } from "../../constants/ingredient-type";
 import { ingredients } from "../../mocks/data";
 import styles from "./burger-constructor.module.css";
+
+const [bunType] = Object.keys(ingredientTypes);
 
 export const BurgerConstructor = () => (
   <section className={`${styles.section} pt-25`}>
@@ -22,14 +25,16 @@ export const BurgerConstructor = () => (
       />
     </div>
     <div className={`${styles.ingredientsList} custom-scroll`}>
-      {ingredients.map((ingredient) => (
-        <BurgerItem
-          key={ingredient._id}
-          image={ingredient.image}
-          price={ingredient.price}
-          name={ingredient.name}
-        />
-      ))}
+      {ingredients
+        .filter((ingredient) => ingredient.type !== bunType)
+        .map((ingredient) => (
+          <BurgerItem
+            key={ingredient._id}
+            image={ingredient.image}
+            price={ingredient.price}
+            name={ingredient.name}
+          />
+        ))}
     </div>
     <div className="ml-8 mb-10 mt-4 pl-4 pr-4">
       <ConstructorElement
