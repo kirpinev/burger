@@ -1,0 +1,33 @@
+.header {
+  composes: modal-bg from "../../global-styles/interface.module.css";
+}
+
+.ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+  max-width: 1280px;
+
+  list-style-type: none;
+
+  color: white;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+
+  text-decoration: none;
+}
+
+.logo {
+  display: flex;
+}
+
+.logo {
+  margin-left: -175px;
+}

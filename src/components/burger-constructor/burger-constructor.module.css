@@ -1,0 +1,27 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  width: 100%;
+  max-width: 600px;
+}
+
+.priceButtonContainer {
+  display: flex;
+}
+
+.priceContainer {
+  display: flex;
+  align-items: center;
+}
+
+.ingredientsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  overflow-y: scroll;
+
+  height: calc(100vh - 524px);
+}
