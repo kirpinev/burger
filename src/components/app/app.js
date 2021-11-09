@@ -5,7 +5,7 @@ import { BurgerIngredients } from "../burger-ingredients/burger-ingredients";
 import { BurgerConstructor } from "../burger-constructor/burger-constructor";
 import { StatusContainer } from "../status-container/status-container";
 
-import { ingredientsUrl } from "../../constants/ingredients-url";
+import { api } from "../../api/api";
 
 import styles from "./app.module.css";
 
@@ -26,12 +26,7 @@ export const App = () => {
         isSuccess: false,
       });
 
-      const response = await fetch(ingredientsUrl, {
-        headers: {
-          "Access-Control-Allow-Origin": "no-cors",
-        },
-      });
-      const ingredients = await response.json();
+      const ingredients = await api.getIngredients();
 
       setIngredientsState({
         data: ingredients.data,
