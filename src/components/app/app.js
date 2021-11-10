@@ -5,7 +5,7 @@ import { BurgerIngredients } from "../burger-ingredients/burger-ingredients";
 import { BurgerConstructor } from "../burger-constructor/burger-constructor";
 import { StatusContainer } from "../status-container/status-container";
 
-import { api } from "../../api/api";
+import { ingredientsUrl } from "../../constants/ingredients-url";
 
 import styles from "./app.module.css";
 
@@ -26,7 +26,17 @@ export const App = () => {
         isSuccess: false,
       });
 
-      const ingredients = await api.getIngredients();
+      const response = await fetch(ingredientsUrl, {
+        headers: {
+          "Access-Control-Allow-Origin": "no-cors",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error();
+      }
+
+      const ingredients = await response.json();
 
       setIngredientsState({
         data: ingredients.data,
@@ -57,7 +67,7 @@ export const App = () => {
       <StatusContainer
         buttonText="Повторить"
         onButtonClick={getIngredients}
-        title=" При запросе данных что-то пошло не так, повторить?"
+        title="При запросе данных что-то пошло не так, повторить?"
       />
     );
   }
