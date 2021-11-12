@@ -1,5 +1,5 @@
 .header {
-  composes: modal-bg from "../../global-styles/interface.module.css";
+  background: #1c1c21;
 }
 
 .ul {
