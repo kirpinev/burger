@@ -9,11 +9,12 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { IngredientCard } from "../ingredient-card/ingredient-card";
 import { Modal } from "../modal/modal";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
+import { IngredientList } from "../ingredient-list/ingredient-list";
 
 import { useModal } from "../../hooks/use-modal";
+import { useOnScreen } from "../../hooks/use-on-screen";
 
 import { ingredientTypes } from "../../constants/ingredient-type";
 import { ingredient } from "../../prop-types/ingredient";
@@ -25,12 +26,18 @@ export const BurgerIngredients = ({ ingredients }) => {
   const [currentIngredientType, setCurrentIngredientType] = useState(
     ingredientTypes.bun
   );
+
   const { isModalOpen, toggleModal } = useModal();
+
   const bunRef = useRef();
   const mainRef = useRef();
   const sauceRef = useRef();
 
-  const groupedIngredients = useMemo(
+  const isBunsOnScreen = useOnScreen(bunRef);
+  const isMainsOnScreen = useOnScreen(mainRef);
+  const isSaucesOnScreen = useOnScreen(sauceRef);
+
+  const [bunIngredients, mainIngredients, sauceIngredients] = useMemo(
     () => Object.entries(_.groupBy(ingredients, "type")),
     [ingredients]
   );
@@ -51,32 +58,38 @@ export const BurgerIngredients = ({ ingredients }) => {
     (name) => {
       if (name === bunType) {
         return bunRef;
-      }
-      if (name === mainType) {
+      } else if (name === mainType) {
         return mainRef;
-      }
-      if (name === sauceType) {
+      } else if (name === sauceType) {
         return sauceRef;
       }
     },
     [bunType, mainType, sauceType]
   );
 
-  const scrollIntoIngredient = useCallback(() => {
-    if (currentIngredientType === ingredientTypes.bun) {
+  const scrollIntoIngredient = useCallback((type) => {
+    if (type === ingredientTypes.bun) {
       bunRef.current.scrollIntoView();
-    }
-    if (currentIngredientType === ingredientTypes.main) {
+    } else if (type === ingredientTypes.main) {
       mainRef.current.scrollIntoView();
-    }
-    if (currentIngredientType === ingredientTypes.sauce) {
+    } else if (type === ingredientTypes.sauce) {
       sauceRef.current.scrollIntoView();
     }
-  }, [currentIngredientType]);
+  }, []);
+
+  const setSelectedTab = useCallback(() => {
+    if (isBunsOnScreen && isSaucesOnScreen) {
+      setCurrentIngredientType(ingredientTypes.bun);
+    } else if (!isBunsOnScreen && isSaucesOnScreen) {
+      setCurrentIngredientType(ingredientTypes.sauce);
+    } else if (!isSaucesOnScreen && isMainsOnScreen) {
+      setCurrentIngredientType(ingredientTypes.main);
+    }
+  }, [isBunsOnScreen, isMainsOnScreen, isSaucesOnScreen]);
 
   useEffect(() => {
-    scrollIntoIngredient();
-  }, [currentIngredientType, scrollIntoIngredient]);
+    setSelectedTab();
+  }, [setSelectedTab]);
 
   return (
     <>
@@ -91,52 +104,39 @@ export const BurgerIngredients = ({ ingredients }) => {
           <Tab
             value={ingredientTypes.bun}
             active={currentIngredientType === ingredientTypes.bun}
-            onClick={setCurrentIngredientType}
+            onClick={scrollIntoIngredient}
           >
             {ingredientTypes.bun}
           </Tab>
           <Tab
-            value={ingredientTypes.main}
-            active={currentIngredientType === ingredientTypes.main}
-            onClick={setCurrentIngredientType}
-          >
-            {ingredientTypes.main}
-          </Tab>
-          <Tab
             value={ingredientTypes.sauce}
             active={currentIngredientType === ingredientTypes.sauce}
-            onClick={setCurrentIngredientType}
+            onClick={scrollIntoIngredient}
           >
             {ingredientTypes.sauce}
+          </Tab>
+          <Tab
+            value={ingredientTypes.main}
+            active={currentIngredientType === ingredientTypes.main}
+            onClick={scrollIntoIngredient}
+          >
+            {ingredientTypes.main}
           </Tab>
         </div>
         <div className={`${styles.container} custom-scroll`}>
           <ul className={styles.ingredientsList}>
-            {groupedIngredients.map(([type, ingredients]) => (
-              <li className="mb-10" key={type}>
-                <h2
-                  ref={setRefForIngredientType(type)}
-                  className="text text_type_main-medium mb-6"
-                >
-                  {ingredientTypes[type]}
-                </h2>
-                <ul className={`${styles.ingredientsListByType}`}>
-                  {ingredients.map((ingredient) => (
-                    <li
-                      key={ingredient._id}
-                      onClick={() => selectIngredientAndOpenModal(ingredient)}
-                    >
-                      <IngredientCard
-                        name={ingredient.name}
-                        imageLink={ingredient.image}
-                        price={ingredient.price}
-                        handleModalOpen={selectIngredientAndOpenModal}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
+            {[bunIngredients, sauceIngredients, mainIngredients].map(
+              ([type, ingredients]) => (
+                <li className="mb-10" key={type}>
+                  <IngredientList
+                    setRefForIngredientType={setRefForIngredientType}
+                    ingredients={ingredients}
+                    type={type}
+                    selectIngredientAndOpenModal={selectIngredientAndOpenModal}
+                  />
+                </li>
+              )
+            )}
           </ul>
         </div>
       </section>

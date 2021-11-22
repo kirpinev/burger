@@ -23,11 +23,3 @@
 
   list-style-type: none;
 }
-
-.ingredientsListByType {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 32px 24px;
-
-  composes: ingredientsList;
-}

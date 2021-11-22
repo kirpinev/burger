@@ -17,6 +17,10 @@ export const App = () => {
     isSuccess: false,
   });
 
+  const isResponseOk = useCallback((response) => response.ok, []);
+
+  const getJSON = useCallback(async (response) => response.json(), []);
+
   const getIngredients = useCallback(async () => {
     try {
       setIngredientsState({
@@ -26,17 +30,13 @@ export const App = () => {
         isSuccess: false,
       });
 
-      const response = await fetch(ingredientsUrl, {
-        headers: {
-          "Access-Control-Allow-Origin": "no-cors",
-        },
-      });
+      const response = await fetch(ingredientsUrl);
 
-      if (!response.ok) {
+      if (!isResponseOk(response)) {
         throw new Error();
       }
 
-      const ingredients = await response.json();
+      const ingredients = await getJSON(response);
 
       setIngredientsState({
         data: ingredients.data,
@@ -52,7 +52,7 @@ export const App = () => {
         isError: true,
       });
     }
-  }, [ingredientsState]);
+  }, [ingredientsState, isResponseOk, getJSON]);
 
   useEffect(() => {
     getIngredients();
