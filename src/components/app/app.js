@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 
 import { AppHeader } from "../app-header/app-header";
 import { BurgerIngredients } from "../burger-ingredients/burger-ingredients";
@@ -6,29 +6,58 @@ import { BurgerConstructor } from "../burger-constructor/burger-constructor";
 import { StatusContainer } from "../status-container/status-container";
 
 import { ingredientsUrl } from "../../constants/ingredients-url";
+import { isResponseOk, getJSON } from "../../api/api";
 
 import styles from "./app.module.css";
 
-export const App = () => {
-  const [ingredientsState, setIngredientsState] = useState({
-    data: [],
-    isLoading: true,
-    isError: false,
-    isSuccess: false,
-  });
+const loadingActionTypes = {
+  loading: "loading",
+  success: "success",
+  error: "error",
+};
 
-  const isResponseOk = useCallback((response) => response.ok, []);
+const loadingInitialState = {
+  isLoading: true,
+  isError: false,
+  isSuccess: false,
+};
 
-  const getJSON = useCallback(async (response) => response.json(), []);
-
-  const getIngredients = useCallback(async () => {
-    try {
-      setIngredientsState({
-        ...ingredientsState,
+const loadingReducer = (state, action) => {
+  switch (action.type) {
+    case loadingActionTypes.loading:
+      return {
         isLoading: true,
         isError: false,
         isSuccess: false,
-      });
+      };
+    case loadingActionTypes.success:
+      return {
+        isSuccess: true,
+        isError: false,
+        isLoading: false,
+      };
+    case loadingActionTypes.error:
+      return {
+        isLoading: false,
+        isSuccess: false,
+        isError: true,
+      };
+    default:
+      throw new Error(`Что-то не так с типом экшена: ${action.type}`);
+  }
+};
+
+export const App = () => {
+  const [ingredients, setIngredients] = useState([]);
+  const [loadingStatus, dispatchLoadingStatus] = useReducer(
+    loadingReducer,
+    loadingInitialState,
+    undefined
+  );
+
+  const getIngredients = useCallback(async () => {
+    try {
+      dispatchLoadingStatus({ type: loadingActionTypes.loading });
 
       const response = await fetch(ingredientsUrl);
 
@@ -36,33 +65,26 @@ export const App = () => {
         throw new Error();
       }
 
-      const ingredients = await getJSON(response);
+      const ingredientsList = await getJSON(response);
 
-      setIngredientsState({
-        data: ingredients.data,
-        isSuccess: true,
-        isError: false,
-        isLoading: false,
+      setIngredients(ingredientsList.data);
+      dispatchLoadingStatus({
+        type: loadingActionTypes.success,
       });
     } catch (e) {
-      setIngredientsState({
-        ...ingredientsState,
-        isLoading: false,
-        isSuccess: false,
-        isError: true,
-      });
+      dispatchLoadingStatus({ type: loadingActionTypes.error });
     }
-  }, [ingredientsState, isResponseOk, getJSON]);
+  }, []);
 
   useEffect(() => {
     getIngredients();
-  }, []);
+  }, [getIngredients]);
 
-  if (ingredientsState.isLoading) {
+  if (loadingStatus.isLoading) {
     return <StatusContainer title="Загрузка..." />;
   }
 
-  if (ingredientsState.isError) {
+  if (loadingStatus.isError) {
     return (
       <StatusContainer
         buttonText="Повторить"
@@ -76,8 +98,8 @@ export const App = () => {
     <div className={`${styles.container} body`}>
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients ingredients={ingredientsState.data} />
-        <BurgerConstructor ingredients={ingredientsState.data} />
+        <BurgerIngredients ingredients={ingredients} />
+        <BurgerConstructor ingredients={ingredients} />
       </main>
     </div>
   );
