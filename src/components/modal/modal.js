@@ -14,34 +14,31 @@ export const Modal = ({ handleModalCloseClick, children }) => {
     [modalId]
   );
 
-  const closeModal = useCallback(
-    (e) => {
-      if (
-        e.target.id === "overlay" ||
-        e.target.id === "close-button" ||
-        e.target.tagName === "svg" ||
-        e.target.tagName === "path"
-      ) {
-        handleModalCloseClick();
-      }
-    },
-    [handleModalCloseClick]
+  const isTargetValid = useCallback(
+    (e) =>
+      e.target.id === "overlay" ||
+      e.target.id === "close-button" ||
+      e.target.tagName === "svg" ||
+      e.target.tagName === "path",
+    []
   );
 
-  const closeModalOnEsc = useCallback(
+  const isKeyValid = useCallback((e) => e.key === "Escape", []);
+
+  const closeModal = useCallback(
     (e) => {
-      if (e.key === "Escape") {
+      if (isTargetValid(e) || isKeyValid(e)) {
         handleModalCloseClick();
       }
     },
-    [handleModalCloseClick]
+    [handleModalCloseClick, isTargetValid, isKeyValid]
   );
 
   useEffect(() => {
-    document.addEventListener("keydown", closeModalOnEsc);
+    document.addEventListener("keydown", closeModal);
 
     return () => {
-      document.removeEventListener("keydown", closeModalOnEsc);
+      document.removeEventListener("keydown", closeModal);
     };
   });
 
