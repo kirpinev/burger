@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect, useReducer, useState } from "react";
 
 import { AppHeader } from "../app-header/app-header";
-import { BurgerIngredients } from "../burger-ingredients/burger-ingredients";
-import { BurgerConstructor } from "../burger-constructor/burger-constructor";
 import { StatusContainer } from "../status-container/status-container";
 
 import { ingredientsUrl } from "../../constants/ingredients-url";
 import { isResponseOk, getJSON } from "../../api/api";
 
 import styles from "./app.module.css";
+import { Constructor } from "../constructor/constructor";
 
 const loadingActionTypes = {
   loading: "loading",
@@ -98,8 +97,7 @@ export const App = () => {
     <div className={`${styles.container} body`}>
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients ingredients={ingredients} />
-        <BurgerConstructor ingredients={ingredients} />
+        <Constructor ingredients={ingredients} />
       </main>
     </div>
   );
