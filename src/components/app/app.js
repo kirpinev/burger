@@ -2,12 +2,13 @@ import React, { useCallback, useEffect, useReducer, useState } from "react";
 
 import { AppHeader } from "../app-header/app-header";
 import { StatusContainer } from "../status-container/status-container";
+import { Constructor } from "../constructor/constructor";
 
-import { ingredientsUrl } from "../../constants/ingredients-url";
-import { isResponseOk, getJSON } from "../../api/api";
+import { BurgerIngredientsContext } from "../../context/burger-ingredients-context";
+import { OrderContext } from "../../context/order-context";
+import { isResponseOk, getJSON, getAllIngredients } from "../../api/api";
 
 import styles from "./app.module.css";
-import { Constructor } from "../constructor/constructor";
 
 const loadingActionTypes = {
   loading: "loading",
@@ -42,12 +43,37 @@ const loadingReducer = (state, action) => {
         isError: true,
       };
     default:
-      throw new Error(`Что-то не так с типом экшена: ${action.type}`);
+      return state;
+  }
+};
+
+const initialOrderState = {
+  number: null,
+};
+
+const orderActionTypes = {
+  save: "save",
+  reset: "reset",
+};
+
+const orderReducer = (state, action) => {
+  switch (action.type) {
+    case orderActionTypes.save:
+      return { number: action.payload };
+    case orderActionTypes.reset:
+      return initialOrderState;
+    default:
+      return state;
   }
 };
 
 export const App = () => {
   const [ingredients, setIngredients] = useState([]);
+  const [order, dispatchOrder] = useReducer(
+    orderReducer,
+    initialOrderState,
+    undefined
+  );
   const [loadingStatus, dispatchLoadingStatus] = useReducer(
     loadingReducer,
     loadingInitialState,
@@ -58,15 +84,15 @@ export const App = () => {
     try {
       dispatchLoadingStatus({ type: loadingActionTypes.loading });
 
-      const response = await fetch(ingredientsUrl);
+      const response = await getAllIngredients();
 
       if (!isResponseOk(response)) {
         throw new Error();
       }
 
-      const ingredientsList = await getJSON(response);
+      const { data: ingredientsList } = await getJSON(response);
 
-      setIngredients(ingredientsList.data);
+      setIngredients(ingredientsList);
       dispatchLoadingStatus({
         type: loadingActionTypes.success,
       });
@@ -96,9 +122,15 @@ export const App = () => {
   return (
     <div className={`${styles.container} body`}>
       <AppHeader />
-      <main className={styles.main}>
-        <Constructor ingredients={ingredients} />
-      </main>
+      <BurgerIngredientsContext.Provider value={ingredients}>
+        <OrderContext.Provider
+          value={{ order, dispatchOrder, orderActionTypes }}
+        >
+          <main className={styles.main}>
+            <Constructor />
+          </main>
+        </OrderContext.Provider>
+      </BurgerIngredientsContext.Provider>
     </div>
   );
 };

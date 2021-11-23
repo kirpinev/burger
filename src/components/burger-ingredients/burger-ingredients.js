@@ -1,5 +1,6 @@
 import React, {
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -18,16 +19,18 @@ import { useOnScreen } from "../../hooks/use-on-screen";
 
 import { ingredientTypes } from "../../constants/ingredient-type";
 import { ingredient } from "../../prop-types/ingredient";
+import { BurgerIngredientsContext } from "../../context/burger-ingredients-context";
 
 import styles from "./burger-ingredients.module.css";
 
-export const BurgerIngredients = ({ ingredients }) => {
+export const BurgerIngredients = () => {
   const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [currentIngredientType, setCurrentIngredientType] = useState(
     ingredientTypes.bun
   );
+  const ingredients = useContext(BurgerIngredientsContext);
 
-  const { isModalOpen, toggleModal } = useModal();
+  const [isIngredientModalOpen, toggleIngredientModal] = useModal();
 
   const bunRef = useRef();
   const mainRef = useRef();
@@ -49,9 +52,9 @@ export const BurgerIngredients = ({ ingredients }) => {
   const selectIngredientAndOpenModal = useCallback(
     (ingredient) => {
       setSelectedIngredient(ingredient);
-      toggleModal();
+      toggleIngredientModal();
     },
-    [toggleModal]
+    [toggleIngredientModal]
   );
 
   const setRefForIngredientType = useCallback(
@@ -93,8 +96,8 @@ export const BurgerIngredients = ({ ingredients }) => {
 
   return (
     <>
-      {isModalOpen && (
-        <Modal handleModalCloseClick={toggleModal}>
+      {isIngredientModalOpen && (
+        <Modal handleModalCloseClick={toggleIngredientModal}>
           <IngredientDetails ingredient={selectedIngredient} />
         </Modal>
       )}
