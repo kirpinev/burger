@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import gif from "../../images/done.gif";
+import gif from "images/done.gif";
 
 import styles from "./order-details.module.css";
 

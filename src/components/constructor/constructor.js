@@ -1,7 +1,7 @@
 import React from "react";
 
-import { BurgerIngredients } from "../burger-ingredients/burger-ingredients";
-import { BurgerConstructor } from "../burger-constructor/burger-constructor";
+import { BurgerIngredients } from "components/burger-ingredients/burger-ingredients";
+import { BurgerConstructor } from "components/burger-constructor/burger-constructor";
 
 export const Constructor = () => (
   <>

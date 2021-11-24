@@ -10,16 +10,16 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { Modal } from "../modal/modal";
-import { IngredientDetails } from "../ingredient-details/ingredient-details";
-import { IngredientList } from "../ingredient-list/ingredient-list";
+import { Modal } from "components/modal/modal";
+import { IngredientDetails } from "components/ingredient-details/ingredient-details";
+import { IngredientList } from "components/ingredient-list/ingredient-list";
 
-import { useModal } from "../../hooks/use-modal";
-import { useOnScreen } from "../../hooks/use-on-screen";
+import { useModal } from "hooks/use-modal";
+import { useOnScreen } from "hooks/use-on-screen";
 
-import { ingredientTypes } from "../../constants/ingredient-type";
-import { ingredient } from "../../prop-types/ingredient";
-import { BurgerIngredientsContext } from "../../context/burger-ingredients-context";
+import { ingredientTypes } from "constants/ingredient-type";
+import { ingredient } from "prop-types/ingredient";
+import { BurgerIngredientsContext } from "context/burger-ingredients-context";
 
 import styles from "./burger-ingredients.module.css";
 

@@ -6,7 +6,7 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { HeaderNavLink } from "../header-nav-link/header-nav-link";
+import { HeaderNavLink } from "components/header-nav-link/header-nav-link";
 
 import styles from "./app-header.module.css";
 

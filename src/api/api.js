@@ -1,4 +1,4 @@
-import { apiUrls } from "../constants/api-urls";
+import { apiUrls } from "constants/api-urls";
 
 export const getAllIngredients = () =>
   fetch(`${apiUrls.base}${apiUrls.ingredients}`);

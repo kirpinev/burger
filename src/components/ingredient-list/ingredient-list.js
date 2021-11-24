@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { IngredientCard } from "../ingredient-card/ingredient-card";
+import { IngredientCard } from "components/ingredient-card/ingredient-card";
 
-import { ingredientTypes } from "../../constants/ingredient-type";
-import { ingredient } from "../../prop-types/ingredient";
+import { ingredientTypes } from "constants/ingredient-type";
+import { ingredient } from "prop-types/ingredient";
 
 import styles from "./ingredient-list.module.css";
 

@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useReducer, useState } from "react";
 
-import { AppHeader } from "../app-header/app-header";
-import { StatusContainer } from "../status-container/status-container";
-import { Constructor } from "../constructor/constructor";
+import { AppHeader } from "components/app-header/app-header";
+import { StatusContainer } from "components/status-container/status-container";
+import { Constructor } from "components/constructor/constructor";
 
-import { BurgerIngredientsContext } from "../../context/burger-ingredients-context";
-import { OrderContext } from "../../context/order-context";
-import { isResponseOk, getJSON, getAllIngredients } from "../../api/api";
+import { BurgerIngredientsContext } from "context/burger-ingredients-context";
+import { OrderContext } from "context/order-context";
+import { isResponseOk, getJSON, getAllIngredients } from "api/api";
 
 import styles from "./app.module.css";
 

@@ -6,18 +6,18 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { BurgerItem } from "../burger-item/burger-item";
-import { OrderDetails } from "../order-details/order-details";
-import { Modal } from "../modal/modal";
-import { OrderErrorDetails } from "../order-error-details/order-error-details";
+import { BurgerItem } from "components/burger-item/burger-item";
+import { OrderDetails } from "components/order-details/order-details";
+import { Modal } from "components/modal/modal";
+import { OrderErrorDetails } from "components/order-error-details/order-error-details";
 
-import { useModal } from "../../hooks/use-modal";
+import { useModal } from "hooks/use-modal";
 
-import { ingredientTypes } from "../../constants/ingredient-type";
-import { ingredient } from "../../prop-types/ingredient";
-import { BurgerIngredientsContext } from "../../context/burger-ingredients-context";
-import { OrderContext } from "../../context/order-context";
-import { getJSON, isResponseOk, postAnOrder } from "../../api/api";
+import { ingredientTypes } from "constants/ingredient-type";
+import { ingredient } from "prop-types/ingredient";
+import { BurgerIngredientsContext } from "context/burger-ingredients-context";
+import { OrderContext } from "context/order-context";
+import { getJSON, isResponseOk, postAnOrder } from "api/api";
 
 import styles from "./burger-constructor.module.css";
 
