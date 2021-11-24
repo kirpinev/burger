@@ -1,68 +1,115 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 
-import { AppHeader } from "../app-header/app-header";
-import { BurgerIngredients } from "../burger-ingredients/burger-ingredients";
-import { BurgerConstructor } from "../burger-constructor/burger-constructor";
-import { StatusContainer } from "../status-container/status-container";
+import { AppHeader } from "components/app-header/app-header";
+import { StatusContainer } from "components/status-container/status-container";
+import { Constructor } from "components/constructor/constructor";
 
-import { ingredientsUrl } from "../../constants/ingredients-url";
+import { BurgerIngredientsContext } from "context/burger-ingredients-context";
+import { OrderContext } from "context/order-context";
+import { isResponseOk, getJSON, getAllIngredients } from "api/api";
 
 import styles from "./app.module.css";
 
-export const App = () => {
-  const [ingredientsState, setIngredientsState] = useState({
-    data: [],
-    isLoading: true,
-    isError: false,
-    isSuccess: false,
-  });
+const loadingActionTypes = {
+  loading: "loading",
+  success: "success",
+  error: "error",
+};
 
-  const isResponseOk = useCallback((response) => response.ok, []);
+const loadingInitialState = {
+  isLoading: true,
+  isError: false,
+  isSuccess: false,
+};
 
-  const getJSON = useCallback(async (response) => response.json(), []);
-
-  const getIngredients = useCallback(async () => {
-    try {
-      setIngredientsState({
-        ...ingredientsState,
+const loadingReducer = (state, action) => {
+  switch (action.type) {
+    case loadingActionTypes.loading:
+      return {
         isLoading: true,
         isError: false,
         isSuccess: false,
-      });
+      };
+    case loadingActionTypes.success:
+      return {
+        isSuccess: true,
+        isError: false,
+        isLoading: false,
+      };
+    case loadingActionTypes.error:
+      return {
+        isLoading: false,
+        isSuccess: false,
+        isError: true,
+      };
+    default:
+      return state;
+  }
+};
 
-      const response = await fetch(ingredientsUrl);
+const initialOrderState = {
+  number: null,
+};
+
+const orderActionTypes = {
+  save: "save",
+  reset: "reset",
+};
+
+const orderReducer = (state, action) => {
+  switch (action.type) {
+    case orderActionTypes.save:
+      return { number: action.payload };
+    case orderActionTypes.reset:
+      return initialOrderState;
+    default:
+      return state;
+  }
+};
+
+export const App = () => {
+  const [ingredients, setIngredients] = useState([]);
+  const [order, dispatchOrder] = useReducer(
+    orderReducer,
+    initialOrderState,
+    undefined
+  );
+  const [loadingStatus, dispatchLoadingStatus] = useReducer(
+    loadingReducer,
+    loadingInitialState,
+    undefined
+  );
+
+  const getIngredients = useCallback(async () => {
+    try {
+      dispatchLoadingStatus({ type: loadingActionTypes.loading });
+
+      const response = await getAllIngredients();
 
       if (!isResponseOk(response)) {
         throw new Error();
       }
 
-      const ingredients = await getJSON(response);
+      const { data: ingredientsList } = await getJSON(response);
 
-      setIngredientsState({
-        data: ingredients.data,
-        isSuccess: true,
-        isError: false,
-        isLoading: false,
+      setIngredients(ingredientsList);
+      dispatchLoadingStatus({
+        type: loadingActionTypes.success,
       });
     } catch (e) {
-      setIngredientsState({
-        ...ingredientsState,
-        isLoading: false,
-        isSuccess: false,
-        isError: true,
-      });
+      dispatchLoadingStatus({ type: loadingActionTypes.error });
     }
-  }, [ingredientsState, isResponseOk, getJSON]);
+  }, []);
 
   useEffect(() => {
     getIngredients();
-  }, []);
+  }, [getIngredients]);
 
-  if (ingredientsState.isLoading) {
+  if (loadingStatus.isLoading) {
     return <StatusContainer title="Загрузка..." />;
   }
 
-  if (ingredientsState.isError) {
+  if (loadingStatus.isError) {
     return (
       <StatusContainer
         buttonText="Повторить"
@@ -75,10 +122,15 @@ export const App = () => {
   return (
     <div className={`${styles.container} body`}>
       <AppHeader />
-      <main className={styles.main}>
-        <BurgerIngredients ingredients={ingredientsState.data} />
-        <BurgerConstructor ingredients={ingredientsState.data} />
-      </main>
+      <BurgerIngredientsContext.Provider value={ingredients}>
+        <OrderContext.Provider
+          value={{ order, dispatchOrder, orderActionTypes }}
+        >
+          <main className={styles.main}>
+            <Constructor />
+          </main>
+        </OrderContext.Provider>
+      </BurgerIngredientsContext.Provider>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StatusContainer } from "../status-container/status-container";
+import { StatusContainer } from "components/status-container/status-container";
 
 export class ErrorBoundary extends React.Component {
   state = { hasError: false };

@@ -8,8 +8,5 @@ export const useModal = () => {
     [isModalOpen]
   );
 
-  return {
-    isModalOpen,
-    toggleModal,
-  };
+  return [isModalOpen, toggleModal];
 };

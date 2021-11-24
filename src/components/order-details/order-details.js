@@ -1,12 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-import gif from "../../images/done.gif";
+import gif from "images/done.gif";
 
 import styles from "./order-details.module.css";
 
-export const OrderDetails = () => (
+export const OrderDetails = ({ orderNumber }) => (
   <div className={`${styles.container}`}>
-    <h4 className="text text_type_digits-large mt-30 mb-8">034536</h4>
+    <h4 className="text text_type_digits-large mt-30 mb-8">{orderNumber}</h4>
     <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
     <img
       className="mb-15"
@@ -24,3 +25,7 @@ export const OrderDetails = () => (
     </p>
   </div>
 );
+
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.number.isRequired,
+};
