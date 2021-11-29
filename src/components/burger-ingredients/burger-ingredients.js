@@ -15,7 +15,6 @@ import { IngredientDetails } from "components/ingredient-details/ingredient-deta
 import { IngredientList } from "components/ingredient-list/ingredient-list";
 
 import { useModal } from "hooks/use-modal";
-import { useOnScreen } from "hooks/use-on-screen";
 
 import { ingredientTypes } from "constants/ingredient-type";
 import { ingredient } from "prop-types/ingredient";
@@ -32,13 +31,11 @@ export const BurgerIngredients = () => {
 
   const [isIngredientModalOpen, toggleIngredientModal] = useModal();
 
+  const tabContainerRef = useRef();
+  const scrollContainerRef = useRef();
   const bunRef = useRef();
   const mainRef = useRef();
   const sauceRef = useRef();
-
-  const isBunsOnScreen = useOnScreen(bunRef);
-  const isMainsOnScreen = useOnScreen(mainRef);
-  const isSaucesOnScreen = useOnScreen(sauceRef);
 
   const [bunIngredients, mainIngredients, sauceIngredients] = useMemo(
     () => Object.entries(_.groupBy(ingredients, "type")),
@@ -80,19 +77,36 @@ export const BurgerIngredients = () => {
     }
   }, []);
 
-  const setSelectedTab = useCallback(() => {
-    if (isBunsOnScreen && isSaucesOnScreen) {
+  const isDistanceValid = useCallback(
+    (container, ingredient, distance = 150) =>
+      Math.abs(ingredient - container) <= distance,
+    []
+  );
+
+  const selectTab = useCallback(() => {
+    const tabCoords = tabContainerRef.current.getBoundingClientRect().bottom;
+    const bunCoords = bunRef.current.getBoundingClientRect().top;
+    const mainCoords = mainRef.current.getBoundingClientRect().top;
+    const sauceCoords = sauceRef.current.getBoundingClientRect().top;
+
+    if (isDistanceValid(tabCoords, bunCoords)) {
       setCurrentIngredientType(ingredientTypes.bun);
-    } else if (!isBunsOnScreen && isSaucesOnScreen) {
+    } else if (isDistanceValid(tabCoords, sauceCoords)) {
       setCurrentIngredientType(ingredientTypes.sauce);
-    } else if (!isSaucesOnScreen && isMainsOnScreen) {
+    } else if (isDistanceValid(tabCoords, mainCoords)) {
       setCurrentIngredientType(ingredientTypes.main);
     }
-  }, [isBunsOnScreen, isMainsOnScreen, isSaucesOnScreen]);
+  }, [isDistanceValid]);
 
   useEffect(() => {
-    setSelectedTab();
-  }, [setSelectedTab]);
+    const scrollContainer = scrollContainerRef.current;
+
+    scrollContainer.addEventListener("scroll", selectTab);
+
+    return () => {
+      scrollContainer.removeEventListener("scroll", selectTab);
+    };
+  }, [selectTab]);
 
   return (
     <>
@@ -103,7 +117,7 @@ export const BurgerIngredients = () => {
       )}
       <section className={`${styles.section} pt-10`}>
         <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
-        <div className={`${styles.tabs} mb-10`}>
+        <div ref={tabContainerRef} className={`${styles.tabs} mb-10`}>
           <Tab
             value={ingredientTypes.bun}
             active={currentIngredientType === ingredientTypes.bun}
@@ -126,7 +140,10 @@ export const BurgerIngredients = () => {
             {ingredientTypes.main}
           </Tab>
         </div>
-        <div className={`${styles.container} custom-scroll`}>
+        <div
+          ref={scrollContainerRef}
+          className={`${styles.container} custom-scroll`}
+        >
           <ul className={styles.ingredientsList}>
             {[bunIngredients, sauceIngredients, mainIngredients].map(
               ([type, ingredients]) => (
