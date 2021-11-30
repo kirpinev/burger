@@ -1,4 +1,5 @@
-import React, { useCallback, useContext, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import {
   ConstructorElement,
@@ -11,67 +12,52 @@ import { OrderDetails } from "components/order-details/order-details";
 import { Modal } from "components/modal/modal";
 import { OrderErrorDetails } from "components/order-error-details/order-error-details";
 
-import { useModal } from "hooks/use-modal";
-
 import { ingredientTypes } from "constants/ingredient-type";
 import { ingredient } from "prop-types/ingredient";
-import { BurgerIngredientsContext } from "context/burger-ingredients-context";
-import { OrderContext } from "context/order-context";
-import { getJSON, isResponseOk, postAnOrder } from "api/api";
+import { makeAnOrderRequest } from "services/actions/order";
+import {
+  toggleErrorOrderModal,
+  toggleSuccessOrderModal,
+} from "services/actions/modals";
 
 import styles from "./burger-constructor.module.css";
 
 export const BurgerConstructor = () => {
-  const [isSuccessModalOpen, toggleSuccessModal] = useModal();
-  const [isErrorModalOpen, toggleErrorModal] = useModal();
-  const ingredients = useContext(BurgerIngredientsContext);
-  const { order, dispatchOrder, orderActionTypes } = useContext(OrderContext);
+  const { burgerIngredients } = useSelector((state) => state.ingredients);
+  const orderNumber = useSelector((state) => state.order.number);
+  const { isErrorOrderModalOpen, isSuccessOrderModalOpen } = useSelector(
+    (state) => state.modals
+  );
+  const dispatch = useDispatch();
 
   const [bunType] = useMemo(() => Object.keys(ingredientTypes), []);
-
   const totalSum = useMemo(
-    () => ingredients.reduce((acc, curr) => acc + curr.price, 0),
-    [ingredients]
+    () => burgerIngredients.reduce((acc, curr) => acc + curr.price, 0),
+    [burgerIngredients]
   );
 
-  const ingredientsIds = useMemo(
-    () => ingredients.map((ingredient) => ingredient._id),
-    [ingredients]
+  const toggleSuccessModal = useCallback(
+    () => dispatch(toggleSuccessOrderModal()),
+    [dispatch]
+  );
+  const toggleErrorModal = useCallback(
+    () => dispatch(toggleErrorOrderModal()),
+    [dispatch]
   );
 
-  const saveOrder = useCallback(
-    (orderDetails) => ({
-      type: orderActionTypes.save,
-      payload: orderDetails.order.number,
-    }),
-    [orderActionTypes]
+  const makeAnOrder = useCallback(
+    () => dispatch(makeAnOrderRequest()),
+    [dispatch]
   );
-
-  const makeAnOrder = async () => {
-    try {
-      const response = await postAnOrder(ingredientsIds);
-
-      if (!isResponseOk(response)) {
-        throw new Error();
-      }
-
-      const orderDetails = await getJSON(response);
-
-      dispatchOrder(saveOrder(orderDetails));
-      toggleSuccessModal();
-    } catch (e) {
-      toggleErrorModal();
-    }
-  };
 
   return (
     <>
-      {isSuccessModalOpen && (
+      {isSuccessOrderModalOpen && (
         <Modal handleModalCloseClick={toggleSuccessModal}>
-          <OrderDetails orderNumber={order.number} />
+          <OrderDetails orderNumber={orderNumber} />
         </Modal>
       )}
-      {isErrorModalOpen && (
+      {isErrorOrderModalOpen && (
         <Modal handleModalCloseClick={toggleErrorModal}>
           <OrderErrorDetails />
         </Modal>
@@ -81,13 +67,13 @@ export const BurgerConstructor = () => {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${ingredients[0].name} (верх)`}
-            price={ingredients[0].price}
-            thumbnail={ingredients[0].image}
+            text={`${burgerIngredients[0].name} (верх)`}
+            price={burgerIngredients[0].price}
+            thumbnail={burgerIngredients[0].image}
           />
         </div>
         <div className={`${styles.ingredientsList} custom-scroll`}>
-          {ingredients
+          {burgerIngredients
             .filter((ingredient) => ingredient.type !== bunType)
             .map((ingredient) => (
               <BurgerItem
@@ -102,9 +88,9 @@ export const BurgerConstructor = () => {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${ingredients[0].name} (низ)`}
-            price={ingredients[0].price}
-            thumbnail={ingredients[0].image}
+            text={`${burgerIngredients[0].name} (низ)`}
+            price={burgerIngredients[0].price}
+            thumbnail={burgerIngredients[0].image}
           />
         </div>
         <div className={`${styles.priceButtonContainer} mr-4`}>

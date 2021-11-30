@@ -1,11 +1,11 @@
 import React, {
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -14,22 +14,25 @@ import { Modal } from "components/modal/modal";
 import { IngredientDetails } from "components/ingredient-details/ingredient-details";
 import { IngredientList } from "components/ingredient-list/ingredient-list";
 
-import { useModal } from "hooks/use-modal";
-
 import { ingredientTypes } from "constants/ingredient-type";
 import { ingredient } from "prop-types/ingredient";
-import { BurgerIngredientsContext } from "context/burger-ingredients-context";
+import {
+  saveSelectedIngredient,
+  resetSelectedIngredient,
+} from "services/actions/ingredients";
+import { toggleIngredientModal } from "services/actions/modals";
 
 import styles from "./burger-ingredients.module.css";
 
 export const BurgerIngredients = () => {
-  const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [currentIngredientType, setCurrentIngredientType] = useState(
     ingredientTypes.bun
   );
-  const ingredients = useContext(BurgerIngredientsContext);
-
-  const [isIngredientModalOpen, toggleIngredientModal] = useModal();
+  const { isIngredientModalOpen } = useSelector((state) => state.modals);
+  const { burgerIngredients, selectedIngredient } = useSelector(
+    (state) => state.ingredients
+  );
+  const dispatch = useDispatch();
 
   const tabContainerRef = useRef();
   const scrollContainerRef = useRef();
@@ -38,8 +41,8 @@ export const BurgerIngredients = () => {
   const sauceRef = useRef();
 
   const [bunIngredients, mainIngredients, sauceIngredients] = useMemo(
-    () => Object.entries(_.groupBy(ingredients, "type")),
-    [ingredients]
+    () => Object.entries(_.groupBy(burgerIngredients, "type")),
+    [burgerIngredients]
   );
   const [bunType, mainType, sauceType] = useMemo(
     () => Object.keys(ingredientTypes),
@@ -48,11 +51,16 @@ export const BurgerIngredients = () => {
 
   const selectIngredientAndOpenModal = useCallback(
     (ingredient) => {
-      setSelectedIngredient(ingredient);
-      toggleIngredientModal();
+      dispatch(saveSelectedIngredient(ingredient));
+      dispatch(toggleIngredientModal());
     },
-    [toggleIngredientModal]
+    [dispatch]
   );
+
+  const closeIngredientModal = useCallback(() => {
+    dispatch(toggleIngredientModal());
+    dispatch(resetSelectedIngredient());
+  }, [dispatch]);
 
   const setRefForIngredientType = useCallback(
     (name) => {
@@ -111,7 +119,7 @@ export const BurgerIngredients = () => {
   return (
     <>
       {isIngredientModalOpen && (
-        <Modal handleModalCloseClick={toggleIngredientModal}>
+        <Modal handleModalCloseClick={closeIngredientModal}>
           <IngredientDetails ingredient={selectedIngredient} />
         </Modal>
       )}

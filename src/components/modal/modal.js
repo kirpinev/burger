@@ -27,6 +27,8 @@ export const Modal = ({ handleModalCloseClick, children }) => {
 
   const closeModal = useCallback(
     (e) => {
+      e.stopPropagation();
+
       if (isTargetValid(e) || isKeyValid(e)) {
         handleModalCloseClick();
       }
