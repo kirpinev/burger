@@ -1,21 +1,27 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import styles from "./burger-item.module.css";
+import { ingredient } from "prop-types/ingredient";
 
-export const BurgerItem = ({ name, price, image }) => (
+import styles from "./burger-item.module.css";
+import PropTypes from "prop-types";
+
+export const BurgerItem = ({ ingredient, deleteIngredient }) => (
   <div className={`${styles.ingredientContainer} mr-1`}>
     <DragIcon type="primary" />
-    <ConstructorElement text={name} price={price} thumbnail={image} />
+    <ConstructorElement
+      text={ingredient.name}
+      price={ingredient.price}
+      thumbnail={ingredient.image}
+      handleClose={deleteIngredient}
+    />
   </div>
 );
 
 BurgerItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
+  ingredient: ingredient.isRequired,
+  deleteIngredient: PropTypes.func.isRequired,
 };

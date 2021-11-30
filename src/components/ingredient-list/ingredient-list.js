@@ -28,6 +28,7 @@ export const IngredientList = ({
           onClick={() => selectIngredientAndOpenModal(ingredient)}
         >
           <IngredientCard
+            ingredient={ingredient}
             name={ingredient.name}
             imageLink={ingredient.image}
             price={ingredient.price}

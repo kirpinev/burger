@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import { AppHeader } from "components/app-header/app-header";
 import { StatusContainer } from "components/status-container/status-container";
@@ -36,8 +38,10 @@ export const App = () => {
     <div className={`${styles.container} body`}>
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients />
-        <BurgerConstructor />
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
       </main>
     </div>
   );
