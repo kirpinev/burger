@@ -6,6 +6,7 @@ import {
   RESET_CONSTRUCTOR_INGREDIENTS,
   SAVE_CONSTRUCTOR_INGREDIENT,
   DELETE_CONSTRUCTOR_INGREDIENT,
+  REORDER_CONSTRUCTOR_INGREDIENTS,
 } from "services/actions/ingredients";
 
 const initialState = {
@@ -50,6 +51,11 @@ export const ingredientsReducer = (state = initialState, action) => {
           ...state.constructorIngredients,
           action.payload,
         ],
+      };
+    case REORDER_CONSTRUCTOR_INGREDIENTS:
+      return {
+        ...state,
+        constructorIngredients: action.payload,
       };
     case DELETE_CONSTRUCTOR_INGREDIENT:
       return {

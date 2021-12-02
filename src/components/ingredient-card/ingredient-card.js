@@ -7,13 +7,14 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { ingredient } from "prop-types/ingredient";
+import { dndTypes } from "constants/dnd-types";
 
 import styles from "./ingredient-card.module.css";
 
 export const IngredientCard = ({ ingredient }) => {
   const [{ isDragging }, dragRef] = useDrag(
     {
-      type: "ingredient",
+      type: dndTypes.ingredientItem,
       item: { ...ingredient },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),

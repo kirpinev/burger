@@ -26,6 +26,7 @@ import {
 } from "services/actions/ingredients";
 
 import { ingredient } from "prop-types/ingredient";
+import { dndTypes } from "constants/dnd-types";
 
 import styles from "./burger-constructor.module.css";
 
@@ -40,7 +41,7 @@ export const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const [{ isHover }, dropRef] = useDrop(
     {
-      accept: "ingredient",
+      accept: dndTypes.ingredientItem,
       drop: (ingredient) => {
         ingredient.type === "bun"
           ? dispatch(saveConstructorBun(ingredient))
@@ -111,6 +112,7 @@ export const BurgerConstructor = () => {
             {constructorIngredients.map((ingredient, index) => (
               <BurgerItem
                 key={ingredient._id + index}
+                index={index}
                 ingredient={ingredient}
                 deleteIngredient={() =>
                   dispatch(deleteConstructorIngredient(index))
