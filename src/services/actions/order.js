@@ -2,19 +2,19 @@ import { postAnOrderRequest, isResponseOk, getJSON } from "api/api";
 import { toggleErrorOrderModal, toggleSuccessOrderModal } from "./modals";
 import { resetConstructorIngredients } from "./ingredients";
 
-export const SAVE_ORDER_NUMBER = "SAVE_ORDER_NUMBER";
-export const RESET_ORDER_NUMBER = "RESET_ORDER_NUMBER";
+export const SAVE_ORDER = "SAVE_ORDER_NUMBER";
+export const RESET_ORDER = "RESET_ORDER_NUMBER";
 
-export const saveOrderNumber = (orderDetails) => ({
-  type: SAVE_ORDER_NUMBER,
+export const saveOrder = (orderDetails) => ({
+  type: SAVE_ORDER,
   payload: {
     name: orderDetails.name,
     number: orderDetails.order.number,
   },
 });
 
-export const resetOrderNumber = () => ({
-  type: RESET_ORDER_NUMBER,
+export const resetOrder = () => ({
+  type: RESET_ORDER,
 });
 
 export const postAnOrder = () => async (dispatch, getState) => {
@@ -36,11 +36,11 @@ export const postAnOrder = () => async (dispatch, getState) => {
 
     const orderDetails = await getJSON(response);
 
-    dispatch(saveOrderNumber(orderDetails));
+    dispatch(saveOrder(orderDetails));
     dispatch(toggleSuccessOrderModal());
     dispatch(resetConstructorIngredients());
   } catch (e) {
-    dispatch(resetOrderNumber());
+    dispatch(resetOrder());
     dispatch(toggleErrorOrderModal());
   }
 };
