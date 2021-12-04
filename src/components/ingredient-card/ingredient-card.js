@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
 import {

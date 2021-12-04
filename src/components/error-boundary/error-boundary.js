@@ -1,8 +1,8 @@
-import React from "react";
+import { Component } from "react";
 
 import { StatusContainer } from "components/status-container/status-container";
 
-export class ErrorBoundary extends React.Component {
+export class ErrorBoundary extends Component {
   state = { hasError: false };
 
   static getDerivedStateFromError() {

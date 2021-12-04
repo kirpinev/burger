@@ -1,17 +1,18 @@
-import React, { useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
 import PropTypes from "prop-types";
+import { useDrag, useDrop } from "react-dnd";
+import { useDispatch } from "react-redux";
 import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDrag, useDrop } from "react-dnd";
-import { useDispatch } from "react-redux";
+
+import { moveIngredient } from "services/actions/ingredients";
 
 import { ingredient } from "prop-types/ingredient";
 import { dndTypes } from "constants/dnd-types";
 
 import styles from "./burger-item.module.css";
-import { moveIngredient } from "services/actions/ingredients";
 
 export const BurgerItem = ({ ingredient, deleteIngredient, index }) => {
   const dispatch = useDispatch();
