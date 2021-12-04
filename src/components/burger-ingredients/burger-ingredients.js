@@ -1,26 +1,23 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import _ from "lodash";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { Modal } from "components/modal/modal";
 import { IngredientDetails } from "components/ingredient-details/ingredient-details";
 import { IngredientList } from "components/ingredient-list/ingredient-list";
 
-import { ingredientTypes } from "constants/ingredient-type";
-import { ingredient } from "prop-types/ingredient";
 import {
   saveSelectedIngredient,
   resetSelectedIngredient,
 } from "services/actions/ingredients";
 import { toggleIngredientModal } from "services/actions/modals";
+import { selectBurgerIngredients } from "services/selectors/select-burger-ingredients";
+import { selectModalStatus } from "services/selectors/select-modal-status";
+import { selectSelectedIngredient } from "services/selectors/select-selected-ingredient";
+
+import { ingredientTypes } from "constants/ingredient-type";
+import { ingredient } from "prop-types/ingredient";
 
 import styles from "./burger-ingredients.module.css";
 
@@ -28,10 +25,9 @@ export const BurgerIngredients = () => {
   const [currentIngredientType, setCurrentIngredientType] = useState(
     ingredientTypes.ru.bun
   );
-  const { isIngredientModalOpen } = useSelector((state) => state.modals);
-  const { burgerIngredients, selectedIngredient } = useSelector(
-    (state) => state.ingredients
-  );
+  const { isIngredientModalOpen } = useSelector(selectModalStatus);
+  const burgerIngredients = useSelector(selectBurgerIngredients);
+  const selectedIngredient = useSelector(selectSelectedIngredient);
   const dispatch = useDispatch();
 
   const tabContainerRef = useRef();
@@ -39,11 +35,6 @@ export const BurgerIngredients = () => {
   const bunRef = useRef();
   const mainRef = useRef();
   const sauceRef = useRef();
-
-  const [bunIngredients, mainIngredients, sauceIngredients] = useMemo(
-    () => Object.entries(_.groupBy(burgerIngredients, "type")),
-    [burgerIngredients]
-  );
 
   const selectIngredientAndOpenModal = useCallback(
     (ingredient) => {
@@ -146,18 +137,16 @@ export const BurgerIngredients = () => {
           className={`${styles.container} custom-scroll`}
         >
           <ul className={styles.ingredientsList}>
-            {[bunIngredients, sauceIngredients, mainIngredients].map(
-              ([type, ingredients]) => (
-                <li className="mb-10" key={type}>
-                  <IngredientList
-                    setRefForIngredientType={setRefForIngredientType}
-                    ingredients={ingredients}
-                    type={type}
-                    selectIngredientAndOpenModal={selectIngredientAndOpenModal}
-                  />
-                </li>
-              )
-            )}
+            {burgerIngredients.map(([type, ingredients]) => (
+              <li className="mb-10" key={type}>
+                <IngredientList
+                  setRefForIngredientType={setRefForIngredientType}
+                  ingredients={ingredients}
+                  type={type}
+                  selectIngredientAndOpenModal={selectIngredientAndOpenModal}
+                />
+              </li>
+            ))}
           </ul>
         </div>
       </section>

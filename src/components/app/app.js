@@ -9,11 +9,12 @@ import { BurgerIngredients } from "components/burger-ingredients/burger-ingredie
 import { BurgerConstructor } from "components/burger-constructor/burger-constructor";
 
 import { getIngredients } from "services/actions/ingredients";
+import { selectLoadingStatus } from "services/selectors/select-loading-status";
 
 import styles from "./app.module.css";
 
 export const App = () => {
-  const { isLoading, isError } = useSelector((state) => state.loading);
+  const { isLoading, isError } = useSelector(selectLoadingStatus);
   const dispatch = useDispatch();
 
   useEffect(() => {

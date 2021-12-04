@@ -6,6 +6,8 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+import { selectConstructorIngredients } from "services/selectors/select-constructor-ingredients";
+
 import { ingredient } from "prop-types/ingredient";
 import { dndTypes } from "constants/dnd-types";
 
@@ -23,7 +25,7 @@ export const IngredientCard = ({ ingredient }) => {
     []
   );
   const { selectedBun, constructorIngredients } = useSelector(
-    (state) => state.ingredients
+    selectConstructorIngredients
   );
 
   const bunCount = useMemo(

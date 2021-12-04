@@ -24,6 +24,10 @@ import {
   saveConstructorIngredient,
   deleteConstructorIngredient,
 } from "services/actions/ingredients";
+import { selectBurgerPrice } from "services/selectors/select-burger-price";
+import { selectOrderNumber } from "services/selectors/select-order-number";
+import { selectModalStatus } from "services/selectors/select-modal-status";
+import { selectConstructorIngredients } from "services/selectors/select-constructor-ingredients";
 
 import { ingredient } from "prop-types/ingredient";
 import { dndTypes } from "constants/dnd-types";
@@ -31,13 +35,13 @@ import { dndTypes } from "constants/dnd-types";
 import styles from "./burger-constructor.module.css";
 
 export const BurgerConstructor = () => {
+  const burgerPrice = useSelector(selectBurgerPrice);
   const { constructorIngredients, selectedBun } = useSelector(
-    (state) => state.ingredients
+    selectConstructorIngredients
   );
-  const orderNumber = useSelector((state) => state.order.number);
-  const { isErrorOrderModalOpen, isSuccessOrderModalOpen } = useSelector(
-    (state) => state.modals
-  );
+  const orderNumber = useSelector(selectOrderNumber);
+  const { isErrorOrderModalOpen, isSuccessOrderModalOpen } =
+    useSelector(selectModalStatus);
   const dispatch = useDispatch();
   const [{ isHover }, dropRef] = useDrop(
     {
@@ -52,15 +56,6 @@ export const BurgerConstructor = () => {
       }),
     },
     []
-  );
-
-  const ingredientsSum = useMemo(
-    () => constructorIngredients.reduce((acc, curr) => acc + curr.price, 0),
-    [constructorIngredients]
-  );
-  const bunSum = useMemo(
-    () => (selectedBun ? selectedBun.price * 2 : 0),
-    [selectedBun]
   );
 
   const opacity = useMemo(() => (isHover ? 0.8 : 1), [isHover]);
@@ -133,9 +128,7 @@ export const BurgerConstructor = () => {
           </div>
           <div className={`${styles.priceButtonContainer} mr-4`}>
             <div className={`${styles.priceContainer} mr-10`}>
-              <p className="text text_type_digits-medium mr-1">
-                {ingredientsSum + bunSum}
-              </p>
+              <p className="text text_type_digits-medium mr-1">{burgerPrice}</p>
               <CurrencyIcon type="primary" />
             </div>
             {selectedBun && constructorIngredients.length !== 0 && (

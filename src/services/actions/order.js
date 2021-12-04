@@ -14,10 +14,12 @@ export const saveOrderNumber = (orderDetails) => ({
 
 export const makeAnOrderRequest = () => async (dispatch, getState) => {
   try {
-    const ingredients = getState().ingredients.burgerIngredients;
-    const ingredientsIds = ingredients.map((ingredient) => ingredient._id);
+    const ingredientsIds = getState().ingredients.constructorIngredients.map(
+      (ingredient) => ingredient._id
+    );
+    const bunId = getState().ingredients.selectedBun._id;
 
-    const response = await postAnOrder(ingredientsIds);
+    const response = await postAnOrder([bunId, ...ingredientsIds, bunId]);
 
     if (!isResponseOk(response)) {
       throw new Error();
