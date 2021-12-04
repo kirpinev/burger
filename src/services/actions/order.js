@@ -3,6 +3,7 @@ import { toggleErrorOrderModal, toggleSuccessOrderModal } from "./modals";
 import { resetConstructorIngredients } from "./ingredients";
 
 export const SAVE_ORDER_NUMBER = "SAVE_ORDER_NUMBER";
+export const RESET_ORDER_NUMBER = "RESET_ORDER_NUMBER";
 
 export const saveOrderNumber = (orderDetails) => ({
   type: SAVE_ORDER_NUMBER,
@@ -10,6 +11,10 @@ export const saveOrderNumber = (orderDetails) => ({
     name: orderDetails.name,
     number: orderDetails.order.number,
   },
+});
+
+export const resetOrderNumber = () => ({
+  type: RESET_ORDER_NUMBER,
 });
 
 export const makeAnOrderRequest = () => async (dispatch, getState) => {
@@ -31,6 +36,7 @@ export const makeAnOrderRequest = () => async (dispatch, getState) => {
     dispatch(toggleSuccessOrderModal());
     dispatch(resetConstructorIngredients());
   } catch (e) {
+    dispatch(resetOrderNumber());
     dispatch(toggleErrorOrderModal());
   }
 };

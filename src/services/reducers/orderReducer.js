@@ -1,4 +1,4 @@
-import { SAVE_ORDER_NUMBER } from "services/actions/order";
+import { SAVE_ORDER_NUMBER, RESET_ORDER_NUMBER } from "services/actions/order";
 
 const initialState = {
   name: "",
@@ -13,6 +13,8 @@ export const orderReducer = (state = initialState, action) => {
         name: action.payload.name,
         number: action.payload.number,
       };
+    case RESET_ORDER_NUMBER:
+      return initialState;
     default:
       return state;
   }
