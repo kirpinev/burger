@@ -14,7 +14,7 @@ import { Modal } from "components/modal/modal";
 import { OrderErrorDetails } from "components/order-error-details/order-error-details";
 import { EmptyConstructor } from "components/empty-constructor/empty-constructor";
 
-import { makeAnOrderRequest } from "services/actions/order";
+import { postAnOrder } from "services/actions/order";
 import {
   toggleErrorOrderModal,
   toggleSuccessOrderModal,
@@ -58,8 +58,6 @@ export const BurgerConstructor = () => {
     []
   );
 
-  const opacity = useMemo(() => (isHover ? 0.8 : 1), [isHover]);
-
   const toggleSuccessModal = useCallback(
     () => dispatch(toggleSuccessOrderModal()),
     [dispatch]
@@ -69,9 +67,9 @@ export const BurgerConstructor = () => {
     [dispatch]
   );
 
-  const makeAnOrder = useCallback(() => {
-    dispatch(makeAnOrderRequest());
-  }, [dispatch]);
+  const makeAnOrder = useCallback(() => dispatch(postAnOrder()), [dispatch]);
+
+  const opacity = useMemo(() => (isHover ? 0.8 : 1), [isHover]);
 
   return (
     <>

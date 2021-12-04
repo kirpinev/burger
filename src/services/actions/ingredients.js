@@ -1,4 +1,4 @@
-import { isResponseOk, getJSON, getAllIngredients } from "api/api";
+import { isResponseOk, getJSON, getIngredientsRequest } from "api/api";
 import { setError, setLoading, setSuccess } from "services/actions/loading";
 
 export const SAVE_INGREDIENTS = "FETCH_INGREDIENTS";
@@ -53,7 +53,7 @@ export const getIngredients = () => async (dispatch) => {
   try {
     dispatch(setLoading());
 
-    const response = await getAllIngredients();
+    const response = await getIngredientsRequest();
 
     if (!isResponseOk(response)) {
       throw new Error();

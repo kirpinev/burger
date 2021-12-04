@@ -1,9 +1,9 @@
 import { apiUrls } from "constants/api-urls";
 
-export const getAllIngredients = () =>
+export const getIngredientsRequest = () =>
   fetch(`${apiUrls.base}${apiUrls.ingredients}`);
 
-export const postAnOrder = async (ingredientsIds) =>
+export const postAnOrderRequest = async (ingredientsIds) =>
   fetch(`${apiUrls.base}${apiUrls.orders}`, {
     method: "POST",
     headers: {

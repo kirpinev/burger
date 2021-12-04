@@ -1,4 +1,4 @@
-import { postAnOrder, isResponseOk, getJSON } from "api/api";
+import { postAnOrderRequest, isResponseOk, getJSON } from "api/api";
 import { toggleErrorOrderModal, toggleSuccessOrderModal } from "./modals";
 import { resetConstructorIngredients } from "./ingredients";
 
@@ -17,14 +17,18 @@ export const resetOrderNumber = () => ({
   type: RESET_ORDER_NUMBER,
 });
 
-export const makeAnOrderRequest = () => async (dispatch, getState) => {
+export const postAnOrder = () => async (dispatch, getState) => {
   try {
     const ingredientsIds = getState().ingredients.constructorIngredients.map(
       (ingredient) => ingredient._id
     );
     const bunId = getState().ingredients.selectedBun._id;
 
-    const response = await postAnOrder([bunId, ...ingredientsIds, bunId]);
+    const response = await postAnOrderRequest([
+      bunId,
+      ...ingredientsIds,
+      bunId,
+    ]);
 
     if (!isResponseOk(response)) {
       throw new Error();

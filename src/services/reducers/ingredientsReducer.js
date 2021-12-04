@@ -31,7 +31,7 @@ export const ingredientsReducer = (state = initialState, action) => {
     case RESET_SELECTED_INGREDIENT:
       return {
         ...state,
-        selectedIngredient: null,
+        selectedIngredient: initialState.selectedIngredient,
       };
     case SAVE_CONSTRUCTOR_BUN:
       return {
@@ -41,8 +41,8 @@ export const ingredientsReducer = (state = initialState, action) => {
     case RESET_CONSTRUCTOR_INGREDIENTS:
       return {
         ...state,
-        constructorIngredients: [],
-        selectedBun: null,
+        constructorIngredients: initialState.constructorIngredients,
+        selectedBun: initialState.selectedBun,
       };
     case SAVE_CONSTRUCTOR_INGREDIENT:
       return {
