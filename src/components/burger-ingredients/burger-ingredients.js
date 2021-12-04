@@ -26,7 +26,7 @@ import styles from "./burger-ingredients.module.css";
 
 export const BurgerIngredients = () => {
   const [currentIngredientType, setCurrentIngredientType] = useState(
-    ingredientTypes.bun
+    ingredientTypes.ru.bun
   );
   const { isIngredientModalOpen } = useSelector((state) => state.modals);
   const { burgerIngredients, selectedIngredient } = useSelector(
@@ -44,10 +44,6 @@ export const BurgerIngredients = () => {
     () => Object.entries(_.groupBy(burgerIngredients, "type")),
     [burgerIngredients]
   );
-  const [bunType, mainType, sauceType] = useMemo(
-    () => Object.keys(ingredientTypes),
-    []
-  );
 
   const selectIngredientAndOpenModal = useCallback(
     (ingredient) => {
@@ -62,25 +58,22 @@ export const BurgerIngredients = () => {
     dispatch(resetSelectedIngredient());
   }, [dispatch]);
 
-  const setRefForIngredientType = useCallback(
-    (name) => {
-      if (name === bunType) {
-        return bunRef;
-      } else if (name === mainType) {
-        return mainRef;
-      } else if (name === sauceType) {
-        return sauceRef;
-      }
-    },
-    [bunType, mainType, sauceType]
-  );
+  const setRefForIngredientType = useCallback((name) => {
+    if (name === ingredientTypes.eng.bun) {
+      return bunRef;
+    } else if (name === ingredientTypes.eng.main) {
+      return mainRef;
+    } else if (name === ingredientTypes.eng.sauce) {
+      return sauceRef;
+    }
+  }, []);
 
   const scrollIntoIngredient = useCallback((type) => {
-    if (type === ingredientTypes.bun) {
+    if (type === ingredientTypes.ru.bun) {
       bunRef.current.scrollIntoView();
-    } else if (type === ingredientTypes.main) {
+    } else if (type === ingredientTypes.ru.main) {
       mainRef.current.scrollIntoView();
-    } else if (type === ingredientTypes.sauce) {
+    } else if (type === ingredientTypes.ru.sauce) {
       sauceRef.current.scrollIntoView();
     }
   }, []);
@@ -98,11 +91,11 @@ export const BurgerIngredients = () => {
     const sauceCoords = sauceRef.current.getBoundingClientRect().top;
 
     if (isDistanceValid(tabCoords, bunCoords)) {
-      setCurrentIngredientType(ingredientTypes.bun);
+      setCurrentIngredientType(ingredientTypes.ru.bun);
     } else if (isDistanceValid(tabCoords, sauceCoords)) {
-      setCurrentIngredientType(ingredientTypes.sauce);
+      setCurrentIngredientType(ingredientTypes.ru.sauce);
     } else if (isDistanceValid(tabCoords, mainCoords)) {
-      setCurrentIngredientType(ingredientTypes.main);
+      setCurrentIngredientType(ingredientTypes.ru.main);
     }
   }, [isDistanceValid]);
 
@@ -127,25 +120,25 @@ export const BurgerIngredients = () => {
         <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
         <div ref={tabContainerRef} className={`${styles.tabs} mb-10`}>
           <Tab
-            value={ingredientTypes.bun}
-            active={currentIngredientType === ingredientTypes.bun}
+            value={ingredientTypes.ru.bun}
+            active={currentIngredientType === ingredientTypes.ru.bun}
             onClick={scrollIntoIngredient}
           >
-            {ingredientTypes.bun}
+            {ingredientTypes.ru.bun}
           </Tab>
           <Tab
-            value={ingredientTypes.sauce}
-            active={currentIngredientType === ingredientTypes.sauce}
+            value={ingredientTypes.ru.sauce}
+            active={currentIngredientType === ingredientTypes.ru.sauce}
             onClick={scrollIntoIngredient}
           >
-            {ingredientTypes.sauce}
+            {ingredientTypes.ru.sauce}
           </Tab>
           <Tab
-            value={ingredientTypes.main}
-            active={currentIngredientType === ingredientTypes.main}
+            value={ingredientTypes.ru.main}
+            active={currentIngredientType === ingredientTypes.ru.main}
             onClick={scrollIntoIngredient}
           >
-            {ingredientTypes.main}
+            {ingredientTypes.ru.main}
           </Tab>
         </div>
         <div

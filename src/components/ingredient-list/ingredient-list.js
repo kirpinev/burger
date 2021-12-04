@@ -19,7 +19,7 @@ export const IngredientList = ({
       ref={setRefForIngredientType(type)}
       className="text text_type_main-medium mb-6"
     >
-      {ingredientTypes[type]}
+      {ingredientTypes.ru[type]}
     </h2>
     <ul className={`${styles.ingredientsListByType}`}>
       {ingredients.map((ingredient) => (
