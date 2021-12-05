@@ -1,0 +1,14 @@
+.emptyContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 2px dashed white;
+
+  width: 100%;
+  max-width: 600px;
+}
+
+.text {
+  text-align: center;
+}

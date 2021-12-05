@@ -1,5 +1,3 @@
-import React from "react";
-
 import styles from "./order-error-details.module.css";
 
 export const OrderErrorDetails = () => (

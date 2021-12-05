@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -27,6 +27,8 @@ export const Modal = ({ handleModalCloseClick, children }) => {
 
   const closeModal = useCallback(
     (e) => {
+      e.stopPropagation();
+
       if (isTargetValid(e) || isKeyValid(e)) {
         handleModalCloseClick();
       }

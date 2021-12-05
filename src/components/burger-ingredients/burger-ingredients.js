@@ -1,145 +1,152 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import _ from "lodash";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { Modal } from "components/modal/modal";
 import { IngredientDetails } from "components/ingredient-details/ingredient-details";
 import { IngredientList } from "components/ingredient-list/ingredient-list";
 
-import { useModal } from "hooks/use-modal";
-import { useOnScreen } from "hooks/use-on-screen";
+import {
+  saveSelectedIngredient,
+  resetSelectedIngredient,
+} from "services/actions/ingredients";
+import { toggleIngredientModal } from "services/actions/modals";
+import { selectBurgerIngredients } from "services/selectors/select-burger-ingredients";
+import { selectModalStatus } from "services/selectors/select-modal-status";
+import { selectSelectedIngredient } from "services/selectors/select-selected-ingredient";
 
 import { ingredientTypes } from "constants/ingredient-type";
 import { ingredient } from "prop-types/ingredient";
-import { BurgerIngredientsContext } from "context/burger-ingredients-context";
 
 import styles from "./burger-ingredients.module.css";
 
 export const BurgerIngredients = () => {
-  const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [currentIngredientType, setCurrentIngredientType] = useState(
-    ingredientTypes.bun
+    ingredientTypes.ru.bun
   );
-  const ingredients = useContext(BurgerIngredientsContext);
+  const { isIngredientModalOpen } = useSelector(selectModalStatus);
+  const burgerIngredients = useSelector(selectBurgerIngredients);
+  const selectedIngredient = useSelector(selectSelectedIngredient);
+  const dispatch = useDispatch();
 
-  const [isIngredientModalOpen, toggleIngredientModal] = useModal();
-
+  const tabContainerRef = useRef();
+  const scrollContainerRef = useRef();
   const bunRef = useRef();
   const mainRef = useRef();
   const sauceRef = useRef();
 
-  const isBunsOnScreen = useOnScreen(bunRef);
-  const isMainsOnScreen = useOnScreen(mainRef);
-  const isSaucesOnScreen = useOnScreen(sauceRef);
-
-  const [bunIngredients, mainIngredients, sauceIngredients] = useMemo(
-    () => Object.entries(_.groupBy(ingredients, "type")),
-    [ingredients]
-  );
-  const [bunType, mainType, sauceType] = useMemo(
-    () => Object.keys(ingredientTypes),
-    []
-  );
-
   const selectIngredientAndOpenModal = useCallback(
     (ingredient) => {
-      setSelectedIngredient(ingredient);
-      toggleIngredientModal();
+      dispatch(saveSelectedIngredient(ingredient));
+      dispatch(toggleIngredientModal());
     },
-    [toggleIngredientModal]
+    [dispatch]
   );
 
-  const setRefForIngredientType = useCallback(
-    (name) => {
-      if (name === bunType) {
-        return bunRef;
-      } else if (name === mainType) {
-        return mainRef;
-      } else if (name === sauceType) {
-        return sauceRef;
-      }
-    },
-    [bunType, mainType, sauceType]
-  );
+  const closeIngredientModal = useCallback(() => {
+    dispatch(toggleIngredientModal());
+    dispatch(resetSelectedIngredient());
+  }, [dispatch]);
+
+  const setRefForIngredientType = useCallback((name) => {
+    if (name === ingredientTypes.eng.bun) {
+      return bunRef;
+    } else if (name === ingredientTypes.eng.main) {
+      return mainRef;
+    } else if (name === ingredientTypes.eng.sauce) {
+      return sauceRef;
+    }
+  }, []);
 
   const scrollIntoIngredient = useCallback((type) => {
-    if (type === ingredientTypes.bun) {
+    if (type === ingredientTypes.ru.bun) {
       bunRef.current.scrollIntoView();
-    } else if (type === ingredientTypes.main) {
+    } else if (type === ingredientTypes.ru.main) {
       mainRef.current.scrollIntoView();
-    } else if (type === ingredientTypes.sauce) {
+    } else if (type === ingredientTypes.ru.sauce) {
       sauceRef.current.scrollIntoView();
     }
   }, []);
 
-  const setSelectedTab = useCallback(() => {
-    if (isBunsOnScreen && isSaucesOnScreen) {
-      setCurrentIngredientType(ingredientTypes.bun);
-    } else if (!isBunsOnScreen && isSaucesOnScreen) {
-      setCurrentIngredientType(ingredientTypes.sauce);
-    } else if (!isSaucesOnScreen && isMainsOnScreen) {
-      setCurrentIngredientType(ingredientTypes.main);
+  const isDistanceValid = useCallback(
+    (container, ingredient, distance = 150) =>
+      Math.abs(ingredient - container) <= distance,
+    []
+  );
+
+  const selectTab = useCallback(() => {
+    const tabCoords = tabContainerRef.current.getBoundingClientRect().bottom;
+    const bunCoords = bunRef.current.getBoundingClientRect().top;
+    const mainCoords = mainRef.current.getBoundingClientRect().top;
+    const sauceCoords = sauceRef.current.getBoundingClientRect().top;
+
+    if (isDistanceValid(tabCoords, bunCoords)) {
+      setCurrentIngredientType(ingredientTypes.ru.bun);
+    } else if (isDistanceValid(tabCoords, sauceCoords)) {
+      setCurrentIngredientType(ingredientTypes.ru.sauce);
+    } else if (isDistanceValid(tabCoords, mainCoords)) {
+      setCurrentIngredientType(ingredientTypes.ru.main);
     }
-  }, [isBunsOnScreen, isMainsOnScreen, isSaucesOnScreen]);
+  }, [isDistanceValid]);
 
   useEffect(() => {
-    setSelectedTab();
-  }, [setSelectedTab]);
+    const scrollContainer = scrollContainerRef.current;
+
+    scrollContainer.addEventListener("scroll", selectTab);
+
+    return () => {
+      scrollContainer.removeEventListener("scroll", selectTab);
+    };
+  }, [selectTab]);
 
   return (
     <>
       {isIngredientModalOpen && (
-        <Modal handleModalCloseClick={toggleIngredientModal}>
+        <Modal handleModalCloseClick={closeIngredientModal}>
           <IngredientDetails ingredient={selectedIngredient} />
         </Modal>
       )}
       <section className={`${styles.section} pt-10`}>
         <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
-        <div className={`${styles.tabs} mb-10`}>
+        <div ref={tabContainerRef} className={`${styles.tabs} mb-10`}>
           <Tab
-            value={ingredientTypes.bun}
-            active={currentIngredientType === ingredientTypes.bun}
+            value={ingredientTypes.ru.bun}
+            active={currentIngredientType === ingredientTypes.ru.bun}
             onClick={scrollIntoIngredient}
           >
-            {ingredientTypes.bun}
+            {ingredientTypes.ru.bun}
           </Tab>
           <Tab
-            value={ingredientTypes.sauce}
-            active={currentIngredientType === ingredientTypes.sauce}
+            value={ingredientTypes.ru.sauce}
+            active={currentIngredientType === ingredientTypes.ru.sauce}
             onClick={scrollIntoIngredient}
           >
-            {ingredientTypes.sauce}
+            {ingredientTypes.ru.sauce}
           </Tab>
           <Tab
-            value={ingredientTypes.main}
-            active={currentIngredientType === ingredientTypes.main}
+            value={ingredientTypes.ru.main}
+            active={currentIngredientType === ingredientTypes.ru.main}
             onClick={scrollIntoIngredient}
           >
-            {ingredientTypes.main}
+            {ingredientTypes.ru.main}
           </Tab>
         </div>
-        <div className={`${styles.container} custom-scroll`}>
+        <div
+          ref={scrollContainerRef}
+          className={`${styles.container} custom-scroll`}
+        >
           <ul className={styles.ingredientsList}>
-            {[bunIngredients, sauceIngredients, mainIngredients].map(
-              ([type, ingredients]) => (
-                <li className="mb-10" key={type}>
-                  <IngredientList
-                    setRefForIngredientType={setRefForIngredientType}
-                    ingredients={ingredients}
-                    type={type}
-                    selectIngredientAndOpenModal={selectIngredientAndOpenModal}
-                  />
-                </li>
-              )
-            )}
+            {burgerIngredients.map(([type, ingredients]) => (
+              <li className="mb-10" key={type}>
+                <IngredientList
+                  setRefForIngredientType={setRefForIngredientType}
+                  ingredients={ingredients}
+                  type={type}
+                  selectIngredientAndOpenModal={selectIngredientAndOpenModal}
+                />
+              </li>
+            ))}
           </ul>
         </div>
       </section>

@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 
 import { IngredientCard } from "components/ingredient-card/ingredient-card";
@@ -19,7 +18,7 @@ export const IngredientList = ({
       ref={setRefForIngredientType(type)}
       className="text text_type_main-medium mb-6"
     >
-      {ingredientTypes[type]}
+      {ingredientTypes.ru[type]}
     </h2>
     <ul className={`${styles.ingredientsListByType}`}>
       {ingredients.map((ingredient) => (
@@ -28,6 +27,7 @@ export const IngredientList = ({
           onClick={() => selectIngredientAndOpenModal(ingredient)}
         >
           <IngredientCard
+            ingredient={ingredient}
             name={ingredient.name}
             imageLink={ingredient.image}
             price={ingredient.price}

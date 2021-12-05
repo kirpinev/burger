@@ -1,5 +1,12 @@
 export const ingredientTypes = {
-  bun: "Булки",
-  main: "Начинка",
-  sauce: "Соусы",
+  ru: {
+    bun: "Булки",
+    main: "Начинка",
+    sauce: "Соусы",
+  },
+  eng: {
+    bun: "bun",
+    main: "main",
+    sauce: "sauce",
+  },
 };

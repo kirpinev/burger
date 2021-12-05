@@ -1,115 +1,31 @@
-import React, { useCallback, useEffect, useReducer, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import { AppHeader } from "components/app-header/app-header";
 import { StatusContainer } from "components/status-container/status-container";
-import { Constructor } from "components/constructor/constructor";
+import { BurgerIngredients } from "components/burger-ingredients/burger-ingredients";
+import { BurgerConstructor } from "components/burger-constructor/burger-constructor";
 
-import { BurgerIngredientsContext } from "context/burger-ingredients-context";
-import { OrderContext } from "context/order-context";
-import { isResponseOk, getJSON, getAllIngredients } from "api/api";
+import { getIngredients } from "services/actions/ingredients";
+import { selectLoadingStatus } from "services/selectors/select-loading-status";
 
 import styles from "./app.module.css";
 
-const loadingActionTypes = {
-  loading: "loading",
-  success: "success",
-  error: "error",
-};
-
-const loadingInitialState = {
-  isLoading: true,
-  isError: false,
-  isSuccess: false,
-};
-
-const loadingReducer = (state, action) => {
-  switch (action.type) {
-    case loadingActionTypes.loading:
-      return {
-        isLoading: true,
-        isError: false,
-        isSuccess: false,
-      };
-    case loadingActionTypes.success:
-      return {
-        isSuccess: true,
-        isError: false,
-        isLoading: false,
-      };
-    case loadingActionTypes.error:
-      return {
-        isLoading: false,
-        isSuccess: false,
-        isError: true,
-      };
-    default:
-      return state;
-  }
-};
-
-const initialOrderState = {
-  number: null,
-};
-
-const orderActionTypes = {
-  save: "save",
-  reset: "reset",
-};
-
-const orderReducer = (state, action) => {
-  switch (action.type) {
-    case orderActionTypes.save:
-      return { number: action.payload };
-    case orderActionTypes.reset:
-      return initialOrderState;
-    default:
-      return state;
-  }
-};
-
 export const App = () => {
-  const [ingredients, setIngredients] = useState([]);
-  const [order, dispatchOrder] = useReducer(
-    orderReducer,
-    initialOrderState,
-    undefined
-  );
-  const [loadingStatus, dispatchLoadingStatus] = useReducer(
-    loadingReducer,
-    loadingInitialState,
-    undefined
-  );
-
-  const getIngredients = useCallback(async () => {
-    try {
-      dispatchLoadingStatus({ type: loadingActionTypes.loading });
-
-      const response = await getAllIngredients();
-
-      if (!isResponseOk(response)) {
-        throw new Error();
-      }
-
-      const { data: ingredientsList } = await getJSON(response);
-
-      setIngredients(ingredientsList);
-      dispatchLoadingStatus({
-        type: loadingActionTypes.success,
-      });
-    } catch (e) {
-      dispatchLoadingStatus({ type: loadingActionTypes.error });
-    }
-  }, []);
+  const { isLoading, isError } = useSelector(selectLoadingStatus);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getIngredients();
-  }, [getIngredients]);
+    dispatch(getIngredients());
+  }, [dispatch]);
 
-  if (loadingStatus.isLoading) {
+  if (isLoading) {
     return <StatusContainer title="Загрузка..." />;
   }
 
-  if (loadingStatus.isError) {
+  if (isError) {
     return (
       <StatusContainer
         buttonText="Повторить"
@@ -122,15 +38,12 @@ export const App = () => {
   return (
     <div className={`${styles.container} body`}>
       <AppHeader />
-      <BurgerIngredientsContext.Provider value={ingredients}>
-        <OrderContext.Provider
-          value={{ order, dispatchOrder, orderActionTypes }}
-        >
-          <main className={styles.main}>
-            <Constructor />
-          </main>
-        </OrderContext.Provider>
-      </BurgerIngredientsContext.Provider>
+      <main className={styles.main}>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
+      </main>
     </div>
   );
 };
