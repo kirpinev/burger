@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
-import { AppHeader } from "components/app-header/app-header";
 import {
   Button,
   EmailInput,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { AppHeader } from "components/app-header/app-header";
 
 import { appRoutes } from "constants/app-routes";
 

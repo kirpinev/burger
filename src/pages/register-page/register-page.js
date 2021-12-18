@@ -1,4 +1,3 @@
-import { AppHeader } from "components/app-header/app-header";
 import { Link } from "react-router-dom";
 
 import {
@@ -7,6 +6,7 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { AppHeader } from "components/app-header/app-header";
 
 import { appRoutes } from "constants/app-routes";
 
