@@ -16,6 +16,10 @@
     margin-top: 55px;
 }
 
+.info:last-of-type {
+    margin-top: -7px;
+}
+
 .link {
     text-decoration: none;
     color: #4C4CFF;
