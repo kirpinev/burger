@@ -91,7 +91,9 @@ export const ResetPasswordPage = () => {
         >
           Вспомнили пароль?{" "}
           <Link className={styles.link} to={appRoutes.loginPage}>
-            Войти
+            <Button type="secondary" size="medium">
+              Войти
+            </Button>
           </Link>
         </p>
       </div>

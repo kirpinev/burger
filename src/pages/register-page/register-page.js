@@ -29,7 +29,9 @@ export const RegisterPage = () => {
         >
           Уже зарегистрированы?{" "}
           <Link className={styles.link} to={appRoutes.loginPage}>
-            Войти
+            <Button type="secondary" size="medium">
+              Войти
+            </Button>
           </Link>
         </p>
       </div>

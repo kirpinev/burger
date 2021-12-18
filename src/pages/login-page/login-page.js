@@ -27,7 +27,9 @@ export const LoginPage = () => {
         >
           Вы новый пользователь?{" "}
           <Link className={styles.link} to={appRoutes.registerPage}>
-            Зарегистрироваться
+            <Button type="secondary" size="medium">
+              Зарегистрироваться
+            </Button>
           </Link>
         </p>
         <p
@@ -35,7 +37,9 @@ export const LoginPage = () => {
         >
           Забыли пароль?{" "}
           <Link className={styles.link} to={appRoutes.forgotPasswordPage}>
-            Восстановить пароль
+            <Button type="secondary" size="medium">
+              Восстановить пароль
+            </Button>
           </Link>
         </p>
       </div>
