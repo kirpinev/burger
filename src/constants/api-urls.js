@@ -3,4 +3,5 @@ export const apiUrls = {
   orders: "/orders",
   ingredients: "/ingredients",
   passwordReset: "/password-reset",
+  newPassword: "/reset",
 };

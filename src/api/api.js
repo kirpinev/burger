@@ -25,6 +25,16 @@ export const resetPassword = async (email) =>
     }),
   });
 
+export const sendNewPassword = async (password, token) =>
+  fetch(`${apiUrls.base}${apiUrls.passwordReset}${apiUrls.newPassword}`, {
+    method: "POST",
+    headers: JSONHeaders,
+    body: JSON.stringify({
+      password,
+      token,
+    }),
+  });
+
 export const isResponseOk = (response) => response.ok;
 
 export const getJSON = async (response) => response.json();

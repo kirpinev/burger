@@ -1,56 +1,62 @@
 import { useCallback, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 
 import {
   Button,
-  EmailInput,
+  PasswordInput,
+  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Modal } from "components/modal/modal";
 import { AppHeader } from "components/app-header/app-header";
+import { Modal } from "components/modal/modal";
 import { RequestErrorDetails } from "components/request-error-details/request-error-details";
 
-import { updateEmail } from "services/actions/email";
-import { resetEmailState } from "services/actions/email";
-import { selectEmailAndEmailSentStatus } from "services/selectors/select-email";
-import { sendResetEmail } from "services/actions/email";
+import { selectPasswordState } from "services/selectors/select-password";
 import { selectModalStatus } from "services/selectors/select-modal-status";
+import { updatePassword, updateToken } from "services/actions/password";
 import { toggleErrorModal } from "services/actions/modals";
+import { resetPasswordState } from "services/actions/password";
+import { sendPasswordAndToken } from "services/actions/password";
 
 import { appRoutes } from "constants/app-routes";
-import { validateEmail } from "utils/validate-email";
+import { validatePassword } from "utils/validate-password";
 
 import styles from "global-styles/form.module.css";
 
-export const ForgotPasswordPage = () => {
-  const { email, emailSent } = useSelector(selectEmailAndEmailSentStatus);
+export const ResetPasswordPage = () => {
+  const { password, token, passwordSent } = useSelector(selectPasswordState);
   const { isErrorModalOpen } = useSelector(selectModalStatus);
   const dispatch = useDispatch();
 
-  const changeEmailValue = useCallback(
-    (e) => dispatch(updateEmail(e.target.value)),
+  const changePasswordValue = useCallback(
+    (e) => dispatch(updatePassword(e.target.value)),
     [dispatch]
   );
 
-  const sendEmail = useCallback(() => {
-    if (validateEmail(email)) {
-      dispatch(sendResetEmail());
-    }
-  }, [dispatch, email]);
+  const changeTokenValue = useCallback(
+    (e) => dispatch(updateToken(e.target.value)),
+    [dispatch]
+  );
 
   const toggleModalWithError = useCallback(
     () => dispatch(toggleErrorModal()),
     [dispatch]
   );
 
+  const sendPassword = useCallback(() => {
+    if (validatePassword(password) && token) {
+      dispatch(sendPasswordAndToken(password, token));
+    }
+  }, [dispatch, password, token]);
+
   useEffect(() => {
     return () => {
-      dispatch(resetEmailState());
+      dispatch(resetPasswordState());
     };
   }, [dispatch]);
 
-  if (emailSent) {
-    return <Redirect push to={appRoutes.resetPasswordPage} />;
+  if (passwordSent) {
+    return <Redirect push to={appRoutes.loginPage} />;
   }
 
   return (
@@ -59,20 +65,26 @@ export const ForgotPasswordPage = () => {
         <Modal handleModalCloseClick={toggleModalWithError}>
           <RequestErrorDetails
             title="Что-то пошло не так :("
-            subtitle="Попробуйте отправить email повторно"
+            subtitle="Попробуйте отправить пароль повторно"
           />
         </Modal>
       )}
       <AppHeader />
       <div className={styles.container}>
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
-        <EmailInput
-          value={email}
-          name="Укажите e-mail"
-          onChange={changeEmailValue}
+        <PasswordInput
+          value={password}
+          name="password"
+          onChange={changePasswordValue}
         />
-        <Button type="primary" size="medium" onClick={sendEmail}>
-          Восстановить
+        <Input
+          placeholder="Введите код из письма"
+          name="token"
+          value={token}
+          onChange={changeTokenValue}
+        />
+        <Button type="primary" size="medium" onClick={sendPassword}>
+          Сохранить
         </Button>
         <p
           className={`text text_type_main-default text_color_inactive ${styles.info}`}
