@@ -5,6 +5,7 @@ import { ingredientsReducer } from "services/reducers/ingredientsReducer";
 import { loadingReducer } from "services/reducers/loadingReducer";
 import { orderReducer } from "services/reducers/orderReducer";
 import { modalsReducer } from "services/reducers/modalsReducer";
+import { emailReducer } from "services/reducers/emailReducer";
 
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   loading: loadingReducer,
   order: orderReducer,
   modals: modalsReducer,
+  email: emailReducer,
 });
 
 export const store = createStore(rootReducer, enhancer);

@@ -11,12 +11,12 @@ import {
 import { BurgerItem } from "components/burger-item/burger-item";
 import { OrderDetails } from "components/order-details/order-details";
 import { Modal } from "components/modal/modal";
-import { OrderErrorDetails } from "components/order-error-details/order-error-details";
+import { RequestErrorDetails } from "components/request-error-details/request-error-details";
 import { EmptyConstructor } from "components/empty-constructor/empty-constructor";
 
 import { postAnOrder } from "services/actions/order";
 import {
-  toggleErrorOrderModal,
+  toggleErrorModal,
   toggleSuccessOrderModal,
 } from "services/actions/modals";
 import {
@@ -40,7 +40,7 @@ export const BurgerConstructor = () => {
     selectConstructorIngredients
   );
   const orderNumber = useSelector(selectOrderNumber);
-  const { isErrorOrderModalOpen, isSuccessOrderModalOpen } =
+  const { isErrorModalOpen, isSuccessOrderModalOpen } =
     useSelector(selectModalStatus);
   const dispatch = useDispatch();
   const [{ isHover }, dropRef] = useDrop(
@@ -62,8 +62,8 @@ export const BurgerConstructor = () => {
     () => dispatch(toggleSuccessOrderModal()),
     [dispatch]
   );
-  const toggleErrorModal = useCallback(
-    () => dispatch(toggleErrorOrderModal()),
+  const toggleModalWithError = useCallback(
+    () => dispatch(toggleErrorModal()),
     [dispatch]
   );
 
@@ -78,9 +78,12 @@ export const BurgerConstructor = () => {
           <OrderDetails orderNumber={orderNumber} />
         </Modal>
       )}
-      {isErrorOrderModalOpen && (
-        <Modal handleModalCloseClick={toggleErrorModal}>
-          <OrderErrorDetails />
+      {isErrorModalOpen && (
+        <Modal handleModalCloseClick={toggleModalWithError}>
+          <RequestErrorDetails
+            title="Что-то пошло не так :("
+            subtitle="Попробуйте оформить заказ снова"
+          />
         </Modal>
       )}
       {!selectedBun && constructorIngredients.length === 0 ? (

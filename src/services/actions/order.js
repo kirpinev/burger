@@ -1,5 +1,5 @@
 import { postAnOrderRequest, isResponseOk, getJSON } from "api/api";
-import { toggleErrorOrderModal, toggleSuccessOrderModal } from "./modals";
+import { toggleErrorModal, toggleSuccessOrderModal } from "./modals";
 import { resetConstructorIngredients } from "./ingredients";
 
 export const SAVE_ORDER = "SAVE_ORDER_NUMBER";
@@ -41,6 +41,6 @@ export const postAnOrder = () => async (dispatch, getState) => {
     dispatch(resetConstructorIngredients());
   } catch (e) {
     dispatch(resetOrder());
-    dispatch(toggleErrorOrderModal());
+    dispatch(toggleErrorModal());
   }
 };
