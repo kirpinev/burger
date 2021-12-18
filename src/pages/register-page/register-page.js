@@ -8,8 +8,9 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+import { appRoutes } from "constants/app-routes";
+
 import styles from "global-styles/form.module.css";
-import { appRoutes } from "../../constants/app-routes";
 
 export const RegisterPage = () => {
   return (
