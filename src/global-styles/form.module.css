@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+
+    margin-top: 180px;
+}
+
+.container > div > div {
+    width: 480px;
+}
+
+.info {
+    margin-top: 55px;
+}
+
+.link {
+    text-decoration: none;
+    color: #4C4CFF;
+}
