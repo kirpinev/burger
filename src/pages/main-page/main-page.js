@@ -11,9 +11,9 @@ import { BurgerConstructor } from "components/burger-constructor/burger-construc
 import { getIngredients } from "services/actions/ingredients";
 import { selectLoadingStatus } from "services/selectors/select-loading-status";
 
-import styles from "./app.module.css";
+import styles from "./main-page.module.css";
 
-export const App = () => {
+export const MainPage = () => {
   const { isLoading, isError } = useSelector(selectLoadingStatus);
   const dispatch = useDispatch();
 

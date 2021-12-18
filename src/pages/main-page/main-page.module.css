@@ -1,0 +1,14 @@
+.container {
+    box-sizing: border-box;
+    height: 100vh;
+    padding-bottom: 40px;
+}
+
+.main {
+    display: flex;
+    justify-content: space-between;
+
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1240px;
+}
