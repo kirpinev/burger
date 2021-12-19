@@ -35,6 +35,59 @@ export const sendNewPassword = async (password, token) =>
     }),
   });
 
+export const registerUserRequest = async ({ name, email, password }) =>
+  fetch(`${apiUrls.base}${apiUrls.register}`, {
+    method: "POST",
+    headers: JSONHeaders,
+    body: JSON.stringify({
+      name,
+      email,
+      password,
+    }),
+  });
+
+export const authorizeUserRequest = async (email, password) =>
+  fetch(`${apiUrls.base}${apiUrls.login}`, {
+    method: "POST",
+    headers: JSONHeaders,
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  });
+
+export const updateTokensRequest = async (token) =>
+  fetch(`${apiUrls.base}${apiUrls.token}`, {
+    method: "POST",
+    headers: JSONHeaders,
+    body: JSON.stringify({
+      token,
+    }),
+  });
+
+export const getUserInfoRequest = async (token) =>
+  fetch(`${apiUrls.base}${apiUrls.userInfo}`, {
+    method: "GET",
+    headers: {
+      ...JSONHeaders,
+      Authorization: token,
+    },
+  });
+
+export const updateUserInfoRequest = async ({ token, name, email, password }) =>
+  fetch(`${apiUrls.base}${apiUrls.userInfo}`, {
+    method: "PATCH",
+    headers: {
+      ...JSONHeaders,
+      Authorization: token,
+    },
+    body: JSON.stringify({
+      name,
+      email,
+      password,
+    }),
+  });
+
 export const isResponseOk = (response) => response.ok;
 
 export const getJSON = async (response) => response.json();

@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
 
 import {
   Button,
@@ -7,18 +8,33 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { AppHeader } from "components/app-header/app-header";
 
+import { selectUserInfo } from "services/selectors/select-user-info";
+import { useFormMethods } from "hooks/use-form-methods";
 import { appRoutes } from "constants/app-routes";
+import { getTokenFromStorage } from "utils/local-storage";
+import { accessToken } from "constants/token-names";
 
 import styles from "global-styles/form.module.css";
 
 export const LoginPage = () => {
+  const { password, email, isLoggedIn } = useSelector(selectUserInfo);
+  const { updateEmail, updatePassword, authorize } = useFormMethods();
+
+  if (isLoggedIn || getTokenFromStorage(accessToken)) {
+    return <Redirect to={appRoutes.mainPage} />;
+  }
+
   return (
     <>
       <AppHeader />
-      <div className={styles.container}>
+      <form onSubmit={authorize} className={styles.container}>
         <h1 className="text text_type_main-medium">Вход</h1>
-        <EmailInput value="" name="Email" onChange={() => {}} />
-        <PasswordInput value="" name="Пароль" onChange={() => {}} />
+        <EmailInput value={email} name="email" onChange={updateEmail} />
+        <PasswordInput
+          value={password}
+          name="password"
+          onChange={updatePassword}
+        />
         <Button type="primary" size="medium">
           Войти
         </Button>
@@ -42,7 +58,7 @@ export const LoginPage = () => {
             </Button>
           </Link>
         </p>
-      </div>
+      </form>
     </>
   );
 };
