@@ -5,6 +5,10 @@
   text-decoration: none;
 }
 
+.linkActive {
+  color: white;
+}
+
 .logo {
   display: flex;
 }

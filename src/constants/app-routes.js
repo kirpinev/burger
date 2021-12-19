@@ -5,6 +5,8 @@ export const appRoutes = {
   forgotPasswordPage: "/forgot-password",
   resetPasswordPage: "/reset-password",
   profilePage: "/profile",
+  profileOrders: "/orders",
   ingredientsPage: "/ingredients/:id",
   notFoundPage: "/not-found",
+  logoutPage: "/logout",
 };

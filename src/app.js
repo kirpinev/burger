@@ -5,6 +5,7 @@ import { RegisterPage } from "./pages/register-page/register-page";
 import { LoginPage } from "./pages/login-page/login-page";
 import { ForgotPasswordPage } from "./pages/forgot-password-page/forgot-password-page";
 import { ResetPasswordPage } from "./pages/reset-password-page/reset-password-page";
+import { ProfilePage } from "./pages/profile-page/profile-page";
 
 import { appRoutes } from "./constants/app-routes";
 
@@ -28,6 +29,7 @@ export const App = () => {
         exact={true}
         component={ResetPasswordPage}
       />
+      <Route path={appRoutes.profilePage} component={ProfilePage} />
     </BrowserRouter>
   );
 };

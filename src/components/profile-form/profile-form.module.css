@@ -1,0 +1,14 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form > div > div {
+    width: 480px;
+}
+
+.buttonsContainer {
+    display: flex;
+    justify-content: flex-end;
+}

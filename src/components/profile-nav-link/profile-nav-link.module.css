@@ -1,0 +1,13 @@
+.navLink {
+    cursor: pointer;
+
+    text-decoration: none;
+}
+
+.navLinkActive {
+    color: white;
+}
+
+.navLink:hover {
+    color: white;
+}
