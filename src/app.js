@@ -6,8 +6,10 @@ import { LoginPage } from "./pages/login-page/login-page";
 import { ForgotPasswordPage } from "./pages/forgot-password-page/forgot-password-page";
 import { ResetPasswordPage } from "./pages/reset-password-page/reset-password-page";
 import { ProfilePage } from "./pages/profile-page/profile-page";
+import { LogoutPage } from "./pages/logout-page/logout-page";
 
 import { appRoutes } from "./constants/app-routes";
+import { ProtectedRoute } from "./components/protected-route/protected-route";
 
 export const App = () => {
   return (
@@ -29,7 +31,10 @@ export const App = () => {
         exact={true}
         component={ResetPasswordPage}
       />
-      <Route path={appRoutes.profilePage} component={ProfilePage} />
+      <Route path={appRoutes.logoutPage} exact={true} component={LogoutPage} />
+      <ProtectedRoute path={appRoutes.profilePage}>
+        <ProfilePage />
+      </ProtectedRoute>
     </BrowserRouter>
   );
 };

@@ -10,6 +10,7 @@ import { BurgerConstructor } from "components/burger-constructor/burger-construc
 
 import { getIngredients } from "services/actions/ingredients";
 import { selectLoadingStatus } from "services/selectors/select-loading-status";
+import { resetLoadingState } from "services/actions/loading";
 
 import styles from "./main-page.module.css";
 
@@ -19,6 +20,10 @@ export const MainPage = () => {
 
   useEffect(() => {
     dispatch(getIngredients());
+
+    return () => {
+      dispatch(resetLoadingState());
+    };
   }, [dispatch]);
 
   if (isLoading) {

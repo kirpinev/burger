@@ -137,16 +137,17 @@ export const BurgerIngredients = () => {
           className={`${styles.container} custom-scroll`}
         >
           <ul className={styles.ingredientsList}>
-            {burgerIngredients.map(([type, ingredients]) => (
-              <li className="mb-10" key={type}>
-                <IngredientList
-                  setRefForIngredientType={setRefForIngredientType}
-                  ingredients={ingredients}
-                  type={type}
-                  selectIngredientAndOpenModal={selectIngredientAndOpenModal}
-                />
-              </li>
-            ))}
+            {burgerIngredients[0] &&
+              burgerIngredients.map(([type, ingredients]) => (
+                <li className="mb-10" key={type}>
+                  <IngredientList
+                    setRefForIngredientType={setRefForIngredientType}
+                    ingredients={ingredients}
+                    type={type}
+                    selectIngredientAndOpenModal={selectIngredientAndOpenModal}
+                  />
+                </li>
+              ))}
           </ul>
         </div>
       </section>

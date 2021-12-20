@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useLocation } from "react-router-dom";
 
 import {
   Button,
@@ -11,17 +11,16 @@ import { AppHeader } from "components/app-header/app-header";
 import { selectUserInfo } from "services/selectors/select-user-info";
 import { useFormMethods } from "hooks/use-form-methods";
 import { appRoutes } from "constants/app-routes";
-import { getTokenFromStorage } from "utils/local-storage";
-import { accessToken } from "constants/token-names";
 
 import styles from "global-styles/form.module.css";
 
 export const LoginPage = () => {
   const { password, email, isLoggedIn } = useSelector(selectUserInfo);
   const { updateEmail, updatePassword, authorize } = useFormMethods();
+  const { state } = useLocation();
 
-  if (isLoggedIn || getTokenFromStorage(accessToken)) {
-    return <Redirect to={appRoutes.mainPage} />;
+  if (isLoggedIn) {
+    return <Redirect to={state?.from || appRoutes.mainPage} />;
   }
 
   return (

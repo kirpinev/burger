@@ -1,4 +1,9 @@
-import { ERROR, LOADING, SUCCESS } from "services/actions/loading";
+import {
+  ERROR,
+  LOADING,
+  SUCCESS,
+  RESET_LOADING_STATE,
+} from "services/actions/loading";
 
 const initialState = {
   isLoading: true,
@@ -29,6 +34,8 @@ export const loadingReducer = (state = initialState, action) => {
         isSuccess: false,
         isError: true,
       };
+    case RESET_LOADING_STATE:
+      return { ...initialState };
     default:
       return state;
   }

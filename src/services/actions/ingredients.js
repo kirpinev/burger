@@ -59,9 +59,9 @@ export const getIngredients = () => async (dispatch) => {
       throw new Error();
     }
 
-    const { data: ingredientsList } = await getJSON(response);
+    const { data } = await getJSON(response);
 
-    dispatch(saveFetchedIngredients(ingredientsList));
+    dispatch(saveFetchedIngredients(data));
     dispatch(setSuccess());
   } catch (e) {
     dispatch(setError());

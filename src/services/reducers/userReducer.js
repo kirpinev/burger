@@ -11,7 +11,6 @@ const initialState = {
   email: "",
   password: "",
   isLoggedIn: false,
-  forceLogOut: false,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -25,7 +24,7 @@ export const userReducer = (state = initialState, action) => {
     case LOG_IN_USER:
       return { ...state, isLoggedIn: true };
     case LOG_OUT_USER:
-      return { ...state, isLoggedIn: false };
+      return { ...initialState };
     default:
       return state;
   }

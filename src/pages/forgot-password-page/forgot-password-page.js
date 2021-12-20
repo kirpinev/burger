@@ -21,13 +21,11 @@ import { appRoutes } from "constants/app-routes";
 import { validateEmail } from "utils/validate-email";
 import { getTokenFromStorage } from "utils/local-storage";
 import { accessToken } from "constants/token-names";
-import { selectUserInfo } from "services/selectors/select-user-info";
 
 import styles from "global-styles/form.module.css";
 
 export const ForgotPasswordPage = () => {
   const { email, emailSent } = useSelector(selectEmailAndEmailSentStatus);
-  const { isLoggedIn } = useSelector(selectUserInfo);
   const { isErrorModalOpen } = useSelector(selectModalStatus);
   const dispatch = useDispatch();
 
@@ -53,7 +51,7 @@ export const ForgotPasswordPage = () => {
     };
   }, [dispatch]);
 
-  if (isLoggedIn || getTokenFromStorage(accessToken)) {
+  if (getTokenFromStorage(accessToken)) {
     return <Redirect push to={appRoutes.mainPage} />;
   }
 

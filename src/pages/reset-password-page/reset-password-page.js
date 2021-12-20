@@ -17,19 +17,17 @@ import { updatePassword, updateToken } from "services/actions/password";
 import { toggleErrorModal } from "services/actions/modals";
 import { resetPasswordState } from "services/actions/password";
 import { sendPasswordAndToken } from "services/actions/password";
+import { selectUserInfo } from "services/selectors/select-user-info";
 
 import { appRoutes } from "constants/app-routes";
 import { validatePassword } from "utils/validate-password";
-import { selectUserInfo } from "services/selectors/select-user-info";
-import { getTokenFromStorage } from "utils/local-storage";
-import { accessToken } from "constants/token-names";
 
 import styles from "global-styles/form.module.css";
 
 export const ResetPasswordPage = () => {
+  const { isLoggedIn } = useSelector(selectUserInfo);
   const { password, token, passwordSent } = useSelector(selectPasswordState);
   const { isErrorModalOpen } = useSelector(selectModalStatus);
-  const { isLoggedIn } = useSelector(selectUserInfo);
   const dispatch = useDispatch();
 
   const changePasswordValue = useCallback(
@@ -59,7 +57,7 @@ export const ResetPasswordPage = () => {
     };
   }, [dispatch]);
 
-  if (isLoggedIn || getTokenFromStorage(accessToken)) {
+  if (isLoggedIn) {
     return <Redirect push to={appRoutes.mainPage} />;
   }
 

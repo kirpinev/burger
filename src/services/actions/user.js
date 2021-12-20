@@ -5,9 +5,9 @@ import { authorizeUserRequest, getUserInfoRequest } from "api/api";
 import { getTokenFromStorage } from "utils/local-storage";
 import { isAccessTokenValid } from "utils/validate-token";
 import { refreshTokens } from "utils/refresh-tokens";
-import { resetStorage } from "../../utils/local-storage";
-import { setError, setLoading, setSuccess } from "./loading";
-import { updateUserInfoRequest } from "../../api/api";
+import { resetStorage } from "utils/local-storage";
+import { updateUserInfoRequest } from "api/api";
+import { logoutUserRequest } from "../../api/api";
 
 export const UPDATE_USER_NAME = "UPDATE_USER_NAME";
 export const UPDATE_USER_EMAIL = "UPDATE_USER_EMAIL";
@@ -78,8 +78,6 @@ export const authorizeUser = () => async (dispatch, getState) => {
 
 export const getUserInfo = () => async (dispatch) => {
   try {
-    dispatch(setLoading());
-
     if (isAccessTokenValid(getTokenFromStorage(accessToken))) {
       const response = await getUserInfoRequest(
         getTokenFromStorage(accessToken)
@@ -93,7 +91,7 @@ export const getUserInfo = () => async (dispatch) => {
         user: { name, email },
       } = await getJSON(response);
 
-      dispatch(setSuccess());
+      dispatch(logInUser());
       dispatch(updateUserName(name));
       dispatch(updateUserEmail(email));
     } else {
@@ -114,7 +112,7 @@ export const getUserInfo = () => async (dispatch) => {
           user: { name, email },
         } = await getJSON(response);
 
-        dispatch(setSuccess());
+        dispatch(logInUser());
         dispatch(updateUserName(name));
         dispatch(updateUserEmail(email));
       } else {
@@ -122,9 +120,7 @@ export const getUserInfo = () => async (dispatch) => {
         dispatch(logOutUser());
       }
     }
-  } catch (e) {
-    dispatch(setError());
-  }
+  } catch (e) {}
 };
 
 export const updateUserInfo = () => async (dispatch, getState) => {
@@ -175,7 +171,20 @@ export const updateUserInfo = () => async (dispatch, getState) => {
         dispatch(logOutUser());
       }
     }
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
+};
+
+export const logoutUser = () => async (dispatch) => {
+  try {
+    const token = getTokenFromStorage(refreshToken);
+
+    const response = await logoutUserRequest(token);
+
+    if (!isResponseOk(response)) {
+      throw new Error();
+    }
+
+    resetStorage();
+    dispatch(logOutUser());
+  } catch (e) {}
 };

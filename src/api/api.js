@@ -88,6 +88,17 @@ export const updateUserInfoRequest = async ({ token, name, email, password }) =>
     }),
   });
 
+export const logoutUserRequest = async (token) =>
+  fetch(`${apiUrls.base}${apiUrls.logout}`, {
+    method: "POST",
+    headers: {
+      ...JSONHeaders,
+    },
+    body: JSON.stringify({
+      token,
+    }),
+  });
+
 export const isResponseOk = (response) => response.ok;
 
 export const getJSON = async (response) => response.json();
