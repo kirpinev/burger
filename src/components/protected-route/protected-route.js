@@ -1,11 +1,12 @@
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import { selectUserInfo } from "../../services/selectors/select-user-info";
-import { useCallback, useEffect, useState } from "react";
-import { getUserInfo } from "services/actions/user";
-import { appRoutes } from "../../constants/app-routes";
-import { resetLoadingState } from "../../services/actions/loading";
+
+import { selectUserInfo } from "services/selectors/select-user-info";
+import { getUserInfoThunk } from "services/actions/user";
+import { appRoutes } from "constants/app-routes";
+import { resetLoadingState } from "services/actions/loading";
 
 export const ProtectedRoute = ({ children, ...rest }) => {
   const { name, email, password } = useSelector(selectUserInfo);
@@ -13,7 +14,7 @@ export const ProtectedRoute = ({ children, ...rest }) => {
   const dispatch = useDispatch();
 
   const init = useCallback(async () => {
-    await dispatch(getUserInfo());
+    await dispatch(getUserInfoThunk());
     setIsLoaded(true);
   }, [dispatch]);
 

@@ -16,7 +16,7 @@ export const postAnOrderRequest = async (ingredientsIds) =>
     }),
   });
 
-export const resetPassword = async (email) =>
+export const resetPasswordRequest = async (email) =>
   fetch(`${apiUrls.base}${apiUrls.passwordReset}`, {
     method: "POST",
     headers: JSONHeaders,
@@ -25,7 +25,7 @@ export const resetPassword = async (email) =>
     }),
   });
 
-export const sendNewPassword = async (password, token) =>
+export const sendNewPasswordRequest = async (password, token) =>
   fetch(`${apiUrls.base}${apiUrls.passwordReset}${apiUrls.newPassword}`, {
     method: "POST",
     headers: JSONHeaders,

@@ -6,7 +6,7 @@ import { AppHeader } from "components/app-header/app-header";
 import { ProfileForm } from "components/profile-form/profile-form";
 import { ProfileNavigation } from "components/profile-navigation/profile-navigation";
 
-import { getUserInfo } from "services/actions/user";
+import { getUserInfoThunk } from "services/actions/user";
 import { resetLoadingState } from "services/actions/loading";
 import { appRoutes } from "constants/app-routes";
 
@@ -17,7 +17,7 @@ export const ProfilePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserInfo());
+    dispatch(getUserInfoThunk());
 
     return () => {
       dispatch(resetLoadingState());

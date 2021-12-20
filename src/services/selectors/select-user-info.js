@@ -20,10 +20,36 @@ export const selectUserAuthStatus = createSelector(
   (isLoggedIn) => isLoggedIn
 );
 
+export const selectEmailStatus = createSelector(
+  (state) => state.user.isEmailSent,
+  (isEmailSent) => isEmailSent
+);
+
+export const selectToken = createSelector(
+  (state) => state.user.token,
+  (token) => token
+);
+
+export const selectPasswordStatus = createSelector(
+  (state) => state.user.isPasswordSent,
+  (isPasswordSent) => isPasswordSent
+);
+
 export const selectUserInfo = createSelector(
   selectUserName,
   selectUserEmail,
   selectUserPassword,
   selectUserAuthStatus,
-  (name, email, password, isLoggedIn) => ({ name, email, password, isLoggedIn })
+  selectEmailStatus,
+  selectToken,
+  selectPasswordStatus,
+  (name, email, password, isLoggedIn, isEmailSent, token, isPasswordSent) => ({
+    name,
+    email,
+    password,
+    isLoggedIn,
+    isEmailSent,
+    token,
+    isPasswordSent,
+  })
 );

@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 
@@ -10,33 +10,27 @@ import { Modal } from "components/modal/modal";
 import { AppHeader } from "components/app-header/app-header";
 import { RequestErrorDetails } from "components/request-error-details/request-error-details";
 
-import { updateEmail } from "services/actions/email";
-import { resetEmailState } from "services/actions/email";
-import { selectEmailAndEmailSentStatus } from "services/selectors/select-email";
-import { sendResetEmail } from "services/actions/email";
 import { selectModalStatus } from "services/selectors/select-modal-status";
 import { toggleErrorModal } from "services/actions/modals";
-
 import { appRoutes } from "constants/app-routes";
 import { validateEmail } from "utils/validate-email";
 import { getTokenFromStorage } from "utils/local-storage";
 import { accessToken } from "constants/token-names";
+import { selectUserInfo } from "services/selectors/select-user-info";
+import { useFormMethods } from "hooks/use-form-methods";
+import { sendResetEmailThunk } from "services/actions/user";
 
 import styles from "global-styles/form.module.css";
 
 export const ForgotPasswordPage = () => {
-  const { email, emailSent } = useSelector(selectEmailAndEmailSentStatus);
+  const { email, isEmailSent } = useSelector(selectUserInfo);
+  const { updateEmail } = useFormMethods();
   const { isErrorModalOpen } = useSelector(selectModalStatus);
   const dispatch = useDispatch();
 
-  const changeEmailValue = useCallback(
-    (e) => dispatch(updateEmail(e.target.value)),
-    [dispatch]
-  );
-
   const sendEmail = useCallback(() => {
     if (validateEmail(email)) {
-      dispatch(sendResetEmail());
+      dispatch(sendResetEmailThunk());
     }
   }, [dispatch, email]);
 
@@ -45,17 +39,11 @@ export const ForgotPasswordPage = () => {
     [dispatch]
   );
 
-  useEffect(() => {
-    return () => {
-      dispatch(resetEmailState());
-    };
-  }, [dispatch]);
-
   if (getTokenFromStorage(accessToken)) {
     return <Redirect push to={appRoutes.mainPage} />;
   }
 
-  if (emailSent) {
+  if (isEmailSent) {
     return <Redirect push to={appRoutes.resetPasswordPage} />;
   }
 
@@ -75,7 +63,7 @@ export const ForgotPasswordPage = () => {
         <EmailInput
           value={email}
           name="Укажите e-mail"
-          onChange={changeEmailValue}
+          onChange={updateEmail}
         />
         <Button type="primary" size="medium" onClick={sendEmail}>
           Восстановить

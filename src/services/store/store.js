@@ -5,8 +5,6 @@ import { ingredientsReducer } from "services/reducers/ingredientsReducer";
 import { loadingReducer } from "services/reducers/loadingReducer";
 import { orderReducer } from "services/reducers/orderReducer";
 import { modalsReducer } from "services/reducers/modalsReducer";
-import { emailReducer } from "services/reducers/emailReducer";
-import { passwordReducer } from "services/reducers/passwordReducer";
 import { userReducer } from "services/reducers/userReducer";
 
 const composeEnhancers =
@@ -21,8 +19,6 @@ const rootReducer = combineReducers({
   loading: loadingReducer,
   order: orderReducer,
   modals: modalsReducer,
-  email: emailReducer,
-  password: passwordReducer,
   user: userReducer,
 });
 

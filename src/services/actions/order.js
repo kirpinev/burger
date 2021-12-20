@@ -17,7 +17,7 @@ export const resetOrder = () => ({
   type: RESET_ORDER,
 });
 
-export const postAnOrder = () => async (dispatch, getState) => {
+export const postAnOrderThunk = () => async (dispatch, getState) => {
   try {
     const ingredientsIds = getState().ingredients.constructorIngredients.map(
       (ingredient) => ingredient._id

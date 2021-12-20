@@ -8,7 +8,7 @@ import { StatusContainer } from "components/status-container/status-container";
 import { BurgerIngredients } from "components/burger-ingredients/burger-ingredients";
 import { BurgerConstructor } from "components/burger-constructor/burger-constructor";
 
-import { getIngredients } from "services/actions/ingredients";
+import { getIngredientsThunk } from "services/actions/ingredients";
 import { selectLoadingStatus } from "services/selectors/select-loading-status";
 import { resetLoadingState } from "services/actions/loading";
 
@@ -19,7 +19,7 @@ export const MainPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getIngredients());
+    dispatch(getIngredientsThunk());
 
     return () => {
       dispatch(resetLoadingState());
@@ -34,7 +34,7 @@ export const MainPage = () => {
     return (
       <StatusContainer
         buttonText="Повторить"
-        onButtonClick={getIngredients}
+        onButtonClick={getIngredientsThunk}
         title="При запросе данных что-то пошло не так, повторить?"
       />
     );

@@ -49,7 +49,7 @@ export const resetConstructorIngredients = () => ({
   type: RESET_CONSTRUCTOR_INGREDIENTS,
 });
 
-export const getIngredients = () => async (dispatch) => {
+export const getIngredientsThunk = () => async (dispatch) => {
   try {
     dispatch(setLoading());
 
@@ -68,7 +68,7 @@ export const getIngredients = () => async (dispatch) => {
   }
 };
 
-export const moveIngredient =
+export const moveIngredientThunk =
   ({ item, index, monitor, ref }) =>
   (dispatch, getState) => {
     if (!ref.current) {

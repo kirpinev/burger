@@ -1,20 +1,20 @@
+import { useDispatch } from "react-redux";
+import { useCallback } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import { ProfileNavLink } from "components/profile-nav-link/profile-nav-link";
 import { ProfileNavSignature } from "components/profile-nav-signature/profile-nav-signature";
+import { logoutUserThunk } from "services/actions/user";
 
 import { appRoutes } from "constants/app-routes";
 
 import styles from "./profile-navigation.module.css";
-import { useDispatch } from "react-redux";
-import { useCallback } from "react";
-import { logoutUser } from "../../services/actions/user";
 
 export const ProfileNavigation = () => {
   const dispatch = useDispatch();
 
   const logout = useCallback(() => {
-    dispatch(logoutUser());
+    dispatch(logoutUserThunk());
   }, [dispatch]);
 
   return (

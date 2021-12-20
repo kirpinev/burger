@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 
@@ -11,34 +11,23 @@ import { AppHeader } from "components/app-header/app-header";
 import { Modal } from "components/modal/modal";
 import { RequestErrorDetails } from "components/request-error-details/request-error-details";
 
-import { selectPasswordState } from "services/selectors/select-password";
 import { selectModalStatus } from "services/selectors/select-modal-status";
-import { updatePassword, updateToken } from "services/actions/password";
 import { toggleErrorModal } from "services/actions/modals";
-import { resetPasswordState } from "services/actions/password";
-import { sendPasswordAndToken } from "services/actions/password";
+import { sendPasswordAndTokenThunk } from "services/actions/user";
 import { selectUserInfo } from "services/selectors/select-user-info";
 
+import { useFormMethods } from "hooks/use-form-methods";
 import { appRoutes } from "constants/app-routes";
 import { validatePassword } from "utils/validate-password";
 
 import styles from "global-styles/form.module.css";
 
 export const ResetPasswordPage = () => {
-  const { isLoggedIn } = useSelector(selectUserInfo);
-  const { password, token, passwordSent } = useSelector(selectPasswordState);
+  const { isEmailSent, password, token, isPasswordSent } =
+    useSelector(selectUserInfo);
+  const { updatePassword, updateToken } = useFormMethods();
   const { isErrorModalOpen } = useSelector(selectModalStatus);
   const dispatch = useDispatch();
-
-  const changePasswordValue = useCallback(
-    (e) => dispatch(updatePassword(e.target.value)),
-    [dispatch]
-  );
-
-  const changeTokenValue = useCallback(
-    (e) => dispatch(updateToken(e.target.value)),
-    [dispatch]
-  );
 
   const toggleModalWithError = useCallback(
     () => dispatch(toggleErrorModal()),
@@ -47,21 +36,15 @@ export const ResetPasswordPage = () => {
 
   const sendPassword = useCallback(() => {
     if (validatePassword(password) && token) {
-      dispatch(sendPasswordAndToken(password, token));
+      dispatch(sendPasswordAndTokenThunk());
     }
   }, [dispatch, password, token]);
 
-  useEffect(() => {
-    return () => {
-      dispatch(resetPasswordState());
-    };
-  }, [dispatch]);
-
-  if (isLoggedIn) {
+  if (!isEmailSent) {
     return <Redirect push to={appRoutes.mainPage} />;
   }
 
-  if (passwordSent) {
+  if (isPasswordSent) {
     return <Redirect push to={appRoutes.loginPage} />;
   }
 
@@ -81,13 +64,13 @@ export const ResetPasswordPage = () => {
         <PasswordInput
           value={password}
           name="password"
-          onChange={changePasswordValue}
+          onChange={updatePassword}
         />
         <Input
           placeholder="Введите код из письма"
           name="token"
           value={token}
-          onChange={changeTokenValue}
+          onChange={updateToken}
         />
         <Button type="primary" size="medium" onClick={sendPassword}>
           Сохранить

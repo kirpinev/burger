@@ -5,9 +5,10 @@ import {
   updateUserEmail,
   updateUserName,
   updateUserPassword,
-  updateUserInfo,
-  authorizeUser,
-  registerUser,
+  updateUserInfoThunk,
+  authorizeUserThunk,
+  registerUserThunk,
+  updateUserToken,
 } from "services/actions/user";
 import { getInputValue } from "utils/get-input-value";
 
@@ -35,11 +36,18 @@ export const useFormMethods = () => {
     [dispatch]
   );
 
+  const updateToken = useCallback(
+    (e) => {
+      dispatch(updateUserToken(getInputValue(e)));
+    },
+    [dispatch]
+  );
+
   const updateUser = useCallback(
     (e) => {
       e.preventDefault();
 
-      dispatch(updateUserInfo());
+      dispatch(updateUserInfoThunk());
     },
     [dispatch]
   );
@@ -48,7 +56,7 @@ export const useFormMethods = () => {
     (e) => {
       e.preventDefault();
 
-      dispatch(authorizeUser());
+      dispatch(authorizeUserThunk());
     },
     [dispatch]
   );
@@ -57,7 +65,7 @@ export const useFormMethods = () => {
     (e) => {
       e.preventDefault();
 
-      dispatch(registerUser());
+      dispatch(registerUserThunk());
     },
     [dispatch]
   );
@@ -66,6 +74,7 @@ export const useFormMethods = () => {
     updateName,
     updatePassword,
     updateEmail,
+    updateToken,
     updateUser,
     authorize,
     register,
