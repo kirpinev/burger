@@ -18,7 +18,6 @@ import { selectUserInfo } from "services/selectors/select-user-info";
 
 import { useFormMethods } from "hooks/use-form-methods";
 import { appRoutes } from "constants/app-routes";
-import { validatePassword } from "utils/validate-password";
 
 import styles from "global-styles/form.module.css";
 
@@ -34,14 +33,17 @@ export const ResetPasswordPage = () => {
     [dispatch]
   );
 
-  const sendPassword = useCallback(() => {
-    if (validatePassword(password) && token) {
+  const sendPasswordAndToken = useCallback(
+    (e) => {
+      e.preventDefault();
+
       dispatch(sendPasswordAndTokenThunk());
-    }
-  }, [dispatch, password, token]);
+    },
+    [dispatch]
+  );
 
   if (!isEmailSent) {
-    return <Redirect push to={appRoutes.mainPage} />;
+    return <Redirect push to={appRoutes.forgotPasswordPage} />;
   }
 
   if (isPasswordSent) {
@@ -59,7 +61,7 @@ export const ResetPasswordPage = () => {
         </Modal>
       )}
       <AppHeader />
-      <div className={styles.container}>
+      <form onSubmit={sendPasswordAndToken} className={styles.container}>
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
         <PasswordInput
           value={password}
@@ -72,7 +74,7 @@ export const ResetPasswordPage = () => {
           value={token}
           onChange={updateToken}
         />
-        <Button type="primary" size="medium" onClick={sendPassword}>
+        <Button type="primary" size="medium">
           Сохранить
         </Button>
         <p
@@ -85,7 +87,7 @@ export const ResetPasswordPage = () => {
             </Button>
           </Link>
         </p>
-      </div>
+      </form>
     </>
   );
 };

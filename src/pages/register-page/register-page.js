@@ -12,15 +12,17 @@ import { AppHeader } from "components/app-header/app-header";
 import { selectUserInfo } from "services/selectors/select-user-info";
 import { useFormMethods } from "hooks/use-form-methods";
 import { appRoutes } from "constants/app-routes";
+import { getTokenFromStorage } from "utils/local-storage";
+import { accessToken } from "constants/token-names";
 
 import styles from "global-styles/form.module.css";
 
 export const RegisterPage = () => {
-  const { name, password, email, isLoggedIn } = useSelector(selectUserInfo);
+  const { name, password, email } = useSelector(selectUserInfo);
   const { updateName, updateEmail, updatePassword, register } =
     useFormMethods();
 
-  if (isLoggedIn) {
+  if (getTokenFromStorage(accessToken)) {
     return <Redirect to={appRoutes.mainPage} />;
   }
 

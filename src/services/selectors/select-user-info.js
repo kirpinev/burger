@@ -35,6 +35,11 @@ export const selectPasswordStatus = createSelector(
   (isPasswordSent) => isPasswordSent
 );
 
+export const selectUserEditStatus = createSelector(
+  (state) => state.user.isUserInfoEdit,
+  (isUserInfoEdit) => isUserInfoEdit
+);
+
 export const selectUserInfo = createSelector(
   selectUserName,
   selectUserEmail,

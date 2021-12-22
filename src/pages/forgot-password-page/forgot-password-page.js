@@ -13,7 +13,6 @@ import { RequestErrorDetails } from "components/request-error-details/request-er
 import { selectModalStatus } from "services/selectors/select-modal-status";
 import { toggleErrorModal } from "services/actions/modals";
 import { appRoutes } from "constants/app-routes";
-import { validateEmail } from "utils/validate-email";
 import { getTokenFromStorage } from "utils/local-storage";
 import { accessToken } from "constants/token-names";
 import { selectUserInfo } from "services/selectors/select-user-info";
@@ -28,11 +27,14 @@ export const ForgotPasswordPage = () => {
   const { isErrorModalOpen } = useSelector(selectModalStatus);
   const dispatch = useDispatch();
 
-  const sendEmail = useCallback(() => {
-    if (validateEmail(email)) {
+  const sendEmail = useCallback(
+    (e) => {
+      e.preventDefault();
+
       dispatch(sendResetEmailThunk());
-    }
-  }, [dispatch, email]);
+    },
+    [dispatch]
+  );
 
   const toggleModalWithError = useCallback(
     () => dispatch(toggleErrorModal()),
@@ -58,14 +60,14 @@ export const ForgotPasswordPage = () => {
         </Modal>
       )}
       <AppHeader />
-      <div className={styles.container}>
+      <form onSubmit={sendEmail} className={styles.container}>
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
         <EmailInput
           value={email}
           name="Укажите e-mail"
           onChange={updateEmail}
         />
-        <Button type="primary" size="medium" onClick={sendEmail}>
+        <Button type="primary" size="medium">
           Восстановить
         </Button>
         <p
@@ -78,7 +80,7 @@ export const ForgotPasswordPage = () => {
             </Button>
           </Link>
         </p>
-      </div>
+      </form>
     </>
   );
 };

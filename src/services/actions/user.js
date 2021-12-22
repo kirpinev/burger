@@ -22,6 +22,9 @@ export const LOG_IN_USER = "LOG_IN_USER";
 export const LOG_OUT_USER = "LOG_OUT_USER";
 export const EMAIL_SENT = "EMAIL_SENT";
 export const PASSWORD_SENT = "PASSWORD_SENT";
+export const UPDATE_USER_EDIT_STATUS = "UPDATE_USER_EDIT_STATUS";
+export const RESET_USER_EDIT_STATUS = "RESET_USER_EDIT_STATUS";
+export const RESET_USER_PASSWORD = "RESET_USER_PASSWORD";
 
 export const updateUserName = (name) => ({
   type: UPDATE_USER_NAME,
@@ -41,6 +44,18 @@ export const updateUserEmail = (email) => ({
 export const updateUserToken = (token) => ({
   type: UPDATE_USER_TOKEN,
   payload: token,
+});
+
+export const updateUserEditStatus = () => ({
+  type: UPDATE_USER_EDIT_STATUS,
+});
+
+export const resetUserEditStatus = () => ({
+  type: RESET_USER_EDIT_STATUS,
+});
+
+export const resetUserPassword = () => ({
+  type: RESET_USER_PASSWORD,
 });
 
 export const logInUser = () => ({
