@@ -1,7 +1,13 @@
 import { apiUrls } from "constants/api-urls";
+import { accessToken, refreshToken } from "constants/token-names";
+import { getTokenFromStorage } from "utils/local-storage";
 
 const JSONHeaders = {
   "Content-Type": "application/json",
+};
+
+const AuthHeaders = {
+  Authorization: getTokenFromStorage(accessToken),
 };
 
 export const getIngredientsRequest = () =>
@@ -10,7 +16,10 @@ export const getIngredientsRequest = () =>
 export const postAnOrderRequest = async (ingredientsIds) =>
   fetch(`${apiUrls.base}${apiUrls.orders}`, {
     method: "POST",
-    headers: JSONHeaders,
+    headers: {
+      ...JSONHeaders,
+      ...AuthHeaders,
+    },
     body: JSON.stringify({
       ingredients: ingredientsIds,
     }),
@@ -65,21 +74,21 @@ export const updateTokensRequest = async (token) =>
     }),
   });
 
-export const getUserInfoRequest = async (token) =>
+export const getUserInfoRequest = async () =>
   fetch(`${apiUrls.base}${apiUrls.userInfo}`, {
     method: "GET",
     headers: {
       ...JSONHeaders,
-      Authorization: token,
+      ...AuthHeaders,
     },
   });
 
-export const updateUserInfoRequest = async ({ token, name, email, password }) =>
+export const updateUserInfoRequest = async ({ name, email, password }) =>
   fetch(`${apiUrls.base}${apiUrls.userInfo}`, {
     method: "PATCH",
     headers: {
       ...JSONHeaders,
-      Authorization: token,
+      ...AuthHeaders,
     },
     body: JSON.stringify({
       name,
@@ -95,7 +104,7 @@ export const logoutUserRequest = async (token) =>
       ...JSONHeaders,
     },
     body: JSON.stringify({
-      token,
+      token: getTokenFromStorage(refreshToken),
     }),
   });
 

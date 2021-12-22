@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import PropTypes from "prop-types";
@@ -29,6 +30,9 @@ import { selectOrderNumber } from "services/selectors/select-order-number";
 import { selectModalStatus } from "services/selectors/select-modal-status";
 import { selectConstructorIngredients } from "services/selectors/select-constructor-ingredients";
 
+import { getTokenFromStorage } from "utils/local-storage";
+import { accessToken } from "constants/token-names";
+import { appRoutes } from "constants/app-routes";
 import { ingredient } from "prop-types/ingredient";
 import { dndTypes } from "constants/dnd-types";
 
@@ -43,6 +47,7 @@ export const BurgerConstructor = () => {
   const { isErrorModalOpen, isSuccessOrderModalOpen } =
     useSelector(selectModalStatus);
   const dispatch = useDispatch();
+  const history = useHistory();
   const [{ isHover }, dropRef] = useDrop(
     {
       accept: dndTypes.ingredientItem,
@@ -67,10 +72,13 @@ export const BurgerConstructor = () => {
     [dispatch]
   );
 
-  const makeAnOrder = useCallback(
-    () => dispatch(postAnOrderThunk()),
-    [dispatch]
-  );
+  const makeAnOrder = useCallback(() => {
+    if (getTokenFromStorage(accessToken)) {
+      dispatch(postAnOrderThunk());
+    } else {
+      history.push(appRoutes.loginPage);
+    }
+  }, [dispatch, history]);
 
   const opacity = useMemo(() => (isHover ? 0.8 : 1), [isHover]);
 

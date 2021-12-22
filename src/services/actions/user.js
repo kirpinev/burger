@@ -2,7 +2,6 @@ import { getJSON, isResponseOk, registerUserRequest } from "api/api";
 import { saveTokenToStorage } from "utils/local-storage";
 import { accessToken, refreshToken } from "constants/token-names";
 import { authorizeUserRequest, getUserInfoRequest } from "api/api";
-import { getTokenFromStorage } from "utils/local-storage";
 import { isAccessTokenValid } from "utils/validate-token";
 import { refreshTokens } from "utils/refresh-tokens";
 import { resetStorage } from "utils/local-storage";
@@ -114,10 +113,8 @@ export const authorizeUserThunk = () => async (dispatch, getState) => {
 
 export const getUserInfoThunk = () => async (dispatch) => {
   try {
-    if (isAccessTokenValid(getTokenFromStorage(accessToken))) {
-      const response = await getUserInfoRequest(
-        getTokenFromStorage(accessToken)
-      );
+    if (isAccessTokenValid()) {
+      const response = await getUserInfoRequest();
 
       if (!isResponseOk(response)) {
         throw new Error();
@@ -131,26 +128,10 @@ export const getUserInfoThunk = () => async (dispatch) => {
       dispatch(updateUserName(name));
       dispatch(updateUserEmail(email));
     } else {
-      const isRefreshed = await refreshTokens(
-        getTokenFromStorage(refreshToken)
-      );
+      const isRefreshed = await refreshTokens();
 
       if (isRefreshed) {
-        const response = await getUserInfoRequest(
-          getTokenFromStorage(accessToken)
-        );
-
-        if (!isResponseOk(response)) {
-          throw new Error();
-        }
-
-        const {
-          user: { name, email },
-        } = await getJSON(response);
-
-        dispatch(logInUser());
-        dispatch(updateUserName(name));
-        dispatch(updateUserEmail(email));
+        return dispatch(getUserInfoThunk());
       } else {
         resetStorage();
         dispatch(logOutUser());
@@ -163,11 +144,8 @@ export const updateUserInfoThunk = () => async (dispatch, getState) => {
   try {
     const { name, email, password } = getState().user;
 
-    const token = getTokenFromStorage(accessToken);
-
-    if (isAccessTokenValid(token)) {
+    if (isAccessTokenValid()) {
       const response = await updateUserInfoRequest({
-        token,
         name,
         email,
         password,
@@ -182,39 +160,23 @@ export const updateUserInfoThunk = () => async (dispatch, getState) => {
       dispatch(updateUserName(data.user.name));
       dispatch(updateUserEmail(data.user.email));
     } else {
-      const isRefreshed = await refreshTokens(
-        getTokenFromStorage(refreshToken)
-      );
+      const isRefreshed = await refreshTokens();
 
       if (isRefreshed) {
-        const response = await updateUserInfoRequest({
-          token,
-          name,
-          email,
-          password,
-        });
-
-        if (!isResponseOk(response)) {
-          throw new Error();
-        }
-
-        const data = await getJSON(response);
-
-        dispatch(updateUserName(data.user.name));
-        dispatch(updateUserEmail(data.user.email));
+        return dispatch(updateUserInfoThunk());
       } else {
         resetStorage();
         dispatch(logOutUser());
       }
     }
-  } catch (e) {}
+  } catch (e) {
+    dispatch(toggleErrorModal());
+  }
 };
 
 export const logoutUserThunk = () => async (dispatch) => {
   try {
-    const token = getTokenFromStorage(refreshToken);
-
-    const response = await logoutUserRequest(token);
+    const response = await logoutUserRequest();
 
     if (!isResponseOk(response)) {
       throw new Error();
@@ -222,7 +184,9 @@ export const logoutUserThunk = () => async (dispatch) => {
 
     resetStorage();
     dispatch(logOutUser());
-  } catch (e) {}
+  } catch (e) {
+    dispatch(toggleErrorModal());
+  }
 };
 
 export const sendResetEmailThunk = () => async (dispatch, getState) => {
