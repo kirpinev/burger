@@ -42,7 +42,7 @@ export const LoginPage = () => {
         <Modal handleModalCloseClick={toggleModalWithError}>
           <RequestErrorDetails
             title="Что-то пошло не так :("
-            subtitle="Попробуйте войти снова"
+            subtitle="Проверьте данные и попробуйте войти снова"
           />
         </Modal>
       )}
