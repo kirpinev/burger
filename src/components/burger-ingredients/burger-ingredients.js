@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import PropTypes from "prop-types";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { IngredientList } from "components/ingredient-list/ingredient-list";
@@ -10,7 +9,6 @@ import { toggleIngredientModal } from "services/actions/modals";
 import { selectGroupedBurgerIngredients } from "services/selectors/select-burger-ingredients";
 
 import { ingredientTypes } from "constants/ingredient-type";
-import { ingredient } from "prop-types/ingredient";
 
 import styles from "./burger-ingredients.module.css";
 
@@ -134,8 +132,4 @@ export const BurgerIngredients = () => {
       </section>
     </>
   );
-};
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredient),
 };

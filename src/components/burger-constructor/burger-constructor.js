@@ -2,7 +2,6 @@ import { useCallback, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
-import PropTypes from "prop-types";
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -33,7 +32,6 @@ import { selectConstructorIngredients } from "services/selectors/select-construc
 import { getTokenFromStorage } from "utils/local-storage";
 import { accessToken } from "constants/token-names";
 import { appRoutes } from "constants/app-routes";
-import { ingredient } from "prop-types/ingredient";
 import { dndTypes } from "constants/dnd-types";
 
 import styles from "./burger-constructor.module.css";
@@ -153,8 +151,4 @@ export const BurgerConstructor = () => {
       )}
     </>
   );
-};
-
-BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredient),
 };
