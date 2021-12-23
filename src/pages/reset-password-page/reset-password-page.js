@@ -7,7 +7,7 @@ import {
   PasswordInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { AppHeader } from "components/app-header/app-header";
+
 import { Modal } from "components/modal/modal";
 import { RequestErrorDetails } from "components/request-error-details/request-error-details";
 
@@ -60,7 +60,6 @@ export const ResetPasswordPage = () => {
           />
         </Modal>
       )}
-      <AppHeader />
       <form onSubmit={sendPasswordAndToken} className={styles.container}>
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
         <PasswordInput

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-import { AppHeader } from "components/app-header/app-header";
 import { StatusContainer } from "components/status-container/status-container";
 import { BurgerIngredients } from "components/burger-ingredients/burger-ingredients";
 import { BurgerConstructor } from "components/burger-constructor/burger-constructor";
@@ -41,8 +40,7 @@ export const MainPage = () => {
   }
 
   return (
-    <div className={`${styles.container} body`}>
-      <AppHeader />
+    <div className="body">
       <main className={styles.main}>
         <DndProvider backend={HTML5Backend}>
           <BurgerIngredients />

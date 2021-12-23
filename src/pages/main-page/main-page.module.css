@@ -1,8 +1,3 @@
-.container {
-    box-sizing: border-box;
-    height: 100vh;
-    padding-bottom: 40px;
-}
 
 .main {
     display: flex;

@@ -8,7 +8,6 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { AppHeader } from "components/app-header/app-header";
 import { RequestErrorDetails } from "components/request-error-details/request-error-details";
 import { Modal } from "components/modal/modal";
 
@@ -46,7 +45,6 @@ export const LoginPage = () => {
           />
         </Modal>
       )}
-      <AppHeader />
       <form onSubmit={authorize} className={styles.container}>
         <h1 className="text text_type_main-medium">Вход</h1>
         <EmailInput value={email} name="email" onChange={updateEmail} />

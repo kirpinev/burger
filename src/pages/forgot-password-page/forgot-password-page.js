@@ -6,8 +6,8 @@ import {
   Button,
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+
 import { Modal } from "components/modal/modal";
-import { AppHeader } from "components/app-header/app-header";
 import { RequestErrorDetails } from "components/request-error-details/request-error-details";
 
 import { selectModalStatus } from "services/selectors/select-modal-status";
@@ -59,7 +59,6 @@ export const ForgotPasswordPage = () => {
           />
         </Modal>
       )}
-      <AppHeader />
       <form onSubmit={sendEmail} className={styles.container}>
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
         <EmailInput

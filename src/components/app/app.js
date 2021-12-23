@@ -21,6 +21,7 @@ export const App = () => {
 
   return (
     <>
+      <AppHeader />
       <Switch location={background || location}>
         <Route exact={true} path={appRoutes.mainPage}>
           <MainPage />
@@ -40,9 +41,7 @@ export const App = () => {
         <Route path={appRoutes.logoutPage}>
           <LogoutPage />
         </Route>
-        <Route path={appRoutes.profileOrders}>
-          <AppHeader />
-        </Route>
+        <Route path={appRoutes.profileOrders} />
         <Route path={appRoutes.ingredientsPage}>
           <IngredientDetailsFullPage />
         </Route>

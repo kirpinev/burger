@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 
-import { AppHeader } from "components/app-header/app-header";
 import { ProfileForm } from "components/profile-form/profile-form";
 import { ProfileNavigation } from "components/profile-navigation/profile-navigation";
 
@@ -26,7 +25,6 @@ export const ProfilePage = () => {
 
   return (
     <>
-      <AppHeader />
       <section className={styles.container}>
         <Switch>
           <Route path={path} exact={true}>

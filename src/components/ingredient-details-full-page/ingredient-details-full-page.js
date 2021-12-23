@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 
 import { IngredientDetails } from "components/ingredient-details/ingredient-details";
 import { StatusContainer } from "components/status-container/status-container";
-import { AppHeader } from "components/app-header/app-header";
 
 import { selectBurgerIngredients } from "services/selectors/select-burger-ingredients";
 import { selectLoadingStatus } from "services/selectors/select-loading-status";
@@ -47,7 +46,6 @@ export const IngredientDetailsFullPage = () => {
 
   return (
     <div className="body">
-      <AppHeader />
       <main className={styles.container}>
         <IngredientDetails ingredient={requestIngredient} />
       </main>

@@ -9,7 +9,6 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { AppHeader } from "components/app-header/app-header";
 import { Modal } from "components/modal/modal";
 import { RequestErrorDetails } from "components/request-error-details/request-error-details";
 
@@ -49,7 +48,6 @@ export const RegisterPage = () => {
           />
         </Modal>
       )}
-      <AppHeader />
       <form onSubmit={register} className={styles.container}>
         <h1 className="text text_type_main-medium">Регистрация</h1>
         <Input
