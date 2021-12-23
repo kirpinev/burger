@@ -4,18 +4,16 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 
 import { Modal } from "components/modal/modal";
 import { IngredientDetails } from "components/ingredient-details/ingredient-details";
-import { StatusContainer } from "components/status-container/status-container";
 
 import { selectSelectedIngredient } from "services/selectors/select-selected-ingredient";
-import { appRoutes } from "constants/app-routes";
 import { selectBurgerIngredients } from "services/selectors/select-burger-ingredients";
-import { getIngredientsThunk } from "services/actions/ingredients";
 import { resetLoadingState } from "services/actions/loading";
 import { selectLoadingStatus } from "services/selectors/select-loading-status";
+import { appRoutes } from "constants/app-routes";
 
 export const IngredientModal = () => {
   const selectedIngredient = useSelector(selectSelectedIngredient);
-  const { isLoading, isError } = useSelector(selectLoadingStatus);
+  const { isLoading } = useSelector(selectLoadingStatus);
   const burgerIngredients = useSelector(selectBurgerIngredients);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -30,36 +28,18 @@ export const IngredientModal = () => {
   }, [history]);
 
   useEffect(() => {
-    if (!selectedIngredient) {
-      dispatch(getIngredientsThunk());
-    }
-
     return () => {
       dispatch(resetLoadingState());
     };
   }, [dispatch]);
 
   if (isLoading) {
-    return <StatusContainer title="Загрузка..." />;
-  }
-
-  if (isError) {
-    return (
-      <StatusContainer
-        buttonText="Повторить"
-        onButtonClick={getIngredientsThunk}
-        title="При запросе данных что-то пошло не так, повторить?"
-      />
-    );
+    return null;
   }
 
   return (
-    <>
-      <Modal handleModalCloseClick={goBack}>
-        <IngredientDetails
-          ingredient={selectedIngredient || requestIngredient}
-        />
-      </Modal>
-    </>
+    <Modal handleModalCloseClick={goBack}>
+      <IngredientDetails ingredient={selectedIngredient || requestIngredient} />
+    </Modal>
   );
 };

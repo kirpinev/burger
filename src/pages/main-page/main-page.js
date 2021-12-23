@@ -18,8 +18,6 @@ export const MainPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getIngredientsThunk());
-
     return () => {
       dispatch(resetLoadingState());
     };

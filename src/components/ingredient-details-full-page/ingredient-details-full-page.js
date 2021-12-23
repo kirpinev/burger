@@ -23,8 +23,6 @@ export const IngredientDetailsFullPage = () => {
     : null;
 
   useEffect(() => {
-    dispatch(getIngredientsThunk());
-
     return () => {
       dispatch(resetLoadingState());
     };
