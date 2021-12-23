@@ -6,10 +6,6 @@ const JSONHeaders = {
   "Content-Type": "application/json",
 };
 
-const AuthHeaders = {
-  Authorization: getTokenFromStorage(accessToken),
-};
-
 export const getIngredientsRequest = () =>
   fetch(`${apiUrls.base}${apiUrls.ingredients}`);
 
@@ -18,7 +14,7 @@ export const postAnOrderRequest = async (ingredientsIds) =>
     method: "POST",
     headers: {
       ...JSONHeaders,
-      ...AuthHeaders,
+      Authorization: getTokenFromStorage(accessToken),
     },
     body: JSON.stringify({
       ingredients: ingredientsIds,
@@ -79,7 +75,7 @@ export const getUserInfoRequest = async () =>
     method: "GET",
     headers: {
       ...JSONHeaders,
-      ...AuthHeaders,
+      Authorization: getTokenFromStorage(accessToken),
     },
   });
 
@@ -88,7 +84,7 @@ export const updateUserInfoRequest = async ({ name, email, password }) =>
     method: "PATCH",
     headers: {
       ...JSONHeaders,
-      ...AuthHeaders,
+      Authorization: getTokenFromStorage(accessToken),
     },
     body: JSON.stringify({
       name,

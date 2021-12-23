@@ -49,8 +49,14 @@ export const resetConstructorIngredients = () => ({
   type: RESET_CONSTRUCTOR_INGREDIENTS,
 });
 
-export const getIngredientsThunk = () => async (dispatch) => {
+export const getIngredientsThunk = () => async (dispatch, getState) => {
   try {
+    const ingredients = getState().ingredients.burgerIngredients;
+
+    if (ingredients.length !== 0) {
+      return;
+    }
+
     dispatch(setLoading());
 
     const response = await getIngredientsRequest();

@@ -6,7 +6,7 @@ import {
 } from "services/actions/loading";
 
 const initialState = {
-  isLoading: true,
+  isLoading: false,
   isError: false,
   isSuccess: false,
 };

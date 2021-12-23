@@ -1,4 +1,5 @@
-import { useSelector } from "react-redux";
+import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 
 import {
@@ -7,9 +8,14 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+
 import { AppHeader } from "components/app-header/app-header";
+import { Modal } from "components/modal/modal";
+import { RequestErrorDetails } from "components/request-error-details/request-error-details";
 
 import { selectUserInfo } from "services/selectors/select-user-info";
+import { selectModalStatus } from "services/selectors/select-modal-status";
+import { toggleErrorModal } from "services/actions/modals";
 import { useFormMethods } from "hooks/use-form-methods";
 import { appRoutes } from "constants/app-routes";
 import { getTokenFromStorage } from "utils/local-storage";
@@ -21,6 +27,13 @@ export const RegisterPage = () => {
   const { name, password, email } = useSelector(selectUserInfo);
   const { updateName, updateEmail, updatePassword, register } =
     useFormMethods();
+  const { isErrorModalOpen } = useSelector(selectModalStatus);
+  const dispatch = useDispatch();
+
+  const toggleModalWithError = useCallback(
+    () => dispatch(toggleErrorModal()),
+    [dispatch]
+  );
 
   if (getTokenFromStorage(accessToken)) {
     return <Redirect to={appRoutes.mainPage} />;
@@ -28,6 +41,14 @@ export const RegisterPage = () => {
 
   return (
     <>
+      {isErrorModalOpen && (
+        <Modal handleModalCloseClick={toggleModalWithError}>
+          <RequestErrorDetails
+            title="Что-то пошло не так :("
+            subtitle="Попробуйте отправить запрос снова"
+          />
+        </Modal>
+      )}
       <AppHeader />
       <form onSubmit={register} className={styles.container}>
         <h1 className="text text_type_main-medium">Регистрация</h1>

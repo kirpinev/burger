@@ -1,4 +1,5 @@
-import { useSelector } from "react-redux";
+import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useLocation } from "react-router-dom";
 
 import {
@@ -6,9 +7,14 @@ import {
   EmailInput,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+
 import { AppHeader } from "components/app-header/app-header";
+import { RequestErrorDetails } from "components/request-error-details/request-error-details";
+import { Modal } from "components/modal/modal";
 
 import { selectUserInfo } from "services/selectors/select-user-info";
+import { selectModalStatus } from "services/selectors/select-modal-status";
+import { toggleErrorModal } from "services/actions/modals";
 import { useFormMethods } from "hooks/use-form-methods";
 import { appRoutes } from "constants/app-routes";
 
@@ -17,7 +23,14 @@ import styles from "global-styles/form.module.css";
 export const LoginPage = () => {
   const { password, email, isLoggedIn } = useSelector(selectUserInfo);
   const { updateEmail, updatePassword, authorize } = useFormMethods();
+  const { isErrorModalOpen } = useSelector(selectModalStatus);
   const { state } = useLocation();
+  const dispatch = useDispatch();
+
+  const toggleModalWithError = useCallback(
+    () => dispatch(toggleErrorModal()),
+    [dispatch]
+  );
 
   if (isLoggedIn) {
     return <Redirect to={state?.from || appRoutes.mainPage} />;
@@ -25,6 +38,14 @@ export const LoginPage = () => {
 
   return (
     <>
+      {isErrorModalOpen && (
+        <Modal handleModalCloseClick={toggleModalWithError}>
+          <RequestErrorDetails
+            title="Что-то пошло не так :("
+            subtitle="Попробуйте войти снова"
+          />
+        </Modal>
+      )}
       <AppHeader />
       <form onSubmit={authorize} className={styles.container}>
         <h1 className="text text_type_main-medium">Вход</h1>

@@ -11,7 +11,7 @@ import {
   updateUserInfoRequest,
   sendNewPasswordRequest,
 } from "api/api";
-import { toggleErrorModal } from "./modals";
+import { toggleErrorModal } from "services/actions/modals";
 
 export const UPDATE_USER_NAME = "UPDATE_USER_NAME";
 export const UPDATE_USER_EMAIL = "UPDATE_USER_EMAIL";
@@ -89,7 +89,9 @@ export const registerUserThunk = () => async (dispatch, getState) => {
     saveTokenToStorage(refreshToken, data[refreshToken]);
 
     dispatch(logInUser());
-  } catch (e) {}
+  } catch (e) {
+    dispatch(toggleErrorModal());
+  }
 };
 
 export const authorizeUserThunk = () => async (dispatch, getState) => {
@@ -108,7 +110,9 @@ export const authorizeUserThunk = () => async (dispatch, getState) => {
     saveTokenToStorage(refreshToken, data[refreshToken]);
 
     dispatch(logInUser());
-  } catch (e) {}
+  } catch (e) {
+    dispatch(toggleErrorModal());
+  }
 };
 
 export const getUserInfoThunk = () => async (dispatch) => {
@@ -137,7 +141,9 @@ export const getUserInfoThunk = () => async (dispatch) => {
         dispatch(logOutUser());
       }
     }
-  } catch (e) {}
+  } catch (e) {
+    dispatch(toggleErrorModal());
+  }
 };
 
 export const updateUserInfoThunk = () => async (dispatch, getState) => {
