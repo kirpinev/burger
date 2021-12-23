@@ -18,5 +18,5 @@ export const ProfileNavLink = ({ path, text, onClick }) => (
 ProfileNavLink.propTypes = {
   path: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
+  onClick: PropTypes.func.isRequired,
 };

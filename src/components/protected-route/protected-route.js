@@ -50,5 +50,5 @@ export const ProtectedRoute = ({ children, ...rest }) => {
 };
 
 ProtectedRoute.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.element.isRequired,
 };
