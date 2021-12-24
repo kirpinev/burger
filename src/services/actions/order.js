@@ -8,6 +8,7 @@ import { logOutUser } from "./user";
 
 export const SAVE_ORDER = "SAVE_ORDER_NUMBER";
 export const RESET_ORDER = "RESET_ORDER_NUMBER";
+export const TOGGLE_ORDER_POSTING = "TOGGLE_ORDER_POSTING";
 
 export const saveOrder = (orderDetails) => ({
   type: SAVE_ORDER,
@@ -21,12 +22,19 @@ export const resetOrder = () => ({
   type: RESET_ORDER,
 });
 
+export const toggleOrderPosting = (boolean) => ({
+  type: TOGGLE_ORDER_POSTING,
+  payload: boolean,
+});
+
 export const postAnOrderThunk = () => async (dispatch, getState) => {
   try {
     const ingredientsIds = getState().ingredients.constructorIngredients.map(
       (ingredient) => ingredient._id
     );
     const bunId = getState().ingredients.selectedBun._id;
+
+    dispatch(toggleOrderPosting(true));
 
     if (isAccessTokenValid()) {
       const response = await postAnOrderRequest([
@@ -42,6 +50,7 @@ export const postAnOrderThunk = () => async (dispatch, getState) => {
       const orderDetails = await getJSON(response);
 
       dispatch(saveOrder(orderDetails));
+      dispatch(toggleOrderPosting(false));
       dispatch(toggleSuccessOrderModal());
       dispatch(resetConstructorIngredients());
     } else {

@@ -25,7 +25,10 @@ import {
   deleteConstructorIngredient,
 } from "services/actions/ingredients";
 import { selectBurgerPrice } from "services/selectors/select-burger-price";
-import { selectOrderNumber } from "services/selectors/select-order-number";
+import {
+  selectOrderNumber,
+  selectOrderPostingStatus,
+} from "services/selectors/select-order-number";
 import { selectModalStatus } from "services/selectors/select-modal-status";
 import { selectConstructorIngredients } from "services/selectors/select-constructor-ingredients";
 
@@ -42,6 +45,7 @@ export const BurgerConstructor = () => {
     selectConstructorIngredients
   );
   const orderNumber = useSelector(selectOrderNumber);
+  const isOrderPosting = useSelector(selectOrderPostingStatus);
   const { isErrorModalOpen, isSuccessOrderModalOpen } =
     useSelector(selectModalStatus);
   const dispatch = useDispatch();
@@ -143,7 +147,7 @@ export const BurgerConstructor = () => {
             </div>
             {selectedBun && constructorIngredients.length !== 0 && (
               <Button type="primary" size="large" onClick={makeAnOrder}>
-                Оформить заказ
+                {isOrderPosting ? "Оформляем..." : "Оформить заказ"}
               </Button>
             )}
           </div>
