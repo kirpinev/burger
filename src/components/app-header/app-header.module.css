@@ -26,8 +26,9 @@
 
 .logo {
   display: flex;
+
+  margin-left: -175px;
+
+  cursor: pointer;
 }
 
-.logo {
-  margin-left: -175px;
-}
