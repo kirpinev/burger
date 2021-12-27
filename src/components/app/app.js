@@ -1,49 +1,69 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Route, Switch, useLocation } from "react-router-dom";
 
+import { MainPage } from "pages/main-page/main-page";
+import { RegisterPage } from "pages/register-page/register-page";
+import { LoginPage } from "pages/login-page/login-page";
+import { ForgotPasswordPage } from "pages/forgot-password-page/forgot-password-page";
+import { ResetPasswordPage } from "pages/reset-password-page/reset-password-page";
+import { ProfilePage } from "pages/profile-page/profile-page";
+import { LogoutPage } from "pages/logout-page/logout-page";
+
+import { ProtectedRoute } from "components/protected-route/protected-route";
+import { IngredientModal } from "components/ingredient-modal/ingredient-modal";
+import { IngredientDetailsFullPage } from "components/ingredient-details-full-page/ingredient-details-full-page";
 import { AppHeader } from "components/app-header/app-header";
-import { StatusContainer } from "components/status-container/status-container";
-import { BurgerIngredients } from "components/burger-ingredients/burger-ingredients";
-import { BurgerConstructor } from "components/burger-constructor/burger-constructor";
-
-import { getIngredients } from "services/actions/ingredients";
-import { selectLoadingStatus } from "services/selectors/select-loading-status";
-
-import styles from "./app.module.css";
+import { getIngredientsThunk } from "services/actions/ingredients";
+import { appRoutes } from "constants/app-routes";
 
 export const App = () => {
-  const { isLoading, isError } = useSelector(selectLoadingStatus);
+  const location = useLocation();
   const dispatch = useDispatch();
 
+  const background = location.state && location.state.background;
+
   useEffect(() => {
-    dispatch(getIngredients());
+    dispatch(getIngredientsThunk());
   }, [dispatch]);
 
-  if (isLoading) {
-    return <StatusContainer title="Загрузка..." />;
-  }
-
-  if (isError) {
-    return (
-      <StatusContainer
-        buttonText="Повторить"
-        onButtonClick={getIngredients}
-        title="При запросе данных что-то пошло не так, повторить?"
-      />
-    );
-  }
-
   return (
-    <div className={`${styles.container} body`}>
+    <>
       <AppHeader />
-      <main className={styles.main}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
-      </main>
-    </div>
+
+      <Switch location={background || location}>
+        <Route exact={true} path={appRoutes.mainPage}>
+          <MainPage />
+        </Route>
+        <Route path={appRoutes.registerPage}>
+          <RegisterPage />
+        </Route>
+        <Route path={appRoutes.loginPage}>
+          <LoginPage />
+        </Route>
+        <Route path={appRoutes.forgotPasswordPage}>
+          <ForgotPasswordPage />
+        </Route>
+        <Route path={appRoutes.resetPasswordPage}>
+          <ResetPasswordPage />
+        </Route>
+        <Route path={appRoutes.logoutPage}>
+          <LogoutPage />
+        </Route>
+        <Route path={appRoutes.profileOrders} />
+        <Route path={appRoutes.ingredientsPage}>
+          <IngredientDetailsFullPage />
+        </Route>
+        <ProtectedRoute path={appRoutes.profilePage}>
+          <ProfilePage />
+        </ProtectedRoute>
+      </Switch>
+
+      {background && (
+        <Route path={appRoutes.ingredientsPage}>
+          <IngredientModal />
+        </Route>
+      )}
+    </>
   );
 };

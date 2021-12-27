@@ -7,7 +7,7 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { moveIngredient } from "services/actions/ingredients";
+import { moveIngredientThunk } from "services/actions/ingredients";
 
 import { ingredient } from "prop-types/ingredient";
 import { dndTypes } from "constants/dnd-types";
@@ -25,7 +25,7 @@ export const BurgerItem = ({ ingredient, deleteIngredient, index }) => {
       isHover: monitor.isOver(),
     }),
     drop: (item, monitor) => {
-      dispatch(moveIngredient({ item, index, monitor, ref }));
+      dispatch(moveIngredientThunk({ item, index, monitor, ref }));
     },
   });
 

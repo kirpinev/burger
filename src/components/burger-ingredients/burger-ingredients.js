@@ -1,23 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import PropTypes from "prop-types";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { Modal } from "components/modal/modal";
-import { IngredientDetails } from "components/ingredient-details/ingredient-details";
 import { IngredientList } from "components/ingredient-list/ingredient-list";
 
-import {
-  saveSelectedIngredient,
-  resetSelectedIngredient,
-} from "services/actions/ingredients";
+import { saveSelectedIngredient } from "services/actions/ingredients";
 import { toggleIngredientModal } from "services/actions/modals";
-import { selectBurgerIngredients } from "services/selectors/select-burger-ingredients";
-import { selectModalStatus } from "services/selectors/select-modal-status";
-import { selectSelectedIngredient } from "services/selectors/select-selected-ingredient";
+import { selectGroupedBurgerIngredients } from "services/selectors/select-burger-ingredients";
 
 import { ingredientTypes } from "constants/ingredient-type";
-import { ingredient } from "prop-types/ingredient";
 
 import styles from "./burger-ingredients.module.css";
 
@@ -25,9 +16,7 @@ export const BurgerIngredients = () => {
   const [currentIngredientType, setCurrentIngredientType] = useState(
     ingredientTypes.ru.bun
   );
-  const { isIngredientModalOpen } = useSelector(selectModalStatus);
-  const burgerIngredients = useSelector(selectBurgerIngredients);
-  const selectedIngredient = useSelector(selectSelectedIngredient);
+  const burgerIngredients = useSelector(selectGroupedBurgerIngredients);
   const dispatch = useDispatch();
 
   const tabContainerRef = useRef();
@@ -43,11 +32,6 @@ export const BurgerIngredients = () => {
     },
     [dispatch]
   );
-
-  const closeIngredientModal = useCallback(() => {
-    dispatch(toggleIngredientModal());
-    dispatch(resetSelectedIngredient());
-  }, [dispatch]);
 
   const setRefForIngredientType = useCallback((name) => {
     if (name === ingredientTypes.eng.bun) {
@@ -102,11 +86,6 @@ export const BurgerIngredients = () => {
 
   return (
     <>
-      {isIngredientModalOpen && (
-        <Modal handleModalCloseClick={closeIngredientModal}>
-          <IngredientDetails ingredient={selectedIngredient} />
-        </Modal>
-      )}
       <section className={`${styles.section} pt-10`}>
         <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
         <div ref={tabContainerRef} className={`${styles.tabs} mb-10`}>
@@ -137,23 +116,20 @@ export const BurgerIngredients = () => {
           className={`${styles.container} custom-scroll`}
         >
           <ul className={styles.ingredientsList}>
-            {burgerIngredients.map(([type, ingredients]) => (
-              <li className="mb-10" key={type}>
-                <IngredientList
-                  setRefForIngredientType={setRefForIngredientType}
-                  ingredients={ingredients}
-                  type={type}
-                  selectIngredientAndOpenModal={selectIngredientAndOpenModal}
-                />
-              </li>
-            ))}
+            {burgerIngredients[0] &&
+              burgerIngredients.map(([type, ingredients]) => (
+                <li className="mb-10" key={type}>
+                  <IngredientList
+                    setRefForIngredientType={setRefForIngredientType}
+                    ingredients={ingredients}
+                    type={type}
+                    selectIngredientAndOpenModal={selectIngredientAndOpenModal}
+                  />
+                </li>
+              ))}
           </ul>
         </div>
       </section>
     </>
   );
-};
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredient),
 };

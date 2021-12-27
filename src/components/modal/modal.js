@@ -58,6 +58,6 @@ export const Modal = ({ handleModalCloseClick, children }) => {
 };
 
 Modal.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.element.isRequired,
   handleModalCloseClick: PropTypes.func.isRequired,
 };

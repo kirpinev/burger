@@ -5,3 +5,8 @@
 
   composes: ingredientsList from "../burger-ingredients/burger-ingredients.module.css";
 }
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}

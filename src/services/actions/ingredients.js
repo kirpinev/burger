@@ -49,8 +49,14 @@ export const resetConstructorIngredients = () => ({
   type: RESET_CONSTRUCTOR_INGREDIENTS,
 });
 
-export const getIngredients = () => async (dispatch) => {
+export const getIngredientsThunk = () => async (dispatch, getState) => {
   try {
+    const ingredients = getState().ingredients.burgerIngredients;
+
+    if (ingredients.length !== 0) {
+      return;
+    }
+
     dispatch(setLoading());
 
     const response = await getIngredientsRequest();
@@ -59,16 +65,16 @@ export const getIngredients = () => async (dispatch) => {
       throw new Error();
     }
 
-    const { data: ingredientsList } = await getJSON(response);
+    const { data } = await getJSON(response);
 
-    dispatch(saveFetchedIngredients(ingredientsList));
+    dispatch(saveFetchedIngredients(data));
     dispatch(setSuccess());
   } catch (e) {
     dispatch(setError());
   }
 };
 
-export const moveIngredient =
+export const moveIngredientThunk =
   ({ item, index, monitor, ref }) =>
   (dispatch, getState) => {
     if (!ref.current) {
