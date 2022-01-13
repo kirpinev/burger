@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { FC, useCallback, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
@@ -36,10 +36,11 @@ import { getTokenFromStorage } from "utils/local-storage";
 import { Token } from "enums/token-names";
 import { AppRoutes } from "enums/app-routes";
 import { DndTypes } from "enums/dnd-types";
+import { IBurgerIngredient } from "types/burger-ingredient";
 
 import styles from "./burger-constructor.module.css";
 
-export const BurgerConstructor = () => {
+export const BurgerConstructor: FC = (): JSX.Element => {
   const burgerPrice = useSelector(selectBurgerPrice);
   const { constructorIngredients, selectedBun } = useSelector(
     selectConstructorIngredients
@@ -53,7 +54,7 @@ export const BurgerConstructor = () => {
   const [{ isHover }, dropRef] = useDrop(
     {
       accept: DndTypes.IngredientItem,
-      drop: (ingredient) => {
+      drop: (ingredient: IBurgerIngredient) => {
         ingredient.type === "bun"
           ? dispatch(saveConstructorBun(ingredient))
           : dispatch(saveConstructorIngredient(ingredient));
@@ -118,16 +119,18 @@ export const BurgerConstructor = () => {
             className={`${styles.ingredientsList} custom-scroll`}
             style={{ opacity }}
           >
-            {constructorIngredients.map((ingredient, index) => (
-              <BurgerItem
-                key={ingredient._id + index}
-                index={index}
-                ingredient={ingredient}
-                deleteIngredient={() =>
-                  dispatch(deleteConstructorIngredient(index))
-                }
-              />
-            ))}
+            {constructorIngredients.map(
+              (ingredient: IBurgerIngredient, index: number) => (
+                <BurgerItem
+                  key={ingredient._id + index}
+                  index={index}
+                  ingredient={ingredient}
+                  deleteIngredient={() =>
+                    dispatch(deleteConstructorIngredient(index))
+                  }
+                />
+              )
+            )}
           </div>
           <div className="ml-8 mb-10 mt-4 pl-4 pr-4" style={{ opacity }}>
             {selectedBun && (
