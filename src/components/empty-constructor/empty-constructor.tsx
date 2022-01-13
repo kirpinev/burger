@@ -1,14 +1,23 @@
-import PropTypes from "prop-types";
+import { FC } from "react";
+import { ConnectDropTarget } from "react-dnd";
 
 import styles from "./empty-constructor.module.css";
 
-export const EmptyConstructor = ({ dropRef, isHover }) => (
+interface IEmptyConstructor {
+  dropRef: ConnectDropTarget;
+  isHover: boolean;
+}
+
+export const EmptyConstructor: FC<IEmptyConstructor> = ({
+  dropRef,
+  isHover,
+}): JSX.Element => (
   <div
     ref={dropRef}
     className={`${styles.emptyContainer} mt-25`}
     style={{
-      borderColor: isHover && "#8585ad",
-      color: isHover && "#8585ad",
+      borderColor: isHover ? "#8585ad" : "",
+      color: isHover ? "#8585ad" : "",
     }}
   >
     <p className={`${styles.text} text text_type_main-medium mb-8`}>
@@ -16,8 +25,3 @@ export const EmptyConstructor = ({ dropRef, isHover }) => (
     </p>
   </div>
 );
-
-EmptyConstructor.propTypes = {
-  dropRef: PropTypes.func.isRequired,
-  isHover: PropTypes.bool.isRequired,
-};
