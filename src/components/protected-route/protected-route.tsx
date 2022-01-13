@@ -8,9 +8,13 @@ import { resetLoadingState } from "services/actions/loading";
 
 import { AppRoutes } from "enums/app-routes";
 
-export const ProtectedRoute: FC = ({
+interface IProtectedRoute {
+  path: string;
+}
+
+export const ProtectedRoute: FC<IProtectedRoute> = ({
   children,
-  ...rest
+  path,
 }): JSX.Element | null => {
   const { name, email, password } = useSelector(selectUserInfo);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -35,7 +39,7 @@ export const ProtectedRoute: FC = ({
 
   return (
     <Route
-      {...rest}
+      path={path}
       render={({ location }) =>
         name || email || password ? (
           children

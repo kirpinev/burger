@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch, useLocation } from "react-router-dom";
 
@@ -18,8 +18,18 @@ import { AppHeader } from "components/app-header/app-header";
 import { getIngredientsThunk } from "services/actions/ingredients";
 import { AppRoutes } from "enums/app-routes";
 
-export const App = () => {
-  const location = useLocation();
+interface ILocationState {
+  background: {
+    pathname: string;
+    state: {};
+    search: string;
+    hash: string;
+    key: string;
+  };
+}
+
+export const App: FC = (): JSX.Element => {
+  const location = useLocation<ILocationState>();
   const dispatch = useDispatch();
 
   const background = location.state && location.state.background;
