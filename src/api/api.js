@@ -1,5 +1,5 @@
 import { ApiUrls } from "constants/api-urls";
-import { accessToken, refreshToken } from "constants/token-names";
+import { Token } from "constants/token-names";
 import { getTokenFromStorage } from "utils/local-storage";
 
 const JSONHeaders = {
@@ -14,7 +14,7 @@ export const postAnOrderRequest = async (ingredientsIds) =>
     method: "POST",
     headers: {
       ...JSONHeaders,
-      Authorization: getTokenFromStorage(accessToken),
+      Authorization: getTokenFromStorage(Token.Access),
     },
     body: JSON.stringify({
       ingredients: ingredientsIds,
@@ -75,7 +75,7 @@ export const getUserInfoRequest = async () =>
     method: "GET",
     headers: {
       ...JSONHeaders,
-      Authorization: getTokenFromStorage(accessToken),
+      Authorization: getTokenFromStorage(Token.Access),
     },
   });
 
@@ -84,7 +84,7 @@ export const updateUserInfoRequest = async ({ name, email, password }) =>
     method: "PATCH",
     headers: {
       ...JSONHeaders,
-      Authorization: getTokenFromStorage(accessToken),
+      Authorization: getTokenFromStorage(Token.Access),
     },
     body: JSON.stringify({
       name,
@@ -100,7 +100,7 @@ export const logoutUserRequest = async () =>
       ...JSONHeaders,
     },
     body: JSON.stringify({
-      token: getTokenFromStorage(refreshToken),
+      token: getTokenFromStorage(Token.Refresh),
     }),
   });
 

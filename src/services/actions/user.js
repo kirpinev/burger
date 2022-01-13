@@ -1,6 +1,6 @@
 import { getJSON, isResponseOk, registerUserRequest } from "api/api";
 import { saveTokenToStorage } from "utils/local-storage";
-import { accessToken, refreshToken } from "constants/token-names";
+import { Token } from "constants/token-names";
 import { authorizeUserRequest, getUserInfoRequest } from "api/api";
 import { isAccessTokenValid } from "utils/validate-token";
 import { refreshTokens } from "utils/refresh-tokens";
@@ -85,8 +85,8 @@ export const registerUserThunk = () => async (dispatch, getState) => {
 
     const data = await getJSON(response);
 
-    saveTokenToStorage(accessToken, data[accessToken]);
-    saveTokenToStorage(refreshToken, data[refreshToken]);
+    saveTokenToStorage(Token.Access, data[Token.Access]);
+    saveTokenToStorage(Token.Refresh, data[Token.Refresh]);
 
     dispatch(logInUser());
   } catch (e) {
@@ -106,8 +106,8 @@ export const authorizeUserThunk = () => async (dispatch, getState) => {
 
     const data = await getJSON(response);
 
-    saveTokenToStorage(accessToken, data[accessToken]);
-    saveTokenToStorage(refreshToken, data[refreshToken]);
+    saveTokenToStorage(Token.Access, data[Token.Access]);
+    saveTokenToStorage(Token.Refresh, data[Token.Refresh]);
 
     dispatch(logInUser());
   } catch (e) {

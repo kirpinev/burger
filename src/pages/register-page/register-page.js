@@ -18,7 +18,7 @@ import { toggleErrorModal } from "services/actions/modals";
 import { useFormMethods } from "hooks/use-form-methods";
 import { AppRoutes } from "constants/app-routes";
 import { getTokenFromStorage } from "utils/local-storage";
-import { accessToken } from "constants/token-names";
+import { Token } from "constants/token-names";
 
 import styles from "global-styles/form.module.css";
 
@@ -34,7 +34,7 @@ export const RegisterPage = () => {
     [dispatch]
   );
 
-  if (getTokenFromStorage(accessToken)) {
+  if (getTokenFromStorage(Token.Access)) {
     return <Redirect to={AppRoutes.MainPage} />;
   }
 

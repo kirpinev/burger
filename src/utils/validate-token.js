@@ -1,9 +1,9 @@
 import jwtDecode from "jwt-decode";
 import { getTokenFromStorage } from "utils/local-storage";
-import { accessToken } from "constants/token-names";
+import { Token } from "constants/token-names";
 
 export const isAccessTokenValid = () => {
-  const token = getTokenFromStorage(accessToken);
+  const token = getTokenFromStorage(Token.Access);
 
   return token && jwtDecode(token.split("Bearer ")[1]).exp > Date.now() / 1000;
 };

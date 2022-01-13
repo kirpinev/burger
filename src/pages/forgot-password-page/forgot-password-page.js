@@ -14,7 +14,7 @@ import { selectModalStatus } from "services/selectors/select-modal-status";
 import { toggleErrorModal } from "services/actions/modals";
 import { AppRoutes } from "constants/app-routes";
 import { getTokenFromStorage } from "utils/local-storage";
-import { accessToken } from "constants/token-names";
+import { Token } from "constants/token-names";
 import { selectUserInfo } from "services/selectors/select-user-info";
 import { useFormMethods } from "hooks/use-form-methods";
 import { sendResetEmailThunk } from "services/actions/user";
@@ -41,7 +41,7 @@ export const ForgotPasswordPage = () => {
     [dispatch]
   );
 
-  if (getTokenFromStorage(accessToken)) {
+  if (getTokenFromStorage(Token.Access)) {
     return <Redirect push to={AppRoutes.MainPage} />;
   }
 
