@@ -10,7 +10,7 @@ import {
 import { moveIngredientThunk } from "services/actions/ingredients";
 
 import { ingredient } from "prop-types/ingredient";
-import { dndTypes } from "constants/dnd-types";
+import { DndTypes } from "constants/dnd-types";
 
 import styles from "./burger-item.module.css";
 
@@ -19,7 +19,7 @@ export const BurgerItem = ({ ingredient, deleteIngredient, index }) => {
   const ref = useRef(null);
 
   const [{ handlerId, isHover }, drop] = useDrop({
-    accept: dndTypes.constructorItem,
+    accept: DndTypes.ConstructorItem,
     collect: (monitor) => ({
       handlerId: monitor.getHandlerId(),
       isHover: monitor.isOver(),
@@ -30,7 +30,7 @@ export const BurgerItem = ({ ingredient, deleteIngredient, index }) => {
   });
 
   const [{ isDragging }, drag] = useDrag({
-    type: dndTypes.constructorItem,
+    type: DndTypes.ConstructorItem,
     item: () => {
       return { index };
     },

@@ -9,7 +9,7 @@ import {
 import { selectConstructorIngredients } from "services/selectors/select-constructor-ingredients";
 
 import { IBurgerIngredient } from "types/burger-ingredient";
-import { dndTypes } from "constants/dnd-types";
+import { DndTypes } from "constants/dnd-types";
 
 import styles from "./ingredient-card.module.css";
 
@@ -22,7 +22,7 @@ export const IngredientCard: FC<IIngredientCard> = ({
 }): JSX.Element => {
   const [{ isDragging }, dragRef] = useDrag(
     {
-      type: dndTypes.ingredientItem,
+      type: DndTypes.IngredientItem,
       item: { ...ingredient },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),

@@ -35,7 +35,7 @@ import { selectConstructorIngredients } from "services/selectors/select-construc
 import { getTokenFromStorage } from "utils/local-storage";
 import { accessToken } from "constants/token-names";
 import { AppRoutes } from "constants/app-routes";
-import { dndTypes } from "constants/dnd-types";
+import { DndTypes } from "constants/dnd-types";
 
 import styles from "./burger-constructor.module.css";
 
@@ -52,7 +52,7 @@ export const BurgerConstructor = () => {
   const history = useHistory();
   const [{ isHover }, dropRef] = useDrop(
     {
-      accept: dndTypes.ingredientItem,
+      accept: DndTypes.IngredientItem,
       drop: (ingredient) => {
         ingredient.type === "bun"
           ? dispatch(saveConstructorBun(ingredient))
