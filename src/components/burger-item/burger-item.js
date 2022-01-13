@@ -10,7 +10,7 @@ import {
 import { moveIngredientThunk } from "services/actions/ingredients";
 
 import { ingredient } from "prop-types/ingredient";
-import { DndTypes } from "constants/dnd-types";
+import { DndTypes } from "enums/dnd-types";
 
 import styles from "./burger-item.module.css";
 

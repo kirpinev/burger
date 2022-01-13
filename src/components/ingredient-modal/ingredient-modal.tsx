@@ -10,7 +10,7 @@ import { selectBurgerIngredients } from "services/selectors/select-burger-ingred
 import { resetLoadingState } from "services/actions/loading";
 import { selectLoadingStatus } from "services/selectors/select-loading-status";
 
-import { AppRoutes } from "constants/app-routes";
+import { AppRoutes } from "enums/app-routes";
 import { IBurgerIngredient } from "types/burger-ingredient";
 
 export const IngredientModal: FC = (): JSX.Element | null => {

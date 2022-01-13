@@ -6,7 +6,7 @@ import { selectUserInfo } from "services/selectors/select-user-info";
 import { getUserInfoThunk } from "services/actions/user";
 import { resetLoadingState } from "services/actions/loading";
 
-import { AppRoutes } from "constants/app-routes";
+import { AppRoutes } from "enums/app-routes";
 
 export const ProtectedRoute: FC = ({
   children,

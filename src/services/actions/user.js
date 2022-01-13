@@ -1,6 +1,6 @@
 import { getJSON, isResponseOk, registerUserRequest } from "api/api";
 import { saveTokenToStorage } from "utils/local-storage";
-import { Token } from "constants/token-names";
+import { Token } from "enums/token-names";
 import { authorizeUserRequest, getUserInfoRequest } from "api/api";
 import { isAccessTokenValid } from "utils/validate-token";
 import { refreshTokens } from "utils/refresh-tokens";

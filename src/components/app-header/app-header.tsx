@@ -9,7 +9,7 @@ import {
 
 import { HeaderNavLink } from "components/header-nav-link/header-nav-link";
 
-import { AppRoutes } from "constants/app-routes";
+import { AppRoutes } from "enums/app-routes";
 
 import styles from "./app-header.module.css";
 

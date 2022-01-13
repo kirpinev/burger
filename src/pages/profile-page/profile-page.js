@@ -7,7 +7,7 @@ import { ProfileNavigation } from "components/profile-navigation/profile-navigat
 
 import { getUserInfoThunk } from "services/actions/user";
 import { resetLoadingState } from "services/actions/loading";
-import { AppRoutes } from "constants/app-routes";
+import { AppRoutes } from "enums/app-routes";
 
 import styles from "./profile-page.module.css";
 

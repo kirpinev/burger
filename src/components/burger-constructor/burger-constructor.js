@@ -33,9 +33,9 @@ import { selectModalStatus } from "services/selectors/select-modal-status";
 import { selectConstructorIngredients } from "services/selectors/select-constructor-ingredients";
 
 import { getTokenFromStorage } from "utils/local-storage";
-import { Token } from "constants/token-names";
-import { AppRoutes } from "constants/app-routes";
-import { DndTypes } from "constants/dnd-types";
+import { Token } from "enums/token-names";
+import { AppRoutes } from "enums/app-routes";
+import { DndTypes } from "enums/dnd-types";
 
 import styles from "./burger-constructor.module.css";
 

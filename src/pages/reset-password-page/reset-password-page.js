@@ -17,7 +17,7 @@ import { sendPasswordAndTokenThunk } from "services/actions/user";
 import { selectUserInfo } from "services/selectors/select-user-info";
 
 import { useFormMethods } from "hooks/use-form-methods";
-import { AppRoutes } from "constants/app-routes";
+import { AppRoutes } from "enums/app-routes";
 
 import styles from "global-styles/form.module.css";
 

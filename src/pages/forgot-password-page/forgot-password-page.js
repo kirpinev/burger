@@ -12,9 +12,9 @@ import { RequestErrorDetails } from "components/request-error-details/request-er
 
 import { selectModalStatus } from "services/selectors/select-modal-status";
 import { toggleErrorModal } from "services/actions/modals";
-import { AppRoutes } from "constants/app-routes";
+import { AppRoutes } from "enums/app-routes";
 import { getTokenFromStorage } from "utils/local-storage";
-import { Token } from "constants/token-names";
+import { Token } from "enums/token-names";
 import { selectUserInfo } from "services/selectors/select-user-info";
 import { useFormMethods } from "hooks/use-form-methods";
 import { sendResetEmailThunk } from "services/actions/user";

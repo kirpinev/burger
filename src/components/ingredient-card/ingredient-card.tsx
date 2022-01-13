@@ -9,7 +9,7 @@ import {
 import { selectConstructorIngredients } from "services/selectors/select-constructor-ingredients";
 
 import { IBurgerIngredient } from "types/burger-ingredient";
-import { DndTypes } from "constants/dnd-types";
+import { DndTypes } from "enums/dnd-types";
 
 import styles from "./ingredient-card.module.css";
 

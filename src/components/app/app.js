@@ -16,7 +16,7 @@ import { IngredientDetailsFullPage } from "components/ingredient-details-full-pa
 import { AppHeader } from "components/app-header/app-header";
 
 import { getIngredientsThunk } from "services/actions/ingredients";
-import { AppRoutes } from "constants/app-routes";
+import { AppRoutes } from "enums/app-routes";
 
 export const App = () => {
   const location = useLocation();

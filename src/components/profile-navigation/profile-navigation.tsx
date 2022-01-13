@@ -6,7 +6,7 @@ import { ProfileNavLink } from "components/profile-nav-link/profile-nav-link";
 import { ProfileNavSignature } from "components/profile-nav-signature/profile-nav-signature";
 
 import { logoutUserThunk } from "services/actions/user";
-import { AppRoutes } from "constants/app-routes";
+import { AppRoutes } from "enums/app-routes";
 
 import styles from "./profile-navigation.module.css";
 

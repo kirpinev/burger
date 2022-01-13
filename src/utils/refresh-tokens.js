@@ -1,5 +1,5 @@
 import { getJSON, isResponseOk, updateTokensRequest } from "api/api";
-import { Token } from "constants/token-names";
+import { Token } from "enums/token-names";
 import { getTokenFromStorage, saveTokenToStorage } from "utils/local-storage";
 
 export const refreshTokens = async () => {

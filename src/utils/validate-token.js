@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import { getTokenFromStorage } from "utils/local-storage";
-import { Token } from "constants/token-names";
+import { Token } from "enums/token-names";
 
 export const isAccessTokenValid = () => {
   const token = getTokenFromStorage(Token.Access);

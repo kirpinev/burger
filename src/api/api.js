@@ -1,5 +1,5 @@
-import { ApiUrls } from "constants/api-urls";
-import { Token } from "constants/token-names";
+import { ApiUrls } from "enums/api-urls";
+import { Token } from "enums/token-names";
 import { getTokenFromStorage } from "utils/local-storage";
 
 const JSONHeaders = {

@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 
 import { logoutUserThunk } from "services/actions/user";
 import { selectUserInfo } from "services/selectors/select-user-info";
-import { AppRoutes } from "constants/app-routes";
+import { AppRoutes } from "enums/app-routes";
 
 export const LogoutPage = () => {
   const { password, email, name } = useSelector(selectUserInfo);
