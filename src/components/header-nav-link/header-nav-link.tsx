@@ -1,10 +1,24 @@
-import { useMemo } from "react";
+import { FC, useMemo } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
+import { TIconProps } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/utils";
 
 import styles from "./header-nav-link.module.css";
 
-export const HeaderNavLink = ({ text, Icon, path, exact, matchPaths }) => {
+interface IHeaderNavLink {
+  text: string;
+  Icon: ({ type }: TIconProps) => JSX.Element;
+  path: string;
+  exact: boolean;
+  matchPaths?: string[];
+}
+
+export const HeaderNavLink: FC<IHeaderNavLink> = ({
+  text,
+  Icon,
+  path,
+  exact,
+  matchPaths,
+}): JSX.Element => {
   const location = useLocation();
 
   const iconType = useMemo(
@@ -30,12 +44,4 @@ export const HeaderNavLink = ({ text, Icon, path, exact, matchPaths }) => {
       {text}
     </NavLink>
   );
-};
-
-HeaderNavLink.propTypes = {
-  text: PropTypes.string.isRequired,
-  Icon: PropTypes.func.isRequired,
-  path: PropTypes.string.isRequired,
-  matchPaths: PropTypes.arrayOf(PropTypes.string.isRequired),
-  exact: PropTypes.bool.isRequired,
 };
