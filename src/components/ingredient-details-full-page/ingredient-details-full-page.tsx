@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -9,17 +9,18 @@ import { selectBurgerIngredients } from "services/selectors/select-burger-ingred
 import { selectLoadingStatus } from "services/selectors/select-loading-status";
 import { getIngredientsThunk } from "services/actions/ingredients";
 import { resetLoadingState } from "services/actions/loading";
+import { IBurgerIngredient } from "types/burger-ingredient";
 
 import styles from "./ingredient-details-full-page.module.css";
 
-export const IngredientDetailsFullPage = () => {
+export const IngredientDetailsFullPage: FC = (): JSX.Element => {
   const { isLoading, isError } = useSelector(selectLoadingStatus);
   const burgerIngredients = useSelector(selectBurgerIngredients);
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { id } = useParams<{ id?: string }>();
 
-  const requestIngredient = burgerIngredients.length
-    ? burgerIngredients.find((i) => i._id === id)
+  const requestIngredient: IBurgerIngredient | null = burgerIngredients.length
+    ? burgerIngredients.find((i: IBurgerIngredient) => i._id === id)
     : null;
 
   useEffect(() => {

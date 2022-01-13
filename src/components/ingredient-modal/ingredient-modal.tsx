@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import { FC, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useRouteMatch } from "react-router-dom";
 
@@ -10,17 +10,20 @@ import { selectBurgerIngredients } from "services/selectors/select-burger-ingred
 import { resetLoadingState } from "services/actions/loading";
 import { selectLoadingStatus } from "services/selectors/select-loading-status";
 import { appRoutes } from "constants/app-routes";
+import { IBurgerIngredient } from "types/burger-ingredient";
 
-export const IngredientModal = () => {
+export const IngredientModal: FC = (): JSX.Element | null => {
   const selectedIngredient = useSelector(selectSelectedIngredient);
   const { isLoading } = useSelector(selectLoadingStatus);
   const burgerIngredients = useSelector(selectBurgerIngredients);
   const history = useHistory();
   const dispatch = useDispatch();
-  const match = useRouteMatch(appRoutes.ingredientsPage);
+  const match = useRouteMatch<{ id?: string }>(appRoutes.ingredientsPage);
 
-  const requestIngredient = burgerIngredients.length
-    ? burgerIngredients.find((i) => i._id === match.params.id)
+  const requestIngredient: IBurgerIngredient | null = burgerIngredients.length
+    ? burgerIngredients.find(
+        (i: IBurgerIngredient) => i._id === match?.params.id
+      )
     : null;
 
   const goBack = useCallback(() => {

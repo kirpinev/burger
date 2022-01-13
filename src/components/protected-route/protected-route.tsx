@@ -1,14 +1,16 @@
-import { useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
-import PropTypes from "prop-types";
 
 import { selectUserInfo } from "services/selectors/select-user-info";
 import { getUserInfoThunk } from "services/actions/user";
-import { appRoutes } from "constants/app-routes";
 import { resetLoadingState } from "services/actions/loading";
+import { appRoutes } from "constants/app-routes";
 
-export const ProtectedRoute = ({ children, ...rest }) => {
+export const ProtectedRoute: FC = ({
+  children,
+  ...rest
+}): JSX.Element | null => {
   const { name, email, password } = useSelector(selectUserInfo);
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
@@ -47,8 +49,4 @@ export const ProtectedRoute = ({ children, ...rest }) => {
       }
     />
   );
-};
-
-ProtectedRoute.propTypes = {
-  children: PropTypes.element.isRequired,
 };

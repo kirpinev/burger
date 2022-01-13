@@ -1,15 +1,21 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { FC, useCallback, useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
-import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { ModalOverlay } from "components/modal-overlay/modal-overlay";
 
 import styles from "./modal.module.css";
 
-export const Modal = ({ handleModalCloseClick, children }) => {
+interface IModal {
+  handleModalCloseClick: () => void;
+}
+
+export const Modal: FC<IModal> = ({
+  handleModalCloseClick,
+  children,
+}): JSX.Element | null => {
   const modalId = "modal";
-  const modalContainer = useMemo(
+  const modalContainer: Element | null = useMemo(
     () => document.getElementById(modalId),
     [modalId]
   );
@@ -44,20 +50,21 @@ export const Modal = ({ handleModalCloseClick, children }) => {
     };
   });
 
-  return createPortal(
-    <ModalOverlay closeModal={closeModal}>
-      <div className={styles.modal}>
-        <div className={styles.button} id="close-button" onClick={closeModal}>
-          <CloseIcon type="primary" />
-        </div>
-        {children}
-      </div>
-    </ModalOverlay>,
-    modalContainer
-  );
-};
-
-Modal.propTypes = {
-  children: PropTypes.element.isRequired,
-  handleModalCloseClick: PropTypes.func.isRequired,
+  return modalContainer
+    ? createPortal(
+        <ModalOverlay closeModal={closeModal}>
+          <div className={styles.modal}>
+            <div
+              className={styles.button}
+              id="close-button"
+              onClick={closeModal}
+            >
+              <CloseIcon type="primary" />
+            </div>
+            {children}
+          </div>
+        </ModalOverlay>,
+        modalContainer
+      )
+    : null;
 };

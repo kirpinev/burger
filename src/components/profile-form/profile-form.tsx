@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { FC, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -22,7 +22,7 @@ import { useFormMethods } from "hooks/use-form-methods";
 
 import styles from "./profile-form.module.css";
 
-export const ProfileForm = () => {
+export const ProfileForm: FC = (): JSX.Element => {
   const { name, password, email } = useSelector(selectUserInfo);
   const isUserInfoEdit = useSelector(selectUserEditStatus);
   const { updateName, updateEmail, updatePassword, updateUser } =

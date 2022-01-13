@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { FC, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Logo,
@@ -12,7 +12,7 @@ import { appRoutes } from "constants/app-routes";
 
 import styles from "./app-header.module.css";
 
-export const AppHeader = () => {
+export const AppHeader: FC = (): JSX.Element => {
   const history = useHistory();
 
   const goToMainPage = useCallback(

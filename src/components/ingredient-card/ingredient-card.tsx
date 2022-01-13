@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { FC, useMemo } from "react";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
 import {
@@ -8,12 +8,18 @@ import {
 
 import { selectConstructorIngredients } from "services/selectors/select-constructor-ingredients";
 
-import { ingredient } from "prop-types/ingredient";
+import { IBurgerIngredient } from "types/burger-ingredient";
 import { dndTypes } from "constants/dnd-types";
 
 import styles from "./ingredient-card.module.css";
 
-export const IngredientCard = ({ ingredient }) => {
+interface IIngredientCard {
+  ingredient: IBurgerIngredient;
+}
+
+export const IngredientCard: FC<IIngredientCard> = ({
+  ingredient,
+}): JSX.Element => {
   const [{ isDragging }, dragRef] = useDrag(
     {
       type: dndTypes.ingredientItem,
@@ -39,7 +45,8 @@ export const IngredientCard = ({ ingredient }) => {
     () =>
       ingredient.type !== "bun" &&
       constructorIngredients.filter(
-        (constructorIngredient) => constructorIngredient._id === ingredient._id
+        (constructorIngredient: IBurgerIngredient) =>
+          constructorIngredient._id === ingredient._id
       ).length,
     [constructorIngredients, ingredient._id, ingredient.type]
   );
@@ -67,8 +74,4 @@ export const IngredientCard = ({ ingredient }) => {
       </h3>
     </div>
   );
-};
-
-IngredientCard.propTypes = {
-  ingredient: ingredient.isRequired,
 };

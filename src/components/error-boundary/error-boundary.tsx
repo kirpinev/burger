@@ -1,19 +1,23 @@
-import { Component } from "react";
+import { Component, ErrorInfo } from "react";
 
 import { StatusContainer } from "components/status-container/status-container";
 
-export class ErrorBoundary extends Component {
-  state = { hasError: false };
+interface IErrorBoundaryState {
+  hasError: boolean;
+}
+
+export class ErrorBoundary extends Component<{}, IErrorBoundaryState> {
+  state: IErrorBoundaryState = { hasError: false };
 
   static getDerivedStateFromError() {
     return { hasError: true };
   }
 
-  componentDidCatch(error, info) {
+  componentDidCatch(error: Error, info: ErrorInfo): void {
     console.log("Возникла ошибка!", error, info);
   }
 
-  reloadPage = () => {
+  reloadPage = (): void => {
     window.location.reload();
   };
 

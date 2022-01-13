@@ -1,10 +1,16 @@
-import PropTypes from "prop-types";
+import { FC } from "react";
 
 import gif from "images/done.gif";
 
 import styles from "./order-details.module.css";
 
-export const OrderDetails = ({ orderNumber }) => (
+interface IOrderDetails {
+  orderNumber: number;
+}
+
+export const OrderDetails: FC<IOrderDetails> = ({
+  orderNumber,
+}): JSX.Element => (
   <div className={`${styles.container}`}>
     <h4 className="text text_type_digits-large mt-30 mb-8">{orderNumber}</h4>
     <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
@@ -24,7 +30,3 @@ export const OrderDetails = ({ orderNumber }) => (
     </p>
   </div>
 );
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number.isRequired,
-};

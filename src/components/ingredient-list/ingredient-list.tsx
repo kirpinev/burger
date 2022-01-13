@@ -1,19 +1,29 @@
-import PropTypes from "prop-types";
+import { FC, RefObject } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import { IngredientCard } from "components/ingredient-card/ingredient-card";
 
 import { ingredientTypes } from "constants/ingredient-type";
-import { ingredient } from "prop-types/ingredient";
+import { IBurgerIngredient } from "types/burger-ingredient";
+import { TIngredientType } from "types/ingredient-type";
 
 import styles from "./ingredient-list.module.css";
 
-export const IngredientList = ({
+interface IIngredientList {
+  setRefForIngredientType: (
+    type: TIngredientType
+  ) => RefObject<HTMLHeadingElement>;
+  type: TIngredientType;
+  ingredients: IBurgerIngredient[];
+  selectIngredientAndOpenModal: (ingredient: IBurgerIngredient) => void;
+}
+
+export const IngredientList: FC<IIngredientList> = ({
   setRefForIngredientType,
   type,
   ingredients,
   selectIngredientAndOpenModal,
-}) => {
+}): JSX.Element => {
   const location = useLocation();
 
   return (
@@ -37,24 +47,11 @@ export const IngredientList = ({
                 state: { background: location },
               }}
             >
-              <IngredientCard
-                ingredient={ingredient}
-                name={ingredient.name}
-                imageLink={ingredient.image}
-                price={ingredient.price}
-                handleModalOpen={selectIngredientAndOpenModal}
-              />
+              <IngredientCard ingredient={ingredient} />
             </Link>
           </li>
         ))}
       </ul>
     </>
   );
-};
-
-IngredientList.propTypes = {
-  setRefForIngredientType: PropTypes.func.isRequired,
-  type: PropTypes.string.isRequired,
-  ingredients: PropTypes.arrayOf(ingredient).isRequired,
-  selectIngredientAndOpenModal: PropTypes.func.isRequired,
 };

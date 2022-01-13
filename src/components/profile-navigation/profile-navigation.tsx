@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { useCallback } from "react";
+import { FC, useCallback } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import { ProfileNavLink } from "components/profile-nav-link/profile-nav-link";
@@ -10,7 +10,7 @@ import { appRoutes } from "constants/app-routes";
 
 import styles from "./profile-navigation.module.css";
 
-export const ProfileNavigation = () => {
+export const ProfileNavigation: FC = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const logout = useCallback(() => {

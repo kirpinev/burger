@@ -1,8 +1,16 @@
-import { ingredient } from "prop-types/ingredient";
+import { FC } from "react";
+
+import { IBurgerIngredient } from "types/burger-ingredient";
 
 import styles from "./ingredient-details.module.css";
 
-export const IngredientDetails = ({ ingredient }) => {
+interface IIngredientDetails {
+  ingredient: IBurgerIngredient | null;
+}
+
+export const IngredientDetails: FC<IIngredientDetails> = ({
+  ingredient,
+}): JSX.Element | null => {
   return ingredient ? (
     <>
       <h4 className={`${styles.title} text text_type_main-large`}>
@@ -44,8 +52,4 @@ export const IngredientDetails = ({ ingredient }) => {
       </div>
     </>
   ) : null;
-};
-
-IngredientDetails.propTypes = {
-  ingredient,
 };
