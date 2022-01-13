@@ -1,5 +1,4 @@
-import { useMemo, useRef } from "react";
-import PropTypes from "prop-types";
+import { FC, useMemo, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
 import {
@@ -9,14 +8,24 @@ import {
 
 import { moveIngredientThunk } from "services/actions/ingredients";
 
-import { ingredient } from "prop-types/ingredient";
 import { DndTypes } from "enums/dnd-types";
+import { IBurgerIngredient } from "types/burger-ingredient";
 
 import styles from "./burger-item.module.css";
 
-export const BurgerItem = ({ ingredient, deleteIngredient, index }) => {
+interface IBurgerItem {
+  ingredient: IBurgerIngredient;
+  deleteIngredient: () => void;
+  index: number;
+}
+
+export const BurgerItem: FC<IBurgerItem> = ({
+  ingredient,
+  deleteIngredient,
+  index,
+}): JSX.Element => {
   const dispatch = useDispatch();
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const [{ handlerId, isHover }, drop] = useDrop({
     accept: DndTypes.ConstructorItem,
@@ -62,10 +71,4 @@ export const BurgerItem = ({ ingredient, deleteIngredient, index }) => {
       />
     </div>
   );
-};
-
-BurgerItem.propTypes = {
-  ingredient: ingredient.isRequired,
-  deleteIngredient: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
 };
