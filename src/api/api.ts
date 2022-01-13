@@ -9,7 +9,9 @@ const JSONHeaders = {
 export const getIngredientsRequest = () =>
   fetch(`${ApiUrls.Base}${ApiUrls.Ingredients}`);
 
-export const postAnOrderRequest = async (ingredientsIds) =>
+export const postAnOrderRequest = async (
+  ingredientsIds: number[]
+): Promise<Response> =>
   fetch(`${ApiUrls.Base}${ApiUrls.Orders}`, {
     method: "POST",
     headers: {
@@ -21,7 +23,7 @@ export const postAnOrderRequest = async (ingredientsIds) =>
     }),
   });
 
-export const resetPasswordRequest = async (email) =>
+export const resetPasswordRequest = async (email: string): Promise<Response> =>
   fetch(`${ApiUrls.Base}${ApiUrls.PasswordReset}`, {
     method: "POST",
     headers: JSONHeaders,
@@ -30,7 +32,10 @@ export const resetPasswordRequest = async (email) =>
     }),
   });
 
-export const sendNewPasswordRequest = async (password, token) =>
+export const sendNewPasswordRequest = async (
+  password: string,
+  token: string
+): Promise<Response> =>
   fetch(`${ApiUrls.Base}${ApiUrls.PasswordReset}${ApiUrls.NewPassword}`, {
     method: "POST",
     headers: JSONHeaders,
@@ -40,7 +45,15 @@ export const sendNewPasswordRequest = async (password, token) =>
     }),
   });
 
-export const registerUserRequest = async ({ name, email, password }) =>
+export const registerUserRequest = async ({
+  name,
+  email,
+  password,
+}: {
+  name: string;
+  email: string;
+  password: string;
+}): Promise<Response> =>
   fetch(`${ApiUrls.Base}${ApiUrls.Register}`, {
     method: "POST",
     headers: JSONHeaders,
@@ -51,7 +64,10 @@ export const registerUserRequest = async ({ name, email, password }) =>
     }),
   });
 
-export const authorizeUserRequest = async (email, password) =>
+export const authorizeUserRequest = async (
+  email: string,
+  password: string
+): Promise<Response> =>
   fetch(`${ApiUrls.Base}${ApiUrls.Login}`, {
     method: "POST",
     headers: JSONHeaders,
@@ -61,7 +77,7 @@ export const authorizeUserRequest = async (email, password) =>
     }),
   });
 
-export const updateTokensRequest = async (token) =>
+export const updateTokensRequest = async (token: string): Promise<Response> =>
   fetch(`${ApiUrls.Base}${ApiUrls.Token}`, {
     method: "POST",
     headers: JSONHeaders,
@@ -79,7 +95,15 @@ export const getUserInfoRequest = async () =>
     },
   });
 
-export const updateUserInfoRequest = async ({ name, email, password }) =>
+export const updateUserInfoRequest = async ({
+  name,
+  email,
+  password,
+}: {
+  name: string;
+  email: string;
+  password: string;
+}): Promise<Response> =>
   fetch(`${ApiUrls.Base}${ApiUrls.UserInfo}`, {
     method: "PATCH",
     headers: {
@@ -104,6 +128,6 @@ export const logoutUserRequest = async () =>
     }),
   });
 
-export const isResponseOk = (response) => response.ok;
+export const isResponseOk = (response: Response): boolean => response.ok;
 
-export const getJSON = async (response) => response.json();
+export const getJSON = async (response: Response) => response.json();
