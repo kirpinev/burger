@@ -2,7 +2,9 @@ import { getJSON, isResponseOk, updateTokensRequest } from "api/api";
 import { Token } from "enums/token-names";
 import { getTokenFromStorage, saveTokenToStorage } from "utils/local-storage";
 
-export const refreshTokens = async () => {
+export const refreshTokens = async (): Promise<
+  Promise<boolean> | undefined
+> => {
   try {
     const token = getTokenFromStorage(Token.Refresh);
 
