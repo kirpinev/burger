@@ -1,4 +1,4 @@
-import { apiUrls } from "constants/api-urls";
+import { ApiUrls } from "constants/api-urls";
 import { accessToken, refreshToken } from "constants/token-names";
 import { getTokenFromStorage } from "utils/local-storage";
 
@@ -7,10 +7,10 @@ const JSONHeaders = {
 };
 
 export const getIngredientsRequest = () =>
-  fetch(`${apiUrls.base}${apiUrls.ingredients}`);
+  fetch(`${ApiUrls.Base}${ApiUrls.Ingredients}`);
 
 export const postAnOrderRequest = async (ingredientsIds) =>
-  fetch(`${apiUrls.base}${apiUrls.orders}`, {
+  fetch(`${ApiUrls.Base}${ApiUrls.Orders}`, {
     method: "POST",
     headers: {
       ...JSONHeaders,
@@ -22,7 +22,7 @@ export const postAnOrderRequest = async (ingredientsIds) =>
   });
 
 export const resetPasswordRequest = async (email) =>
-  fetch(`${apiUrls.base}${apiUrls.passwordReset}`, {
+  fetch(`${ApiUrls.Base}${ApiUrls.PasswordReset}`, {
     method: "POST",
     headers: JSONHeaders,
     body: JSON.stringify({
@@ -31,7 +31,7 @@ export const resetPasswordRequest = async (email) =>
   });
 
 export const sendNewPasswordRequest = async (password, token) =>
-  fetch(`${apiUrls.base}${apiUrls.passwordReset}${apiUrls.newPassword}`, {
+  fetch(`${ApiUrls.Base}${ApiUrls.PasswordReset}${ApiUrls.NewPassword}`, {
     method: "POST",
     headers: JSONHeaders,
     body: JSON.stringify({
@@ -41,7 +41,7 @@ export const sendNewPasswordRequest = async (password, token) =>
   });
 
 export const registerUserRequest = async ({ name, email, password }) =>
-  fetch(`${apiUrls.base}${apiUrls.register}`, {
+  fetch(`${ApiUrls.Base}${ApiUrls.Register}`, {
     method: "POST",
     headers: JSONHeaders,
     body: JSON.stringify({
@@ -52,7 +52,7 @@ export const registerUserRequest = async ({ name, email, password }) =>
   });
 
 export const authorizeUserRequest = async (email, password) =>
-  fetch(`${apiUrls.base}${apiUrls.login}`, {
+  fetch(`${ApiUrls.Base}${ApiUrls.Login}`, {
     method: "POST",
     headers: JSONHeaders,
     body: JSON.stringify({
@@ -62,7 +62,7 @@ export const authorizeUserRequest = async (email, password) =>
   });
 
 export const updateTokensRequest = async (token) =>
-  fetch(`${apiUrls.base}${apiUrls.token}`, {
+  fetch(`${ApiUrls.Base}${ApiUrls.Token}`, {
     method: "POST",
     headers: JSONHeaders,
     body: JSON.stringify({
@@ -71,7 +71,7 @@ export const updateTokensRequest = async (token) =>
   });
 
 export const getUserInfoRequest = async () =>
-  fetch(`${apiUrls.base}${apiUrls.userInfo}`, {
+  fetch(`${ApiUrls.Base}${ApiUrls.UserInfo}`, {
     method: "GET",
     headers: {
       ...JSONHeaders,
@@ -80,7 +80,7 @@ export const getUserInfoRequest = async () =>
   });
 
 export const updateUserInfoRequest = async ({ name, email, password }) =>
-  fetch(`${apiUrls.base}${apiUrls.userInfo}`, {
+  fetch(`${ApiUrls.Base}${ApiUrls.UserInfo}`, {
     method: "PATCH",
     headers: {
       ...JSONHeaders,
@@ -93,8 +93,8 @@ export const updateUserInfoRequest = async ({ name, email, password }) =>
     }),
   });
 
-export const logoutUserRequest = async (token) =>
-  fetch(`${apiUrls.base}${apiUrls.logout}`, {
+export const logoutUserRequest = async () =>
+  fetch(`${ApiUrls.Base}${ApiUrls.Logout}`, {
     method: "POST",
     headers: {
       ...JSONHeaders,
