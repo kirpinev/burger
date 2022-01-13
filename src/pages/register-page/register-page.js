@@ -16,7 +16,7 @@ import { selectUserInfo } from "services/selectors/select-user-info";
 import { selectModalStatus } from "services/selectors/select-modal-status";
 import { toggleErrorModal } from "services/actions/modals";
 import { useFormMethods } from "hooks/use-form-methods";
-import { appRoutes } from "constants/app-routes";
+import { AppRoutes } from "constants/app-routes";
 import { getTokenFromStorage } from "utils/local-storage";
 import { accessToken } from "constants/token-names";
 
@@ -35,7 +35,7 @@ export const RegisterPage = () => {
   );
 
   if (getTokenFromStorage(accessToken)) {
-    return <Redirect to={appRoutes.mainPage} />;
+    return <Redirect to={AppRoutes.MainPage} />;
   }
 
   return (
@@ -69,7 +69,7 @@ export const RegisterPage = () => {
           className={`text text_type_main-default text_color_inactive ${styles.info}`}
         >
           Уже зарегистрированы?{" "}
-          <Link className={styles.link} to={appRoutes.loginPage}>
+          <Link className={styles.link} to={AppRoutes.LoginPage}>
             <Button type="secondary" size="medium">
               Войти
             </Button>

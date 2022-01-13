@@ -8,7 +8,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { HeaderNavLink } from "components/header-nav-link/header-nav-link";
-import { appRoutes } from "constants/app-routes";
+
+import { AppRoutes } from "constants/app-routes";
 
 import styles from "./app-header.module.css";
 
@@ -19,7 +20,7 @@ export const AppHeader: FC = (): JSX.Element => {
     (e) => {
       e.preventDefault();
 
-      history.push(appRoutes.mainPage);
+      history.push(AppRoutes.MainPage);
     },
     [history]
   );
@@ -34,7 +35,7 @@ export const AppHeader: FC = (): JSX.Element => {
                 <HeaderNavLink
                   text="Конструктор"
                   Icon={BurgerIcon}
-                  path={appRoutes.mainPage}
+                  path={AppRoutes.MainPage}
                   exact={true}
                 />
               </li>
@@ -42,7 +43,7 @@ export const AppHeader: FC = (): JSX.Element => {
                 <HeaderNavLink
                   text="Лента заказов"
                   Icon={ListIcon}
-                  path={appRoutes.profileOrders}
+                  path={AppRoutes.ProfileOrders}
                   exact={false}
                 />
               </li>
@@ -55,9 +56,9 @@ export const AppHeader: FC = (): JSX.Element => {
             <HeaderNavLink
               text="Личный кабинет"
               Icon={ProfileIcon}
-              path={appRoutes.profilePage}
+              path={AppRoutes.ProfilePage}
               matchPaths={[
-                `${appRoutes.profilePage}${appRoutes.profileOrders}`,
+                `${AppRoutes.ProfilePage}${AppRoutes.ProfileOrders}`,
               ]}
               exact={false}
             />

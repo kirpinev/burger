@@ -9,7 +9,8 @@ import { selectSelectedIngredient } from "services/selectors/select-selected-ing
 import { selectBurgerIngredients } from "services/selectors/select-burger-ingredients";
 import { resetLoadingState } from "services/actions/loading";
 import { selectLoadingStatus } from "services/selectors/select-loading-status";
-import { appRoutes } from "constants/app-routes";
+
+import { AppRoutes } from "constants/app-routes";
 import { IBurgerIngredient } from "types/burger-ingredient";
 
 export const IngredientModal: FC = (): JSX.Element | null => {
@@ -18,7 +19,7 @@ export const IngredientModal: FC = (): JSX.Element | null => {
   const burgerIngredients = useSelector(selectBurgerIngredients);
   const history = useHistory();
   const dispatch = useDispatch();
-  const match = useRouteMatch<{ id?: string }>(appRoutes.ingredientsPage);
+  const match = useRouteMatch<{ id?: string }>(AppRoutes.IngredientsPage);
 
   const requestIngredient: IBurgerIngredient | null = burgerIngredients.length
     ? burgerIngredients.find(

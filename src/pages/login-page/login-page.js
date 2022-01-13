@@ -15,7 +15,7 @@ import { selectUserInfo } from "services/selectors/select-user-info";
 import { selectModalStatus } from "services/selectors/select-modal-status";
 import { toggleErrorModal } from "services/actions/modals";
 import { useFormMethods } from "hooks/use-form-methods";
-import { appRoutes } from "constants/app-routes";
+import { AppRoutes } from "constants/app-routes";
 
 import styles from "global-styles/form.module.css";
 
@@ -32,7 +32,7 @@ export const LoginPage = () => {
   );
 
   if (isLoggedIn) {
-    return <Redirect to={state?.from || appRoutes.mainPage} />;
+    return <Redirect to={state?.from || AppRoutes.MainPage} />;
   }
 
   return (
@@ -60,7 +60,7 @@ export const LoginPage = () => {
           className={`text text_type_main-default text_color_inactive ${styles.info}`}
         >
           Вы новый пользователь?{" "}
-          <Link className={styles.link} to={appRoutes.registerPage}>
+          <Link className={styles.link} to={AppRoutes.RegisterPage}>
             <Button type="secondary" size="medium">
               Зарегистрироваться
             </Button>
@@ -70,7 +70,7 @@ export const LoginPage = () => {
           className={`text text_type_main-default text_color_inactive ${styles.info}`}
         >
           Забыли пароль?{" "}
-          <Link className={styles.link} to={appRoutes.forgotPasswordPage}>
+          <Link className={styles.link} to={AppRoutes.ForgotPasswordPage}>
             <Button type="secondary" size="medium">
               Восстановить пароль
             </Button>

@@ -5,7 +5,8 @@ import { Redirect, Route } from "react-router-dom";
 import { selectUserInfo } from "services/selectors/select-user-info";
 import { getUserInfoThunk } from "services/actions/user";
 import { resetLoadingState } from "services/actions/loading";
-import { appRoutes } from "constants/app-routes";
+
+import { AppRoutes } from "constants/app-routes";
 
 export const ProtectedRoute: FC = ({
   children,
@@ -41,7 +42,7 @@ export const ProtectedRoute: FC = ({
         ) : (
           <Redirect
             to={{
-              pathname: appRoutes.loginPage,
+              pathname: AppRoutes.LoginPage,
               state: { from: location },
             }}
           />

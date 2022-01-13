@@ -7,7 +7,7 @@ import { ProfileNavigation } from "components/profile-navigation/profile-navigat
 
 import { getUserInfoThunk } from "services/actions/user";
 import { resetLoadingState } from "services/actions/loading";
-import { appRoutes } from "constants/app-routes";
+import { AppRoutes } from "constants/app-routes";
 
 import styles from "./profile-page.module.css";
 
@@ -31,10 +31,10 @@ export const ProfilePage = () => {
             <ProfileNavigation />
             <ProfileForm />
           </Route>
-          <Route path={`${path}${appRoutes.profileOrders}`} exact={true}>
+          <Route path={`${path}${AppRoutes.ProfileOrders}`} exact={true}>
             <ProfileNavigation />
           </Route>
-          <Route path={`${path}${appRoutes.profileOrders}/:id`} exact={true}>
+          <Route path={`${path}${AppRoutes.ProfileOrders}/:id`} exact={true}>
             Какой-то заказ
           </Route>
         </Switch>

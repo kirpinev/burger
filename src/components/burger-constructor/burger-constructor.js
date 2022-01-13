@@ -34,7 +34,7 @@ import { selectConstructorIngredients } from "services/selectors/select-construc
 
 import { getTokenFromStorage } from "utils/local-storage";
 import { accessToken } from "constants/token-names";
-import { appRoutes } from "constants/app-routes";
+import { AppRoutes } from "constants/app-routes";
 import { dndTypes } from "constants/dnd-types";
 
 import styles from "./burger-constructor.module.css";
@@ -78,7 +78,7 @@ export const BurgerConstructor = () => {
     if (getTokenFromStorage(accessToken)) {
       dispatch(postAnOrderThunk());
     } else {
-      history.push(appRoutes.loginPage);
+      history.push(AppRoutes.LoginPage);
     }
   }, [dispatch, history]);
 

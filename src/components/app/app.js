@@ -14,8 +14,9 @@ import { ProtectedRoute } from "components/protected-route/protected-route";
 import { IngredientModal } from "components/ingredient-modal/ingredient-modal";
 import { IngredientDetailsFullPage } from "components/ingredient-details-full-page/ingredient-details-full-page";
 import { AppHeader } from "components/app-header/app-header";
+
 import { getIngredientsThunk } from "services/actions/ingredients";
-import { appRoutes } from "constants/app-routes";
+import { AppRoutes } from "constants/app-routes";
 
 export const App = () => {
   const location = useLocation();
@@ -32,35 +33,35 @@ export const App = () => {
       <AppHeader />
 
       <Switch location={background || location}>
-        <Route exact={true} path={appRoutes.mainPage}>
+        <Route exact={true} path={AppRoutes.MainPage}>
           <MainPage />
         </Route>
-        <Route path={appRoutes.registerPage}>
+        <Route path={AppRoutes.RegisterPage}>
           <RegisterPage />
         </Route>
-        <Route path={appRoutes.loginPage}>
+        <Route path={AppRoutes.LoginPage}>
           <LoginPage />
         </Route>
-        <Route path={appRoutes.forgotPasswordPage}>
+        <Route path={AppRoutes.ForgotPasswordPage}>
           <ForgotPasswordPage />
         </Route>
-        <Route path={appRoutes.resetPasswordPage}>
+        <Route path={AppRoutes.ResetPasswordPage}>
           <ResetPasswordPage />
         </Route>
-        <Route path={appRoutes.logoutPage}>
+        <Route path={AppRoutes.LogoutPage}>
           <LogoutPage />
         </Route>
-        <Route path={appRoutes.profileOrders} />
-        <Route path={appRoutes.ingredientsPage}>
+        <Route path={AppRoutes.ProfileOrders} />
+        <Route path={AppRoutes.IngredientsPage}>
           <IngredientDetailsFullPage />
         </Route>
-        <ProtectedRoute path={appRoutes.profilePage}>
+        <ProtectedRoute path={AppRoutes.ProfilePage}>
           <ProfilePage />
         </ProtectedRoute>
       </Switch>
 
       {background && (
-        <Route path={appRoutes.ingredientsPage}>
+        <Route path={AppRoutes.IngredientsPage}>
           <IngredientModal />
         </Route>
       )}

@@ -17,7 +17,7 @@ import { sendPasswordAndTokenThunk } from "services/actions/user";
 import { selectUserInfo } from "services/selectors/select-user-info";
 
 import { useFormMethods } from "hooks/use-form-methods";
-import { appRoutes } from "constants/app-routes";
+import { AppRoutes } from "constants/app-routes";
 
 import styles from "global-styles/form.module.css";
 
@@ -43,11 +43,11 @@ export const ResetPasswordPage = () => {
   );
 
   if (!isEmailSent) {
-    return <Redirect push to={appRoutes.forgotPasswordPage} />;
+    return <Redirect push to={AppRoutes.ForgotPasswordPage} />;
   }
 
   if (isPasswordSent) {
-    return <Redirect push to={appRoutes.loginPage} />;
+    return <Redirect push to={AppRoutes.LoginPage} />;
   }
 
   return (
@@ -80,7 +80,7 @@ export const ResetPasswordPage = () => {
           className={`text text_type_main-default text_color_inactive ${styles.info}`}
         >
           Вспомнили пароль?{" "}
-          <Link className={styles.link} to={appRoutes.loginPage}>
+          <Link className={styles.link} to={AppRoutes.LoginPage}>
             <Button type="secondary" size="medium">
               Войти
             </Button>
