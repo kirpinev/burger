@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 
@@ -11,7 +11,7 @@ import { AppRoutes } from "enums/app-routes";
 
 import styles from "./profile-page.module.css";
 
-export const ProfilePage = () => {
+export const ProfilePage: FC = (): JSX.Element => {
   const { path } = useRouteMatch();
   const dispatch = useDispatch();
 

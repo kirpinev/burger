@@ -1,33 +1,40 @@
-import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FC, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 
 import {
-  Input,
-  EmailInput,
-  PasswordInput,
   Button,
+  EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { Modal } from "components/modal/modal";
 import { RequestErrorDetails } from "components/request-error-details/request-error-details";
 
-import { selectUserInfo } from "services/selectors/select-user-info";
 import { selectModalStatus } from "services/selectors/select-modal-status";
 import { toggleErrorModal } from "services/actions/modals";
-import { useFormMethods } from "hooks/use-form-methods";
 import { AppRoutes } from "enums/app-routes";
 import { getTokenFromStorage } from "utils/local-storage";
 import { Token } from "enums/token-names";
+import { selectUserInfo } from "services/selectors/select-user-info";
+import { useFormMethods } from "hooks/use-form-methods";
+import { sendResetEmailThunk } from "services/actions/user";
 
 import styles from "global-styles/form.module.css";
 
-export const RegisterPage = () => {
-  const { name, password, email } = useSelector(selectUserInfo);
-  const { updateName, updateEmail, updatePassword, register } =
-    useFormMethods();
+export const ForgotPasswordPage: FC = (): JSX.Element => {
+  const { email, isEmailSent } = useSelector(selectUserInfo);
+  const { updateEmail } = useFormMethods();
   const { isErrorModalOpen } = useSelector(selectModalStatus);
   const dispatch = useDispatch();
+
+  const sendEmail = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      dispatch(sendResetEmailThunk());
+    },
+    [dispatch]
+  );
 
   const toggleModalWithError = useCallback(
     () => dispatch(toggleErrorModal()),
@@ -35,7 +42,11 @@ export const RegisterPage = () => {
   );
 
   if (getTokenFromStorage(Token.Access)) {
-    return <Redirect to={AppRoutes.MainPage} />;
+    return <Redirect push to={AppRoutes.MainPage} />;
+  }
+
+  if (isEmailSent) {
+    return <Redirect push to={AppRoutes.ResetPasswordPage} />;
   }
 
   return (
@@ -44,31 +55,24 @@ export const RegisterPage = () => {
         <Modal handleModalCloseClick={toggleModalWithError}>
           <RequestErrorDetails
             title="Что-то пошло не так :("
-            subtitle="Попробуйте отправить запрос снова"
+            subtitle="Попробуйте отправить email повторно"
           />
         </Modal>
       )}
-      <form onSubmit={register} className={styles.container}>
-        <h1 className="text text_type_main-medium">Регистрация</h1>
-        <Input
-          placeholder="Имя"
-          value={name}
-          name="name"
-          onChange={updateName}
-        />
-        <EmailInput value={email} name="email" onChange={updateEmail} />
-        <PasswordInput
-          value={password}
-          name="password"
-          onChange={updatePassword}
+      <form onSubmit={sendEmail} className={styles.container}>
+        <h1 className="text text_type_main-medium">Восстановление пароля</h1>
+        <EmailInput
+          value={email}
+          name="Укажите e-mail"
+          onChange={updateEmail}
         />
         <Button type="primary" size="medium">
-          Зарегистрироваться
+          Восстановить
         </Button>
         <p
           className={`text text_type_main-default text_color_inactive ${styles.info}`}
         >
-          Уже зарегистрированы?{" "}
+          Вспомнили пароль?{" "}
           <Link className={styles.link} to={AppRoutes.LoginPage}>
             <Button type="secondary" size="medium">
               Войти

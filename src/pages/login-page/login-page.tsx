@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { FC, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useLocation } from "react-router-dom";
 
@@ -19,11 +19,11 @@ import { AppRoutes } from "enums/app-routes";
 
 import styles from "global-styles/form.module.css";
 
-export const LoginPage = () => {
+export const LoginPage: FC = (): JSX.Element => {
   const { password, email, isLoggedIn } = useSelector(selectUserInfo);
   const { updateEmail, updatePassword, authorize } = useFormMethods();
   const { isErrorModalOpen } = useSelector(selectModalStatus);
-  const { state } = useLocation();
+  const { state } = useLocation<{ from: string }>();
   const dispatch = useDispatch();
 
   const toggleModalWithError = useCallback(

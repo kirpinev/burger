@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -13,7 +13,7 @@ import { resetLoadingState } from "services/actions/loading";
 
 import styles from "./main-page.module.css";
 
-export const MainPage = () => {
+export const MainPage: FC = (): JSX.Element => {
   const { isLoading, isError } = useSelector(selectLoadingStatus);
   const dispatch = useDispatch();
 
