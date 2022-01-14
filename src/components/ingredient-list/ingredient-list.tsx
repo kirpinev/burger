@@ -12,7 +12,7 @@ import styles from "./ingredient-list.module.css";
 interface IIngredientList {
   setRefForIngredientType: (
     type: TIngredientType
-  ) => RefObject<HTMLHeadingElement>;
+  ) => RefObject<HTMLHeadingElement> | undefined;
   type: TIngredientType;
   ingredients: IBurgerIngredient[];
   selectIngredientAndOpenModal: (ingredient: IBurgerIngredient) => void;

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { FC, RefObject, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -9,21 +9,27 @@ import { toggleIngredientModal } from "services/actions/modals";
 import { selectGroupedBurgerIngredients } from "services/selectors/select-burger-ingredients";
 
 import { ingredientTypes } from "constants/ingredient-type";
+import { TIngredientType } from "types/ingredient-type";
+import { IBurgerIngredient } from "types/burger-ingredient";
 
 import styles from "./burger-ingredients.module.css";
 
-export const BurgerIngredients = () => {
+export const BurgerIngredients: FC = (): JSX.Element => {
   const [currentIngredientType, setCurrentIngredientType] = useState(
     ingredientTypes.ru.bun
   );
-  const burgerIngredients = useSelector(selectGroupedBurgerIngredients);
+  // У burgerIngredients указал тип через any потому что еще не типизировал стор
+  const burgerIngredients = useSelector(selectGroupedBurgerIngredients) as [
+    TIngredientType,
+    IBurgerIngredient[]
+  ][];
   const dispatch = useDispatch();
 
-  const tabContainerRef = useRef();
-  const scrollContainerRef = useRef();
-  const bunRef = useRef();
-  const mainRef = useRef();
-  const sauceRef = useRef();
+  const tabContainerRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const bunRef = useRef<HTMLHeadingElement>(null);
+  const mainRef = useRef<HTMLHeadingElement>(null);
+  const sauceRef = useRef<HTMLHeadingElement>(null);
 
   const selectIngredientAndOpenModal = useCallback(
     (ingredient) => {
@@ -33,23 +39,26 @@ export const BurgerIngredients = () => {
     [dispatch]
   );
 
-  const setRefForIngredientType = useCallback((name) => {
-    if (name === ingredientTypes.eng.bun) {
-      return bunRef;
-    } else if (name === ingredientTypes.eng.main) {
-      return mainRef;
-    } else if (name === ingredientTypes.eng.sauce) {
-      return sauceRef;
-    }
-  }, []);
+  const setRefForIngredientType = useCallback(
+    (name: TIngredientType): RefObject<HTMLHeadingElement> | undefined => {
+      if (name === ingredientTypes.eng.bun) {
+        return bunRef;
+      } else if (name === ingredientTypes.eng.main) {
+        return mainRef;
+      } else if (name === ingredientTypes.eng.sauce) {
+        return sauceRef;
+      }
+    },
+    []
+  );
 
   const scrollIntoIngredient = useCallback((type) => {
     if (type === ingredientTypes.ru.bun) {
-      bunRef.current.scrollIntoView();
+      bunRef.current?.scrollIntoView();
     } else if (type === ingredientTypes.ru.main) {
-      mainRef.current.scrollIntoView();
+      mainRef.current?.scrollIntoView();
     } else if (type === ingredientTypes.ru.sauce) {
-      sauceRef.current.scrollIntoView();
+      sauceRef.current?.scrollIntoView();
     }
   }, []);
 
@@ -60,10 +69,10 @@ export const BurgerIngredients = () => {
   );
 
   const selectTab = useCallback(() => {
-    const tabCoords = tabContainerRef.current.getBoundingClientRect().bottom;
-    const bunCoords = bunRef.current.getBoundingClientRect().top;
-    const mainCoords = mainRef.current.getBoundingClientRect().top;
-    const sauceCoords = sauceRef.current.getBoundingClientRect().top;
+    const tabCoords = tabContainerRef.current?.getBoundingClientRect().bottom;
+    const bunCoords = bunRef.current?.getBoundingClientRect().top;
+    const mainCoords = mainRef.current?.getBoundingClientRect().top;
+    const sauceCoords = sauceRef.current?.getBoundingClientRect().top;
 
     if (isDistanceValid(tabCoords, bunCoords)) {
       setCurrentIngredientType(ingredientTypes.ru.bun);
@@ -77,10 +86,10 @@ export const BurgerIngredients = () => {
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
 
-    scrollContainer.addEventListener("scroll", selectTab);
+    scrollContainer?.addEventListener("scroll", selectTab);
 
     return () => {
-      scrollContainer.removeEventListener("scroll", selectTab);
+      scrollContainer?.removeEventListener("scroll", selectTab);
     };
   }, [selectTab]);
 
@@ -117,16 +126,20 @@ export const BurgerIngredients = () => {
         >
           <ul className={styles.ingredientsList}>
             {burgerIngredients[0] &&
-              burgerIngredients.map(([type, ingredients]) => (
-                <li className="mb-10" key={type}>
-                  <IngredientList
-                    setRefForIngredientType={setRefForIngredientType}
-                    ingredients={ingredients}
-                    type={type}
-                    selectIngredientAndOpenModal={selectIngredientAndOpenModal}
-                  />
-                </li>
-              ))}
+              burgerIngredients.map(
+                ([type, ingredients]): JSX.Element => (
+                  <li className="mb-10" key={type}>
+                    <IngredientList
+                      setRefForIngredientType={setRefForIngredientType}
+                      ingredients={ingredients}
+                      type={type}
+                      selectIngredientAndOpenModal={
+                        selectIngredientAndOpenModal
+                      }
+                    />
+                  </li>
+                )
+              )}
           </ul>
         </div>
       </section>

@@ -86,7 +86,7 @@ export const updateTokensRequest = async (token: string): Promise<Response> =>
     }),
   });
 
-export const getUserInfoRequest = async () =>
+export const getUserInfoRequest = async (): Promise<Response> =>
   fetch(`${ApiUrls.Base}${ApiUrls.UserInfo}`, {
     method: "GET",
     headers: {

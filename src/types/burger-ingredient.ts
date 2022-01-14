@@ -1,7 +1,9 @@
+import { TIngredientType } from "./ingredient-type";
+
 export interface IBurgerIngredient {
   _id: string;
   name: string;
-  type: string;
+  type: TIngredientType;
   proteins: number;
   fat: number;
   carbohydrates: number;
