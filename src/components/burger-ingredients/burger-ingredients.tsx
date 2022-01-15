@@ -18,7 +18,7 @@ export const BurgerIngredients: FC = (): JSX.Element => {
   const [currentIngredientType, setCurrentIngredientType] = useState(
     ingredientTypes.ru.bun
   );
-  // У burgerIngredients указал тип через any потому что еще не типизировал стор
+  // У burgerIngredients указал тип через as потому что еще не типизировал стор
   const burgerIngredients = useSelector(selectGroupedBurgerIngredients) as [
     TIngredientType,
     IBurgerIngredient[]

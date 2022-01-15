@@ -1,12 +1,13 @@
 import { ApiUrls } from "enums/api-urls";
 import { Token } from "enums/token-names";
 import { getTokenFromStorage } from "utils/local-storage";
+import { IUserInfo } from "types/user-info";
 
 const JSONHeaders = {
   "Content-Type": "application/json",
 };
 
-export const getIngredientsRequest = () =>
+export const getIngredientsRequest = async (): Promise<Response> =>
   fetch(`${ApiUrls.Base}${ApiUrls.Ingredients}`);
 
 export const postAnOrderRequest = async (
@@ -49,11 +50,7 @@ export const registerUserRequest = async ({
   name,
   email,
   password,
-}: {
-  name: string;
-  email: string;
-  password: string;
-}): Promise<Response> =>
+}: IUserInfo): Promise<Response> =>
   fetch(`${ApiUrls.Base}${ApiUrls.Register}`, {
     method: "POST",
     headers: JSONHeaders,
@@ -99,11 +96,7 @@ export const updateUserInfoRequest = async ({
   name,
   email,
   password,
-}: {
-  name: string;
-  email: string;
-  password: string;
-}): Promise<Response> =>
+}: IUserInfo): Promise<Response> =>
   fetch(`${ApiUrls.Base}${ApiUrls.UserInfo}`, {
     method: "PATCH",
     headers: {
@@ -130,4 +123,5 @@ export const logoutUserRequest = async () =>
 
 export const isResponseOk = (response: Response): boolean => response.ok;
 
-export const getJSON = async (response: Response) => response.json();
+export const getJSON = async <T>(response: Response): Promise<T> =>
+  response.json();
