@@ -1,27 +1,27 @@
 import React, { FC, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 
 import { ProfileForm } from "components/profile-form/profile-form";
 import { ProfileNavigation } from "components/profile-navigation/profile-navigation";
 
-import { getUserInfoThunk } from "services/actions/user";
-import { resetLoadingState } from "services/actions/loading";
 import { AppRoutes } from "enums/app-routes";
+import { useLoading } from "hooks/use-loading";
+import { useUser } from "hooks/use-user";
 
 import styles from "./profile-page.module.css";
 
 export const ProfilePage: FC = (): JSX.Element => {
   const { path } = useRouteMatch();
-  const dispatch = useDispatch();
+  const { resetLoading } = useLoading();
+  const { getUserInfo } = useUser();
 
   useEffect(() => {
-    dispatch(getUserInfoThunk());
+    getUserInfo();
 
     return () => {
-      dispatch(resetLoadingState());
+      resetLoading();
     };
-  }, [dispatch]);
+  }, [getUserInfo, resetLoading]);
 
   return (
     <>

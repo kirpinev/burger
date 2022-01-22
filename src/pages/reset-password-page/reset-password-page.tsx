@@ -12,11 +12,11 @@ import { Modal } from "components/modal/modal";
 import { RequestErrorDetails } from "components/request-error-details/request-error-details";
 
 import { selectModalStatus } from "services/selectors/select-modal-status";
-import { toggleErrorModal } from "services/actions/modals";
 import { sendPasswordAndTokenThunk } from "services/actions/user";
 import { selectUserInfo } from "services/selectors/select-user-info";
 
 import { useFormMethods } from "hooks/use-form-methods";
+import { useModals } from "hooks/use-modals";
 import { AppRoutes } from "enums/app-routes";
 
 import styles from "global-styles/form.module.css";
@@ -26,12 +26,8 @@ export const ResetPasswordPage: FC = (): JSX.Element => {
     useSelector(selectUserInfo);
   const { updatePassword, updateToken } = useFormMethods();
   const { isErrorModalOpen } = useSelector(selectModalStatus);
+  const { toggleModalWithError } = useModals();
   const dispatch = useDispatch();
-
-  const toggleModalWithError = useCallback(
-    () => dispatch(toggleErrorModal()),
-    [dispatch]
-  );
 
   const sendPasswordAndToken = useCallback(
     (e) => {

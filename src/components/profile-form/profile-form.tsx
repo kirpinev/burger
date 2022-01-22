@@ -9,7 +9,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import {
-  getUserInfoThunk,
   resetUserEditStatus,
   updateUserEditStatus,
   resetUserPassword,
@@ -19,6 +18,7 @@ import {
   selectUserEditStatus,
 } from "services/selectors/select-user-info";
 import { useFormMethods } from "hooks/use-form-methods";
+import { useUser } from "hooks/use-user";
 
 import styles from "./profile-form.module.css";
 
@@ -27,16 +27,17 @@ export const ProfileForm: FC = (): JSX.Element => {
   const isUserInfoEdit = useSelector(selectUserEditStatus);
   const { updateName, updateEmail, updatePassword, updateUser } =
     useFormMethods();
+  const { getUserInfo } = useUser();
   const dispatch = useDispatch();
 
   const resetForm = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(getUserInfoThunk());
+      getUserInfo();
       dispatch(resetUserEditStatus());
       dispatch(resetUserPassword());
     },
-    [dispatch]
+    [dispatch, getUserInfo]
   );
 
   const updateStatus = useCallback(() => {

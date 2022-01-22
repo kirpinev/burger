@@ -1,12 +1,12 @@
 import { FC, RefObject, useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { IngredientList } from "components/ingredient-list/ingredient-list";
 
-import { saveSelectedIngredient } from "services/actions/ingredients";
-import { toggleIngredientModal } from "services/actions/modals";
 import { selectGroupedBurgerIngredients } from "services/selectors/select-burger-ingredients";
+import { useModals } from "hooks/use-modals";
+import { useIngredients } from "hooks/use-ingredients";
 
 import { ingredientTypes } from "constants/ingredient-type";
 import { TIngredientType } from "types/ingredient-type";
@@ -23,7 +23,8 @@ export const BurgerIngredients: FC = (): JSX.Element => {
     TIngredientType,
     IBurgerIngredient[]
   ][];
-  const dispatch = useDispatch();
+  const { toggleModalWithIngredient } = useModals();
+  const { saveSelectedIngredient } = useIngredients();
 
   const tabContainerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -33,10 +34,10 @@ export const BurgerIngredients: FC = (): JSX.Element => {
 
   const selectIngredientAndOpenModal = useCallback(
     (ingredient) => {
-      dispatch(saveSelectedIngredient(ingredient));
-      dispatch(toggleIngredientModal());
+      saveSelectedIngredient(ingredient);
+      toggleModalWithIngredient();
     },
-    [dispatch]
+    [saveSelectedIngredient, toggleModalWithIngredient]
   );
 
   const setRefForIngredientType = useCallback(

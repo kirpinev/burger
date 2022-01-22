@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory, useRouteMatch } from "react-router-dom";
 
 import { Modal } from "components/modal/modal";
@@ -7,8 +7,8 @@ import { IngredientDetails } from "components/ingredient-details/ingredient-deta
 
 import { selectSelectedIngredient } from "services/selectors/select-selected-ingredient";
 import { selectBurgerIngredients } from "services/selectors/select-burger-ingredients";
-import { resetLoadingState } from "services/actions/loading";
 import { selectLoadingStatus } from "services/selectors/select-loading-status";
+import { useLoading } from "hooks/use-loading";
 
 import { AppRoutes } from "enums/app-routes";
 import { IBurgerIngredient } from "types/burger-ingredient";
@@ -17,8 +17,8 @@ export const IngredientModal: FC = (): JSX.Element | null => {
   const selectedIngredient = useSelector(selectSelectedIngredient);
   const { isLoading } = useSelector(selectLoadingStatus);
   const burgerIngredients = useSelector(selectBurgerIngredients);
+  const { resetLoading } = useLoading();
   const history = useHistory();
-  const dispatch = useDispatch();
   const match = useRouteMatch<{ id?: string }>(AppRoutes.IngredientsPage);
 
   const requestIngredient: IBurgerIngredient | null = burgerIngredients.length
@@ -33,9 +33,9 @@ export const IngredientModal: FC = (): JSX.Element | null => {
 
   useEffect(() => {
     return () => {
-      dispatch(resetLoadingState());
+      resetLoading();
     };
-  }, [dispatch]);
+  }, [resetLoading]);
 
   if (isLoading) {
     return null;

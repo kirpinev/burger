@@ -15,15 +15,6 @@ import { RequestErrorDetails } from "components/request-error-details/request-er
 import { EmptyConstructor } from "components/empty-constructor/empty-constructor";
 
 import { postAnOrderThunk } from "services/actions/order";
-import {
-  toggleErrorModal,
-  toggleSuccessOrderModal,
-} from "services/actions/modals";
-import {
-  saveConstructorBun,
-  saveConstructorIngredient,
-  deleteConstructorIngredient,
-} from "services/actions/ingredients";
 import { selectBurgerPrice } from "services/selectors/select-burger-price";
 import {
   selectOrderNumber,
@@ -32,8 +23,9 @@ import {
 import { selectModalStatus } from "services/selectors/select-modal-status";
 import { selectConstructorIngredients } from "services/selectors/select-constructor-ingredients";
 
-import { getTokenFromStorage } from "utils/local-storage";
-import { Token } from "enums/token-names";
+import { getAccessToken } from "utils/local-storage";
+import { useModals } from "hooks/use-modals";
+import { useIngredients } from "hooks/use-ingredients";
 import { AppRoutes } from "enums/app-routes";
 import { DndTypes } from "enums/dnd-types";
 import { IBurgerIngredient } from "types/burger-ingredient";
@@ -49,6 +41,8 @@ export const BurgerConstructor: FC = (): JSX.Element => {
   const isOrderPosting = useSelector(selectOrderPostingStatus);
   const { isErrorModalOpen, isSuccessOrderModalOpen } =
     useSelector(selectModalStatus);
+  const { toggleModalWithError, toggleSuccessModal } = useModals();
+  const { saveBun, saveIngredient, deleteIngredient } = useIngredients();
   const dispatch = useDispatch();
   const history = useHistory();
   const [{ isHover }, dropRef] = useDrop(
@@ -56,8 +50,8 @@ export const BurgerConstructor: FC = (): JSX.Element => {
       accept: DndTypes.IngredientItem,
       drop: (ingredient: IBurgerIngredient) => {
         ingredient.type === "bun"
-          ? dispatch(saveConstructorBun(ingredient))
-          : dispatch(saveConstructorIngredient(ingredient));
+          ? saveBun(ingredient)
+          : saveIngredient(ingredient);
       },
       collect: (monitor) => ({
         isHover: monitor.isOver(),
@@ -66,17 +60,8 @@ export const BurgerConstructor: FC = (): JSX.Element => {
     []
   );
 
-  const toggleSuccessModal = useCallback(
-    () => dispatch(toggleSuccessOrderModal()),
-    [dispatch]
-  );
-  const toggleModalWithError = useCallback(
-    () => dispatch(toggleErrorModal()),
-    [dispatch]
-  );
-
   const makeAnOrder = useCallback(() => {
-    if (getTokenFromStorage(Token.Access)) {
+    if (getAccessToken()) {
       dispatch(postAnOrderThunk());
     } else {
       history.push(AppRoutes.LoginPage);
@@ -125,9 +110,7 @@ export const BurgerConstructor: FC = (): JSX.Element => {
                   key={ingredient._id + index}
                   index={index}
                   ingredient={ingredient}
-                  deleteIngredient={() =>
-                    dispatch(deleteConstructorIngredient(index))
-                  }
+                  deleteIngredient={() => deleteIngredient(index)}
                 />
               )
             )}

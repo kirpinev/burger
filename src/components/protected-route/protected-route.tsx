@@ -1,10 +1,10 @@
 import { FC, useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 
 import { selectUserInfo } from "services/selectors/select-user-info";
-import { getUserInfoThunk } from "services/actions/user";
-import { resetLoadingState } from "services/actions/loading";
+import { useLoading } from "hooks/use-loading";
+import { useUser } from "hooks/use-user";
 
 import { AppRoutes } from "enums/app-routes";
 
@@ -18,20 +18,21 @@ export const ProtectedRoute: FC<IProtectedRoute> = ({
 }): JSX.Element | null => {
   const { name, email, password } = useSelector(selectUserInfo);
   const [isLoaded, setIsLoaded] = useState(false);
-  const dispatch = useDispatch();
+  const { resetLoading } = useLoading();
+  const { getUserInfo } = useUser();
 
   const init = useCallback(async () => {
-    await dispatch(getUserInfoThunk());
+    await getUserInfo();
     setIsLoaded(true);
-  }, [dispatch]);
+  }, [getUserInfo]);
 
   useEffect(() => {
     init();
 
     return () => {
-      dispatch(resetLoadingState());
+      resetLoading();
     };
-  }, [dispatch, init]);
+  }, [resetLoading, init]);
 
   if (!isLoaded) {
     return null;

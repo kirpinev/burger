@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { IngredientDetails } from "components/ingredient-details/ingredient-details";
@@ -8,7 +8,7 @@ import { StatusContainer } from "components/status-container/status-container";
 import { selectBurgerIngredients } from "services/selectors/select-burger-ingredients";
 import { selectLoadingStatus } from "services/selectors/select-loading-status";
 import { getIngredientsThunk } from "services/actions/ingredients";
-import { resetLoadingState } from "services/actions/loading";
+import { useLoading } from "hooks/use-loading";
 import { IBurgerIngredient } from "types/burger-ingredient";
 
 import styles from "./ingredient-details-full-page.module.css";
@@ -16,7 +16,7 @@ import styles from "./ingredient-details-full-page.module.css";
 export const IngredientDetailsFullPage: FC = (): JSX.Element => {
   const { isLoading, isError } = useSelector(selectLoadingStatus);
   const burgerIngredients = useSelector(selectBurgerIngredients);
-  const dispatch = useDispatch();
+  const { resetLoading } = useLoading();
   const { id } = useParams<{ id?: string }>();
 
   const requestIngredient: IBurgerIngredient | null = burgerIngredients.length
@@ -25,9 +25,9 @@ export const IngredientDetailsFullPage: FC = (): JSX.Element => {
 
   useEffect(() => {
     return () => {
-      dispatch(resetLoadingState());
+      resetLoading();
     };
-  }, [dispatch]);
+  }, [resetLoading]);
 
   if (isLoading) {
     return <StatusContainer title="Загрузка..." />;

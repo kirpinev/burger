@@ -1,5 +1,5 @@
-import { FC, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FC } from "react";
+import { useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 
 import {
@@ -14,11 +14,10 @@ import { RequestErrorDetails } from "components/request-error-details/request-er
 
 import { selectUserInfo } from "services/selectors/select-user-info";
 import { selectModalStatus } from "services/selectors/select-modal-status";
-import { toggleErrorModal } from "services/actions/modals";
 import { useFormMethods } from "hooks/use-form-methods";
+import { useModals } from "hooks/use-modals";
 import { AppRoutes } from "enums/app-routes";
-import { getTokenFromStorage } from "utils/local-storage";
-import { Token } from "enums/token-names";
+import { getAccessToken } from "utils/local-storage";
 
 import styles from "global-styles/form.module.css";
 
@@ -27,14 +26,9 @@ export const RegisterPage: FC = (): JSX.Element => {
   const { updateName, updateEmail, updatePassword, register } =
     useFormMethods();
   const { isErrorModalOpen } = useSelector(selectModalStatus);
-  const dispatch = useDispatch();
+  const { toggleModalWithError } = useModals();
 
-  const toggleModalWithError = useCallback(
-    () => dispatch(toggleErrorModal()),
-    [dispatch]
-  );
-
-  if (getTokenFromStorage(Token.Access)) {
+  if (getAccessToken()) {
     return <Redirect to={AppRoutes.MainPage} />;
   }
 

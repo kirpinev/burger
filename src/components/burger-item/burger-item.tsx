@@ -1,13 +1,11 @@
 import { FC, useMemo, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import { useDispatch } from "react-redux";
 import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { moveIngredientThunk } from "services/actions/ingredients";
-
+import { useIngredients } from "hooks/use-ingredients";
 import { DndTypes } from "enums/dnd-types";
 import { IBurgerIngredient } from "types/burger-ingredient";
 
@@ -24,8 +22,8 @@ export const BurgerItem: FC<IBurgerItem> = ({
   deleteIngredient,
   index,
 }): JSX.Element => {
-  const dispatch = useDispatch();
   const ref = useRef<HTMLDivElement>(null);
+  const { moveIngredientToConstructor } = useIngredients();
 
   const [{ handlerId, isHover }, drop] = useDrop({
     accept: DndTypes.ConstructorItem,
@@ -34,7 +32,7 @@ export const BurgerItem: FC<IBurgerItem> = ({
       isHover: monitor.isOver(),
     }),
     drop: (item, monitor) => {
-      dispatch(moveIngredientThunk({ item, index, monitor, ref }));
+      moveIngredientToConstructor({ item, index, monitor, ref });
     },
   });
 

@@ -11,12 +11,11 @@ import { Modal } from "components/modal/modal";
 import { RequestErrorDetails } from "components/request-error-details/request-error-details";
 
 import { selectModalStatus } from "services/selectors/select-modal-status";
-import { toggleErrorModal } from "services/actions/modals";
 import { AppRoutes } from "enums/app-routes";
-import { getTokenFromStorage } from "utils/local-storage";
-import { Token } from "enums/token-names";
+import { getAccessToken } from "utils/local-storage";
 import { selectUserInfo } from "services/selectors/select-user-info";
 import { useFormMethods } from "hooks/use-form-methods";
+import { useModals } from "hooks/use-modals";
 import { sendResetEmailThunk } from "services/actions/user";
 
 import styles from "global-styles/form.module.css";
@@ -25,6 +24,7 @@ export const ForgotPasswordPage: FC = (): JSX.Element => {
   const { email, isEmailSent } = useSelector(selectUserInfo);
   const { updateEmail } = useFormMethods();
   const { isErrorModalOpen } = useSelector(selectModalStatus);
+  const { toggleModalWithError } = useModals();
   const dispatch = useDispatch();
 
   const sendEmail = useCallback(
@@ -36,12 +36,7 @@ export const ForgotPasswordPage: FC = (): JSX.Element => {
     [dispatch]
   );
 
-  const toggleModalWithError = useCallback(
-    () => dispatch(toggleErrorModal()),
-    [dispatch]
-  );
-
-  if (getTokenFromStorage(Token.Access)) {
+  if (getAccessToken()) {
     return <Redirect push to={AppRoutes.MainPage} />;
   }
 
