@@ -1,21 +1,16 @@
-import { useDispatch } from "react-redux";
-import { FC, useCallback } from "react";
+import { FC } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import { ProfileNavLink } from "components/profile-nav-link/profile-nav-link";
 import { ProfileNavSignature } from "components/profile-nav-signature/profile-nav-signature";
 
-import { logoutUserThunk } from "services/actions/user";
+import { useUser } from "hooks/use-user";
 import { AppRoutes } from "enums/app-routes";
 
 import styles from "./profile-navigation.module.css";
 
 export const ProfileNavigation: FC = (): JSX.Element => {
-  const dispatch = useDispatch();
-
-  const logout = useCallback(() => {
-    dispatch(logoutUserThunk());
-  }, [dispatch]);
+  const { logoutUser } = useUser();
 
   return (
     <div className={styles.listContainer}>
@@ -33,7 +28,7 @@ export const ProfileNavigation: FC = (): JSX.Element => {
           <ProfileNavLink
             text="Выход"
             path={AppRoutes.LogoutPage}
-            onClick={logout}
+            onClick={logoutUser}
           />
         </li>
       </ul>
