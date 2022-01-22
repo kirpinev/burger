@@ -1,6 +1,5 @@
 import { ApiUrls } from "enums/api-urls";
-import { Token } from "enums/token-names";
-import { getTokenFromStorage } from "utils/local-storage";
+import { getAccessToken, getRefreshToken } from "utils/local-storage";
 import { IUserInfo } from "types/user-info";
 
 const JSONHeaders = {
@@ -17,7 +16,7 @@ export const postAnOrderRequest = async (
     method: "POST",
     headers: {
       ...JSONHeaders,
-      Authorization: getTokenFromStorage(Token.Access),
+      Authorization: getAccessToken(),
     },
     body: JSON.stringify({
       ingredients: ingredientsIds,
@@ -88,7 +87,7 @@ export const getUserInfoRequest = async (): Promise<Response> =>
     method: "GET",
     headers: {
       ...JSONHeaders,
-      Authorization: getTokenFromStorage(Token.Access),
+      Authorization: getAccessToken(),
     },
   });
 
@@ -101,7 +100,7 @@ export const updateUserInfoRequest = async ({
     method: "PATCH",
     headers: {
       ...JSONHeaders,
-      Authorization: getTokenFromStorage(Token.Access),
+      Authorization: getAccessToken(),
     },
     body: JSON.stringify({
       name,
@@ -117,7 +116,7 @@ export const logoutUserRequest = async () =>
       ...JSONHeaders,
     },
     body: JSON.stringify({
-      token: getTokenFromStorage(Token.Refresh),
+      token: getRefreshToken(),
     }),
   });
 

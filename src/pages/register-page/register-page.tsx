@@ -17,8 +17,7 @@ import { selectModalStatus } from "services/selectors/select-modal-status";
 import { useFormMethods } from "hooks/use-form-methods";
 import { useModals } from "hooks/use-modals";
 import { AppRoutes } from "enums/app-routes";
-import { getTokenFromStorage } from "utils/local-storage";
-import { Token } from "enums/token-names";
+import { getAccessToken } from "utils/local-storage";
 
 import styles from "global-styles/form.module.css";
 
@@ -29,7 +28,7 @@ export const RegisterPage: FC = (): JSX.Element => {
   const { isErrorModalOpen } = useSelector(selectModalStatus);
   const { toggleModalWithError } = useModals();
 
-  if (getTokenFromStorage(Token.Access)) {
+  if (getAccessToken()) {
     return <Redirect to={AppRoutes.MainPage} />;
   }
 

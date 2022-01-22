@@ -1,9 +1,8 @@
 import jwtDecode from "jwt-decode";
-import { getTokenFromStorage } from "utils/local-storage";
-import { Token } from "enums/token-names";
+import { getAccessToken } from "utils/local-storage";
 
 export const isAccessTokenValid = () => {
-  const token = getTokenFromStorage(Token.Access);
+  const token = getAccessToken();
   const decodedToken: "" | { exp: number } | null =
     token && jwtDecode(token.split("Bearer ")[1]);
 

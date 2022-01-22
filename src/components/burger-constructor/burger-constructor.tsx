@@ -23,10 +23,9 @@ import {
 import { selectModalStatus } from "services/selectors/select-modal-status";
 import { selectConstructorIngredients } from "services/selectors/select-constructor-ingredients";
 
-import { getTokenFromStorage } from "utils/local-storage";
+import { getAccessToken } from "utils/local-storage";
 import { useModals } from "hooks/use-modals";
 import { useIngredients } from "hooks/use-ingredients";
-import { Token } from "enums/token-names";
 import { AppRoutes } from "enums/app-routes";
 import { DndTypes } from "enums/dnd-types";
 import { IBurgerIngredient } from "types/burger-ingredient";
@@ -62,7 +61,7 @@ export const BurgerConstructor: FC = (): JSX.Element => {
   );
 
   const makeAnOrder = useCallback(() => {
-    if (getTokenFromStorage(Token.Access)) {
+    if (getAccessToken()) {
       dispatch(postAnOrderThunk());
     } else {
       history.push(AppRoutes.LoginPage);

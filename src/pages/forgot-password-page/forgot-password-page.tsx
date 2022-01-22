@@ -12,8 +12,7 @@ import { RequestErrorDetails } from "components/request-error-details/request-er
 
 import { selectModalStatus } from "services/selectors/select-modal-status";
 import { AppRoutes } from "enums/app-routes";
-import { getTokenFromStorage } from "utils/local-storage";
-import { Token } from "enums/token-names";
+import { getAccessToken } from "utils/local-storage";
 import { selectUserInfo } from "services/selectors/select-user-info";
 import { useFormMethods } from "hooks/use-form-methods";
 import { useModals } from "hooks/use-modals";
@@ -37,7 +36,7 @@ export const ForgotPasswordPage: FC = (): JSX.Element => {
     [dispatch]
   );
 
-  if (getTokenFromStorage(Token.Access)) {
+  if (getAccessToken()) {
     return <Redirect push to={AppRoutes.MainPage} />;
   }
 
