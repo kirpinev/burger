@@ -1,5 +1,4 @@
 import { FC, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Route, Switch, useLocation } from "react-router-dom";
 
 import { MainPage } from "pages/main-page/main-page";
@@ -15,7 +14,7 @@ import { IngredientModal } from "components/ingredient-modal/ingredient-modal";
 import { IngredientDetailsFullPage } from "components/ingredient-details-full-page/ingredient-details-full-page";
 import { AppHeader } from "components/app-header/app-header";
 
-import { getIngredientsThunk } from "services/actions/ingredients";
+import { useIngredients } from "hooks/use-ingredients";
 import { AppRoutes } from "enums/app-routes";
 
 interface ILocationState {
@@ -30,18 +29,17 @@ interface ILocationState {
 
 export const App: FC = (): JSX.Element => {
   const location = useLocation<ILocationState>();
-  const dispatch = useDispatch();
+  const { getIngredients } = useIngredients();
 
   const background = location.state && location.state.background;
 
   useEffect(() => {
-    dispatch(getIngredientsThunk());
-  }, [dispatch]);
+    getIngredients();
+  }, [getIngredients]);
 
   return (
     <>
       <AppHeader />
-
       <Switch location={background || location}>
         <Route exact={true} path={AppRoutes.MainPage}>
           <MainPage />
@@ -69,7 +67,6 @@ export const App: FC = (): JSX.Element => {
           <ProfilePage />
         </ProtectedRoute>
       </Switch>
-
       {background && (
         <Route path={AppRoutes.IngredientsPage}>
           <IngredientModal />

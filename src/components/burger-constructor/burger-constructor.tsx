@@ -15,11 +15,6 @@ import { RequestErrorDetails } from "components/request-error-details/request-er
 import { EmptyConstructor } from "components/empty-constructor/empty-constructor";
 
 import { postAnOrderThunk } from "services/actions/order";
-import {
-  saveConstructorBun,
-  saveConstructorIngredient,
-  deleteConstructorIngredient,
-} from "services/actions/ingredients";
 import { selectBurgerPrice } from "services/selectors/select-burger-price";
 import {
   selectOrderNumber,
@@ -30,6 +25,7 @@ import { selectConstructorIngredients } from "services/selectors/select-construc
 
 import { getTokenFromStorage } from "utils/local-storage";
 import { useModals } from "hooks/use-modals";
+import { useIngredients } from "hooks/use-ingredients";
 import { Token } from "enums/token-names";
 import { AppRoutes } from "enums/app-routes";
 import { DndTypes } from "enums/dnd-types";
@@ -47,6 +43,7 @@ export const BurgerConstructor: FC = (): JSX.Element => {
   const { isErrorModalOpen, isSuccessOrderModalOpen } =
     useSelector(selectModalStatus);
   const { toggleModalWithError, toggleSuccessModal } = useModals();
+  const { saveBun, saveIngredient, deleteIngredient } = useIngredients();
   const dispatch = useDispatch();
   const history = useHistory();
   const [{ isHover }, dropRef] = useDrop(
@@ -54,8 +51,8 @@ export const BurgerConstructor: FC = (): JSX.Element => {
       accept: DndTypes.IngredientItem,
       drop: (ingredient: IBurgerIngredient) => {
         ingredient.type === "bun"
-          ? dispatch(saveConstructorBun(ingredient))
-          : dispatch(saveConstructorIngredient(ingredient));
+          ? saveBun(ingredient)
+          : saveIngredient(ingredient);
       },
       collect: (monitor) => ({
         isHover: monitor.isOver(),
@@ -114,9 +111,7 @@ export const BurgerConstructor: FC = (): JSX.Element => {
                   key={ingredient._id + index}
                   index={index}
                   ingredient={ingredient}
-                  deleteIngredient={() =>
-                    dispatch(deleteConstructorIngredient(index))
-                  }
+                  deleteIngredient={() => deleteIngredient(index)}
                 />
               )
             )}
