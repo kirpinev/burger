@@ -6,22 +6,23 @@ import { ProfileForm } from "components/profile-form/profile-form";
 import { ProfileNavigation } from "components/profile-navigation/profile-navigation";
 
 import { getUserInfoThunk } from "services/actions/user";
-import { resetLoadingState } from "services/actions/loading";
 import { AppRoutes } from "enums/app-routes";
+import { useLoading } from "hooks/use-loading";
 
 import styles from "./profile-page.module.css";
 
 export const ProfilePage: FC = (): JSX.Element => {
   const { path } = useRouteMatch();
+  const { resetLoading } = useLoading();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUserInfoThunk());
 
     return () => {
-      dispatch(resetLoadingState());
+      resetLoading();
     };
-  }, [dispatch]);
+  }, [dispatch, resetLoading]);
 
   return (
     <>

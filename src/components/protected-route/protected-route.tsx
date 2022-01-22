@@ -4,7 +4,7 @@ import { Redirect, Route } from "react-router-dom";
 
 import { selectUserInfo } from "services/selectors/select-user-info";
 import { getUserInfoThunk } from "services/actions/user";
-import { resetLoadingState } from "services/actions/loading";
+import { useLoading } from "hooks/use-loading";
 
 import { AppRoutes } from "enums/app-routes";
 
@@ -18,6 +18,7 @@ export const ProtectedRoute: FC<IProtectedRoute> = ({
 }): JSX.Element | null => {
   const { name, email, password } = useSelector(selectUserInfo);
   const [isLoaded, setIsLoaded] = useState(false);
+  const { resetLoading } = useLoading();
   const dispatch = useDispatch();
 
   const init = useCallback(async () => {
@@ -29,9 +30,9 @@ export const ProtectedRoute: FC<IProtectedRoute> = ({
     init();
 
     return () => {
-      dispatch(resetLoadingState());
+      resetLoading();
     };
-  }, [dispatch, init]);
+  }, [resetLoading, init]);
 
   if (!isLoaded) {
     return null;
