@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import {
   EmailInput,
@@ -8,11 +8,6 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import {
-  resetUserEditStatus,
-  updateUserEditStatus,
-  resetUserPassword,
-} from "services/actions/user";
 import {
   selectUserInfo,
   selectUserEditStatus,
@@ -25,59 +20,57 @@ import styles from "./profile-form.module.css";
 export const ProfileForm: FC = (): JSX.Element => {
   const { name, password, email } = useSelector(selectUserInfo);
   const isUserInfoEdit = useSelector(selectUserEditStatus);
-  const { updateName, updateEmail, updatePassword, updateUser } =
-    useFormMethods();
+  const {
+    updateName,
+    updateEmail,
+    updatePassword,
+    updateUser,
+    updateEditStatus,
+    resetEditStatus,
+    resetPassword,
+  } = useFormMethods();
   const { getUserInfo } = useUser();
-  const dispatch = useDispatch();
 
   const resetForm = useCallback(
     (e) => {
       e.preventDefault();
       getUserInfo();
-      dispatch(resetUserEditStatus());
-      dispatch(resetUserPassword());
+      resetEditStatus();
+      resetPassword();
     },
-    [dispatch, getUserInfo]
+    [getUserInfo, resetEditStatus, resetPassword]
   );
-
-  const updateStatus = useCallback(() => {
-    dispatch(updateUserEditStatus());
-  }, [dispatch]);
-
-  const resetStatus = useCallback(() => {
-    dispatch(resetUserEditStatus());
-  }, [dispatch]);
 
   const updateNameAndShowButtons = useCallback(
     (e) => {
-      updateStatus();
+      updateEditStatus();
       updateName(e);
     },
-    [updateName, updateStatus]
+    [updateName, updateEditStatus]
   );
 
   const updateEmailAndShowButtons = useCallback(
     (e) => {
-      updateStatus();
+      updateEditStatus();
       updateEmail(e);
     },
-    [updateEmail, updateStatus]
+    [updateEmail, updateEditStatus]
   );
 
   const updatePasswordAndShowButtons = useCallback(
     (e) => {
-      updateStatus();
+      updateEditStatus();
       updatePassword(e);
     },
-    [updateStatus, updatePassword]
+    [updateEditStatus, updatePassword]
   );
 
   const updateUserAndHideButtons = useCallback(
     (e) => {
       updateUser(e);
-      resetStatus();
+      resetEditStatus();
     },
-    [updateUser, resetStatus]
+    [updateUser, resetEditStatus]
   );
 
   return (

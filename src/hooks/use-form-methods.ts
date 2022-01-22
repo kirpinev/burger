@@ -9,6 +9,9 @@ import {
   authorizeUserThunk,
   registerUserThunk,
   updateUserToken,
+  updateUserEditStatus,
+  resetUserEditStatus,
+  resetUserPassword,
 } from "services/actions/user";
 import { getInputValue } from "utils/get-input-value";
 
@@ -70,6 +73,20 @@ export const useFormMethods = () => {
     [dispatch]
   );
 
+  const updateEditStatus = useCallback(
+    () => dispatch(updateUserEditStatus()),
+    [dispatch]
+  );
+
+  const resetEditStatus = useCallback(() => {
+    dispatch(resetUserEditStatus());
+  }, [dispatch]);
+
+  const resetPassword = useCallback(
+    () => dispatch(resetUserPassword()),
+    [dispatch]
+  );
+
   return {
     updateName,
     updatePassword,
@@ -78,5 +95,8 @@ export const useFormMethods = () => {
     updateUser,
     authorize,
     register,
+    updateEditStatus,
+    resetEditStatus,
+    resetPassword,
   };
 };
