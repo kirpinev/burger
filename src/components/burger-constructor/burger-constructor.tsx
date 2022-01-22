@@ -16,10 +16,6 @@ import { EmptyConstructor } from "components/empty-constructor/empty-constructor
 
 import { postAnOrderThunk } from "services/actions/order";
 import {
-  toggleErrorModal,
-  toggleSuccessOrderModal,
-} from "services/actions/modals";
-import {
   saveConstructorBun,
   saveConstructorIngredient,
   deleteConstructorIngredient,
@@ -33,6 +29,7 @@ import { selectModalStatus } from "services/selectors/select-modal-status";
 import { selectConstructorIngredients } from "services/selectors/select-constructor-ingredients";
 
 import { getTokenFromStorage } from "utils/local-storage";
+import { useModals } from "hooks/use-modals";
 import { Token } from "enums/token-names";
 import { AppRoutes } from "enums/app-routes";
 import { DndTypes } from "enums/dnd-types";
@@ -49,6 +46,7 @@ export const BurgerConstructor: FC = (): JSX.Element => {
   const isOrderPosting = useSelector(selectOrderPostingStatus);
   const { isErrorModalOpen, isSuccessOrderModalOpen } =
     useSelector(selectModalStatus);
+  const { toggleModalWithError, toggleSuccessModal } = useModals();
   const dispatch = useDispatch();
   const history = useHistory();
   const [{ isHover }, dropRef] = useDrop(
@@ -64,15 +62,6 @@ export const BurgerConstructor: FC = (): JSX.Element => {
       }),
     },
     []
-  );
-
-  const toggleSuccessModal = useCallback(
-    () => dispatch(toggleSuccessOrderModal()),
-    [dispatch]
-  );
-  const toggleModalWithError = useCallback(
-    () => dispatch(toggleErrorModal()),
-    [dispatch]
   );
 
   const makeAnOrder = useCallback(() => {

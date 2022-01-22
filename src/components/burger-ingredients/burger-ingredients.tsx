@@ -5,8 +5,8 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientList } from "components/ingredient-list/ingredient-list";
 
 import { saveSelectedIngredient } from "services/actions/ingredients";
-import { toggleIngredientModal } from "services/actions/modals";
 import { selectGroupedBurgerIngredients } from "services/selectors/select-burger-ingredients";
+import { useModals } from "hooks/use-modals";
 
 import { ingredientTypes } from "constants/ingredient-type";
 import { TIngredientType } from "types/ingredient-type";
@@ -23,6 +23,7 @@ export const BurgerIngredients: FC = (): JSX.Element => {
     TIngredientType,
     IBurgerIngredient[]
   ][];
+  const { toggleModalWithIngredient } = useModals();
   const dispatch = useDispatch();
 
   const tabContainerRef = useRef<HTMLDivElement>(null);
@@ -34,9 +35,9 @@ export const BurgerIngredients: FC = (): JSX.Element => {
   const selectIngredientAndOpenModal = useCallback(
     (ingredient) => {
       dispatch(saveSelectedIngredient(ingredient));
-      dispatch(toggleIngredientModal());
+      toggleModalWithIngredient();
     },
-    [dispatch]
+    [dispatch, toggleModalWithIngredient]
   );
 
   const setRefForIngredientType = useCallback(

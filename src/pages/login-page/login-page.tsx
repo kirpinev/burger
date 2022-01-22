@@ -1,5 +1,5 @@
-import { FC, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FC } from "react";
+import { useSelector } from "react-redux";
 import { Link, Redirect, useLocation } from "react-router-dom";
 
 import {
@@ -13,8 +13,9 @@ import { Modal } from "components/modal/modal";
 
 import { selectUserInfo } from "services/selectors/select-user-info";
 import { selectModalStatus } from "services/selectors/select-modal-status";
-import { toggleErrorModal } from "services/actions/modals";
+
 import { useFormMethods } from "hooks/use-form-methods";
+import { useModals } from "hooks/use-modals";
 import { AppRoutes } from "enums/app-routes";
 
 import styles from "global-styles/form.module.css";
@@ -24,12 +25,7 @@ export const LoginPage: FC = (): JSX.Element => {
   const { updateEmail, updatePassword, authorize } = useFormMethods();
   const { isErrorModalOpen } = useSelector(selectModalStatus);
   const { state } = useLocation<{ from: string }>();
-  const dispatch = useDispatch();
-
-  const toggleModalWithError = useCallback(
-    () => dispatch(toggleErrorModal()),
-    [dispatch]
-  );
+  const { toggleModalWithError } = useModals();
 
   if (isLoggedIn) {
     return <Redirect to={state?.from || AppRoutes.MainPage} />;
