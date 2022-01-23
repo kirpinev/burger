@@ -9,6 +9,7 @@ import {
 
 import { Modal } from "components/modal/modal";
 import { RequestErrorDetails } from "components/request-error-details/request-error-details";
+import { HelmetOptions } from "components/helmet-options/helmet-options";
 
 import { selectModalStatus } from "services/selectors/select-modal-status";
 import { AppRoutes } from "enums/app-routes";
@@ -22,8 +23,8 @@ import styles from "global-styles/form.module.css";
 
 export const ForgotPasswordPage: FC = (): JSX.Element => {
   const { email, isEmailSent } = useSelector(selectUserInfo);
-  const { updateEmail } = useFormMethods();
   const { isErrorModalOpen } = useSelector(selectModalStatus);
+  const { updateEmail } = useFormMethods();
   const { toggleModalWithError } = useModals();
   const dispatch = useDispatch();
 
@@ -46,6 +47,7 @@ export const ForgotPasswordPage: FC = (): JSX.Element => {
 
   return (
     <>
+      <HelmetOptions title=" Восстановление пароля" />
       {isErrorModalOpen && (
         <Modal handleModalCloseClick={toggleModalWithError}>
           <RequestErrorDetails

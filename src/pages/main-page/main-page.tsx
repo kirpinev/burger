@@ -6,6 +6,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { StatusContainer } from "components/status-container/status-container";
 import { BurgerIngredients } from "components/burger-ingredients/burger-ingredients";
 import { BurgerConstructor } from "components/burger-constructor/burger-constructor";
+import { HelmetOptions } from "components/helmet-options/helmet-options";
 
 import { getIngredientsThunk } from "services/actions/ingredients";
 import { selectLoadingStatus } from "services/selectors/select-loading-status";
@@ -38,13 +39,16 @@ export const MainPage: FC = (): JSX.Element => {
   }
 
   return (
-    <div className="body">
-      <main className={styles.main}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
-      </main>
-    </div>
+    <>
+      <HelmetOptions title="Конструктор" />
+      <div className="body">
+        <main className={styles.main}>
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </DndProvider>
+        </main>
+      </div>
+    </>
   );
 };

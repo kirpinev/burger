@@ -11,6 +11,7 @@ import {
 
 import { Modal } from "components/modal/modal";
 import { RequestErrorDetails } from "components/request-error-details/request-error-details";
+import { HelmetOptions } from "components/helmet-options/helmet-options";
 
 import { selectUserInfo } from "services/selectors/select-user-info";
 import { selectModalStatus } from "services/selectors/select-modal-status";
@@ -34,6 +35,7 @@ export const RegisterPage: FC = (): JSX.Element => {
 
   return (
     <>
+      <HelmetOptions title="Регистрация" />
       {isErrorModalOpen && (
         <Modal handleModalCloseClick={toggleModalWithError}>
           <RequestErrorDetails

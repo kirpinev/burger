@@ -3,6 +3,7 @@ import { Route, Switch, useRouteMatch } from "react-router-dom";
 
 import { ProfileForm } from "components/profile-form/profile-form";
 import { ProfileNavigation } from "components/profile-navigation/profile-navigation";
+import { HelmetOptions } from "components/helmet-options/helmet-options";
 
 import { AppRoutes } from "enums/app-routes";
 import { useLoading } from "hooks/use-loading";
@@ -25,6 +26,7 @@ export const ProfilePage: FC = (): JSX.Element => {
 
   return (
     <>
+      <HelmetOptions title="Личный кабинет" />
       <section className={styles.container}>
         <Switch>
           <Route path={path} exact={true}>

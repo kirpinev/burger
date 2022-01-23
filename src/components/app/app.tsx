@@ -13,6 +13,7 @@ import { ProtectedRoute } from "components/protected-route/protected-route";
 import { IngredientModal } from "components/ingredient-modal/ingredient-modal";
 import { IngredientDetailsFullPage } from "components/ingredient-details-full-page/ingredient-details-full-page";
 import { AppHeader } from "components/app-header/app-header";
+import { HelmetOptions } from "components/helmet-options/helmet-options";
 
 import { useIngredients } from "hooks/use-ingredients";
 import { AppRoutes } from "enums/app-routes";
@@ -59,7 +60,9 @@ export const App: FC = (): JSX.Element => {
         <Route path={AppRoutes.LogoutPage}>
           <LogoutPage />
         </Route>
-        <Route path={AppRoutes.ProfileOrders} />
+        <Route path={AppRoutes.ProfileOrders}>
+          <HelmetOptions title="Лента заказов" />
+        </Route>
         <Route path={AppRoutes.IngredientsPage}>
           <IngredientDetailsFullPage />
         </Route>

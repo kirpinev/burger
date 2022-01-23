@@ -10,6 +10,7 @@ import {
 
 import { RequestErrorDetails } from "components/request-error-details/request-error-details";
 import { Modal } from "components/modal/modal";
+import { HelmetOptions } from "components/helmet-options/helmet-options";
 
 import { selectUserInfo } from "services/selectors/select-user-info";
 import { selectModalStatus } from "services/selectors/select-modal-status";
@@ -33,6 +34,7 @@ export const LoginPage: FC = (): JSX.Element => {
 
   return (
     <>
+      <HelmetOptions title="Вход" />
       {isErrorModalOpen && (
         <Modal handleModalCloseClick={toggleModalWithError}>
           <RequestErrorDetails

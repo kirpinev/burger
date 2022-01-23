@@ -10,6 +10,7 @@ import {
 
 import { Modal } from "components/modal/modal";
 import { RequestErrorDetails } from "components/request-error-details/request-error-details";
+import { HelmetOptions } from "components/helmet-options/helmet-options";
 
 import { selectModalStatus } from "services/selectors/select-modal-status";
 import { sendPasswordAndTokenThunk } from "services/actions/user";
@@ -48,6 +49,7 @@ export const ResetPasswordPage: FC = (): JSX.Element => {
 
   return (
     <>
+      <HelmetOptions title="Восстановление пароля" />
       {isErrorModalOpen && (
         <Modal handleModalCloseClick={toggleModalWithError}>
           <RequestErrorDetails
