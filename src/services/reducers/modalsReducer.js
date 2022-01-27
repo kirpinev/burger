@@ -1,8 +1,8 @@
 import {
   TOGGLE_INGREDIENT_MODAL,
   TOGGLE_SUCCESS_ORDER_MODAL,
-  TOGGLE_ERROR_MODAL,
-} from "services/actions/modals";
+  TOGGLE_ERROR_ORDER_MODAL,
+} from "services/constants/modals";
 
 const initialState = {
   isIngredientModalOpen: false,
@@ -23,7 +23,7 @@ export const modalsReducer = (state = initialState, action) => {
         isSuccessOrderModalOpen: !state.isSuccessOrderModalOpen,
       };
     }
-    case TOGGLE_ERROR_MODAL: {
+    case TOGGLE_ERROR_ORDER_MODAL: {
       return {
         ...state,
         isErrorModalOpen: !state.isErrorModalOpen,

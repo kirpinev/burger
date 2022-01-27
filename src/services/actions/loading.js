@@ -1,7 +1,9 @@
-export const LOADING = "LOADING";
-export const SUCCESS = "SUCCESS";
-export const ERROR = "ERROR";
-export const RESET_LOADING_STATE = "RESET_STATE";
+import {
+  LOADING,
+  ERROR,
+  SUCCESS,
+  RESET_LOADING_STATE,
+} from "services/constants/loading";
 
 export const setLoading = () => ({
   type: LOADING,

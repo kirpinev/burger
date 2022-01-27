@@ -10,7 +10,7 @@ import {
   UPDATE_USER_EDIT_STATUS,
   RESET_USER_EDIT_STATUS,
   RESET_USER_PASSWORD,
-} from "services/actions/user";
+} from "services/constants/user";
 
 const initialState = {
   name: "",

@@ -7,7 +7,7 @@ import {
   SAVE_CONSTRUCTOR_INGREDIENT,
   DELETE_CONSTRUCTOR_INGREDIENT,
   REORDER_CONSTRUCTOR_INGREDIENTS,
-} from "services/actions/ingredients";
+} from "services/constants/ingredients";
 
 const initialState = {
   burgerIngredients: [],

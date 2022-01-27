@@ -3,7 +3,7 @@ import {
   LOADING,
   SUCCESS,
   RESET_LOADING_STATE,
-} from "services/actions/loading";
+} from "services/constants/loading";
 
 const initialState = {
   isLoading: false,

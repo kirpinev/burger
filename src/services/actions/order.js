@@ -1,14 +1,20 @@
 import { postAnOrderRequest, isResponseOk, getJSON } from "api/api";
-import { toggleErrorModal, toggleSuccessOrderModal } from "./modals";
-import { resetConstructorIngredients } from "./ingredients";
+
+import {
+  toggleErrorModal,
+  toggleSuccessOrderModal,
+} from "services/actions/modals";
+import { resetConstructorIngredients } from "services/actions/ingredients";
+import { logOutUser } from "services/actions/user";
+import {
+  SAVE_ORDER,
+  RESET_ORDER,
+  TOGGLE_ORDER_POSTING,
+} from "services/constants/order";
+
 import { isAccessTokenValid } from "utils/validate-token";
 import { resetStorage } from "utils/local-storage";
 import { refreshTokens } from "utils/refresh-tokens";
-import { logOutUser } from "./user";
-
-export const SAVE_ORDER = "SAVE_ORDER_NUMBER";
-export const RESET_ORDER = "RESET_ORDER_NUMBER";
-export const TOGGLE_ORDER_POSTING = "TOGGLE_ORDER_POSTING";
 
 export const saveOrder = (orderDetails) => ({
   type: SAVE_ORDER,

@@ -1,15 +1,16 @@
 import { isResponseOk, getJSON, getIngredientsRequest } from "api/api";
-import { setError, setLoading, setSuccess } from "services/actions/loading";
 
-export const SAVE_INGREDIENTS = "FETCH_INGREDIENTS";
-export const SAVE_SELECTED_INGREDIENT = "SAVE_SELECTED_INGREDIENT";
-export const RESET_SELECTED_INGREDIENT = "RESET_SELECTED_INGREDIENT";
-export const SAVE_CONSTRUCTOR_BUN = "SAVE_SELECTED_BUN";
-export const SAVE_CONSTRUCTOR_INGREDIENT = "SAVE_CONSTRUCTOR_INGREDIENT";
-export const REORDER_CONSTRUCTOR_INGREDIENTS =
-  "REORDER_CONSTRUCTOR_INGREDIENTS";
-export const RESET_CONSTRUCTOR_INGREDIENTS = "RESET_CONSTRUCTOR_INGREDIENTS";
-export const DELETE_CONSTRUCTOR_INGREDIENT = "DELETE_CONSTRUCTOR_INGREDIENT";
+import { setError, setLoading, setSuccess } from "services/actions/loading";
+import {
+  SAVE_INGREDIENTS,
+  SAVE_SELECTED_INGREDIENT,
+  RESET_SELECTED_INGREDIENT,
+  SAVE_CONSTRUCTOR_BUN,
+  SAVE_CONSTRUCTOR_INGREDIENT,
+  REORDER_CONSTRUCTOR_INGREDIENTS,
+  DELETE_CONSTRUCTOR_INGREDIENT,
+  RESET_CONSTRUCTOR_INGREDIENTS,
+} from "services/constants/ingredients";
 
 const saveFetchedIngredients = (ingredients) => ({
   type: SAVE_INGREDIENTS,

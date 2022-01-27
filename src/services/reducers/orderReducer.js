@@ -2,7 +2,7 @@ import {
   SAVE_ORDER,
   RESET_ORDER,
   TOGGLE_ORDER_POSTING,
-} from "services/actions/order";
+} from "services/constants/order";
 
 const initialState = {
   name: "",

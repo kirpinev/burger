@@ -1,29 +1,36 @@
-import { getJSON, isResponseOk, registerUserRequest } from "api/api";
-import { saveTokenToStorage } from "utils/local-storage";
-import { Token } from "enums/token-names";
-import { authorizeUserRequest, getUserInfoRequest } from "api/api";
-import { isAccessTokenValid } from "utils/validate-token";
-import { refreshTokens } from "utils/refresh-tokens";
-import { resetStorage } from "utils/local-storage";
 import {
+  getJSON,
+  isResponseOk,
+  registerUserRequest,
+  authorizeUserRequest,
+  getUserInfoRequest,
   logoutUserRequest,
   resetPasswordRequest,
   updateUserInfoRequest,
   sendNewPasswordRequest,
 } from "api/api";
-import { toggleErrorModal } from "services/actions/modals";
 
-export const UPDATE_USER_NAME = "UPDATE_USER_NAME";
-export const UPDATE_USER_EMAIL = "UPDATE_USER_EMAIL";
-export const UPDATE_USER_PASSWORD = "UPDATE_USER_PASSWORD";
-export const UPDATE_USER_TOKEN = "UPDATE_USER_TOKEN";
-export const LOG_IN_USER = "LOG_IN_USER";
-export const LOG_OUT_USER = "LOG_OUT_USER";
-export const EMAIL_SENT = "EMAIL_SENT";
-export const PASSWORD_SENT = "PASSWORD_SENT";
-export const UPDATE_USER_EDIT_STATUS = "UPDATE_USER_EDIT_STATUS";
-export const RESET_USER_EDIT_STATUS = "RESET_USER_EDIT_STATUS";
-export const RESET_USER_PASSWORD = "RESET_USER_PASSWORD";
+import { toggleErrorModal } from "services/actions/modals";
+import {
+  UPDATE_USER_NAME,
+  UPDATE_USER_PASSWORD,
+  UPDATE_USER_EMAIL,
+  UPDATE_USER_TOKEN,
+  UPDATE_USER_EDIT_STATUS,
+  RESET_USER_EDIT_STATUS,
+  RESET_USER_PASSWORD,
+  LOG_IN_USER,
+  LOG_OUT_USER,
+  EMAIL_SENT,
+  PASSWORD_SENT,
+} from "services/constants/user";
+
+import { saveTokenToStorage } from "utils/local-storage";
+import { isAccessTokenValid } from "utils/validate-token";
+import { refreshTokens } from "utils/refresh-tokens";
+import { resetStorage } from "utils/local-storage";
+
+import { Token } from "enums/token-names";
 
 export const updateUserName = (name) => ({
   type: UPDATE_USER_NAME,
