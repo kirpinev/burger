@@ -4,13 +4,24 @@ import {
   TOGGLE_ORDER_POSTING,
 } from "services/constants/order";
 
-const initialState = {
+import { TOrderActions } from "services/actions/order";
+
+type TOrderState = {
+  readonly name: string;
+  readonly number: null | number;
+  readonly isOrderPosting: boolean;
+};
+
+const initialState: TOrderState = {
   name: "",
   number: null,
   isOrderPosting: false,
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (
+  state = initialState,
+  action: TOrderActions
+): TOrderState => {
   switch (action.type) {
     case SAVE_ORDER:
       return {
