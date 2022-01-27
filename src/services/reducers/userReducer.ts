@@ -12,7 +12,20 @@ import {
   RESET_USER_PASSWORD,
 } from "services/constants/user";
 
-const initialState = {
+import { TUserActions } from "services/actions/user";
+
+type TUserState<T, K> = {
+  readonly name: T;
+  readonly email: T;
+  readonly password: T;
+  readonly token: T;
+  readonly isPasswordSent: K;
+  readonly isEmailSent: K;
+  readonly isLoggedIn: K;
+  readonly isUserInfoEdit: K;
+};
+
+const initialState: TUserState<string, boolean> = {
   name: "",
   email: "",
   password: "",
@@ -23,7 +36,10 @@ const initialState = {
   isUserInfoEdit: false,
 };
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (
+  state = initialState,
+  action: TUserActions
+): TUserState<string, boolean> => {
   switch (action.type) {
     case UPDATE_USER_NAME:
       return { ...state, name: action.payload };
