@@ -5,14 +5,16 @@ import {
   updateUserEmail,
   updateUserName,
   updateUserPassword,
-  updateUserInfoThunk,
-  authorizeUserThunk,
-  registerUserThunk,
   updateUserToken,
   updateUserEditStatus,
   resetUserEditStatus,
   resetUserPassword,
 } from "services/actions/user";
+import {
+  updateUserInfoThunk,
+  authorizeUserThunk,
+  registerUserThunk,
+} from "services/thunks/user";
 import { getInputValue } from "utils/get-input-value";
 
 export const useFormMethods = () => {

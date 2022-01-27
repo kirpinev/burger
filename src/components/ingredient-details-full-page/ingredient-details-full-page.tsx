@@ -7,7 +7,7 @@ import { StatusContainer } from "components/status-container/status-container";
 
 import { selectBurgerIngredients } from "services/selectors/select-burger-ingredients";
 import { selectLoadingStatus } from "services/selectors/select-loading-status";
-import { getIngredientsThunk } from "services/actions/ingredients";
+import { getIngredientsThunk } from "services/thunks/ingredients";
 import { useLoading } from "hooks/use-loading";
 import { IBurgerIngredient } from "types/burger-ingredient";
 

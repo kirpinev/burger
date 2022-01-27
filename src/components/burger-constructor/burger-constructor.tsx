@@ -14,7 +14,7 @@ import { Modal } from "components/modal/modal";
 import { RequestErrorDetails } from "components/request-error-details/request-error-details";
 import { EmptyConstructor } from "components/empty-constructor/empty-constructor";
 
-import { postAnOrderThunk } from "services/actions/order";
+import { postAnOrderThunk } from "services/thunks/order";
 import { selectBurgerPrice } from "services/selectors/select-burger-price";
 import {
   selectOrderNumber,

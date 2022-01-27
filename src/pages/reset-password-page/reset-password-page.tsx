@@ -13,7 +13,7 @@ import { RequestErrorDetails } from "components/request-error-details/request-er
 import { HelmetOptions } from "components/helmet-options/helmet-options";
 
 import { selectModalStatus } from "services/selectors/select-modal-status";
-import { sendPasswordAndTokenThunk } from "services/actions/user";
+import { sendPasswordAndTokenThunk } from "services/thunks/user";
 import { selectUserInfo } from "services/selectors/select-user-info";
 
 import { useFormMethods } from "hooks/use-form-methods";

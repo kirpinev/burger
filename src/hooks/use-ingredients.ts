@@ -3,12 +3,14 @@ import { useDispatch } from "react-redux";
 
 import {
   deleteConstructorIngredient,
-  getIngredientsThunk,
-  moveIngredientThunk,
   saveConstructorBun,
   saveConstructorIngredient,
   saveSelectedIngredient as saveSelectIngredient,
 } from "services/actions/ingredients";
+import {
+  getIngredientsThunk,
+  moveIngredientThunk,
+} from "services/thunks/ingredients";
 
 import { IBurgerIngredient } from "types/burger-ingredient";
 

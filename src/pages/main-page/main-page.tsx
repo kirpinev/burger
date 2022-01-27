@@ -8,8 +8,8 @@ import { BurgerIngredients } from "components/burger-ingredients/burger-ingredie
 import { BurgerConstructor } from "components/burger-constructor/burger-constructor";
 import { HelmetOptions } from "components/helmet-options/helmet-options";
 
-import { getIngredientsThunk } from "services/actions/ingredients";
 import { selectLoadingStatus } from "services/selectors/select-loading-status";
+import { getIngredientsThunk } from "services/thunks/ingredients";
 import { useLoading } from "hooks/use-loading";
 
 import styles from "./main-page.module.css";
