@@ -5,13 +5,24 @@ import {
   RESET_LOADING_STATE,
 } from "services/constants/loading";
 
-const initialState = {
+import { TLoadingActions } from "services/actions/loading";
+
+type TLoadingState = {
+  readonly isLoading: boolean;
+  readonly isError: boolean;
+  readonly isSuccess: boolean;
+};
+
+const initialState: TLoadingState = {
   isLoading: false,
   isError: false,
   isSuccess: false,
 };
 
-export const loadingReducer = (state = initialState, action) => {
+export const loadingReducer = (
+  state = initialState,
+  action: TLoadingActions
+): TLoadingState => {
   switch (action.type) {
     case LOADING:
       return {
