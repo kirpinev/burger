@@ -8,15 +8,28 @@ import {
   DELETE_CONSTRUCTOR_INGREDIENT,
   REORDER_CONSTRUCTOR_INGREDIENTS,
 } from "services/constants/ingredients";
+import { TIngredientsActions } from "services/actions/ingredients";
 
-const initialState = {
+import { IBurgerIngredient } from "types/burger-ingredient";
+
+type TIngredientsState = {
+  readonly burgerIngredients: ReadonlyArray<IBurgerIngredient>;
+  readonly constructorIngredients: ReadonlyArray<IBurgerIngredient>;
+  readonly selectedBun: null | IBurgerIngredient;
+  readonly selectedIngredient: null | IBurgerIngredient;
+};
+
+const initialState: TIngredientsState = {
   burgerIngredients: [],
   constructorIngredients: [],
   selectedBun: null,
   selectedIngredient: null,
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (
+  state = initialState,
+  action: TIngredientsActions
+): TIngredientsState => {
   switch (action.type) {
     case SAVE_INGREDIENTS:
       return {

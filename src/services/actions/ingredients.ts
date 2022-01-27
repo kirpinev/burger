@@ -13,7 +13,7 @@ import { IBurgerIngredient } from "types/burger-ingredient";
 
 export interface ISaveFetchedIngredients {
   readonly type: typeof SAVE_INGREDIENTS;
-  readonly payload: IBurgerIngredient[];
+  readonly payload: ReadonlyArray<IBurgerIngredient>;
 }
 
 export interface ISaveSelectedIngredient {
@@ -37,7 +37,7 @@ export interface ISaveConstructorIngredient {
 
 export interface IReorderConstructorIngredients {
   readonly type: typeof REORDER_CONSTRUCTOR_INGREDIENTS;
-  readonly payload: IBurgerIngredient[];
+  readonly payload: ReadonlyArray<IBurgerIngredient>;
 }
 
 export interface IDeleteConstructorIngredient {
