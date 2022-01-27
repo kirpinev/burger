@@ -49,6 +49,16 @@ export interface IResetConstructorIngredients {
   readonly type: typeof RESET_CONSTRUCTOR_INGREDIENTS;
 }
 
+export type TIngredientsActions =
+  | ISaveFetchedIngredients
+  | ISaveSelectedIngredient
+  | IResetSelectedIngredient
+  | ISaveConstructorBun
+  | ISaveConstructorIngredient
+  | IReorderConstructorIngredients
+  | IDeleteConstructorIngredient
+  | IResetConstructorIngredients;
+
 export const saveFetchedIngredients = (
   ingredients: IBurgerIngredient[]
 ): ISaveFetchedIngredients => ({
