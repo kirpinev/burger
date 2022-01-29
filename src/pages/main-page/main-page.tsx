@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "hooks/use-selector";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 

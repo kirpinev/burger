@@ -1,5 +1,6 @@
 import { FC, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "hooks/use-dispatch";
+import { useSelector } from "hooks/use-selector";
 import { Link, Redirect } from "react-router-dom";
 
 import {
