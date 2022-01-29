@@ -5,7 +5,7 @@ import gif from "images/done.gif";
 import styles from "./order-details.module.css";
 
 interface IOrderDetails {
-  orderNumber: number;
+  orderNumber: number | null;
 }
 
 export const OrderDetails: FC<IOrderDetails> = ({

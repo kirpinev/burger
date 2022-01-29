@@ -5,7 +5,7 @@ import { IBurgerIngredient } from "types/burger-ingredient";
 import styles from "./ingredient-details.module.css";
 
 interface IIngredientDetails {
-  ingredient: IBurgerIngredient | null;
+  ingredient: IBurgerIngredient | null | undefined;
 }
 
 export const IngredientDetails: FC<IIngredientDetails> = ({

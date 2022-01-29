@@ -1,6 +1,7 @@
 import { FC, useCallback, useMemo } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "hooks/use-dispatch";
+import { useSelector } from "hooks/use-selector";
 import { useDrop } from "react-dnd";
 import {
   ConstructorElement,
@@ -22,8 +23,9 @@ import {
 } from "services/selectors/select-order-number";
 import { selectModalStatus } from "services/selectors/select-modal-status";
 import { selectConstructorIngredients } from "services/selectors/select-constructor-ingredients";
+import { logOutUser } from "services/actions/user";
 
-import { getAccessToken } from "utils/local-storage";
+import { getAccessToken, getRefreshToken } from "utils/local-storage";
 import { useModals } from "hooks/use-modals";
 import { useIngredients } from "hooks/use-ingredients";
 import { AppRoutes } from "enums/app-routes";
@@ -61,10 +63,11 @@ export const BurgerConstructor: FC = (): JSX.Element => {
   );
 
   const makeAnOrder = useCallback(() => {
-    if (getAccessToken()) {
-      dispatch(postAnOrderThunk());
-    } else {
+    if (!getAccessToken() && !getRefreshToken()) {
+      dispatch(logOutUser());
       history.push(AppRoutes.LoginPage);
+    } else {
+      dispatch(postAnOrderThunk());
     }
   }, [dispatch, history]);
 

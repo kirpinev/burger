@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "hooks/use-selector";
 
 import {
   EmailInput,

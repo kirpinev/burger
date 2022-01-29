@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "hooks/use-selector";
 import { Redirect, Route } from "react-router-dom";
 
 import { selectUserInfo } from "services/selectors/select-user-info";

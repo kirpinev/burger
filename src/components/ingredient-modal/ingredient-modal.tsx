@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "hooks/use-selector";
 import { useHistory, useRouteMatch } from "react-router-dom";
 
 import { Modal } from "components/modal/modal";
@@ -21,11 +21,12 @@ export const IngredientModal: FC = (): JSX.Element | null => {
   const history = useHistory();
   const match = useRouteMatch<{ id?: string }>(AppRoutes.IngredientsPage);
 
-  const requestIngredient: IBurgerIngredient | null = burgerIngredients.length
-    ? burgerIngredients.find(
-        (i: IBurgerIngredient) => i._id === match?.params.id
-      )
-    : null;
+  const requestIngredient: IBurgerIngredient | null | undefined =
+    burgerIngredients.length
+      ? burgerIngredients.find(
+          (i: IBurgerIngredient) => i._id === match?.params.id
+        )
+      : null;
 
   const goBack = useCallback(() => {
     history.goBack();

@@ -1,5 +1,5 @@
 import { FC, RefObject, useCallback, useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "hooks/use-selector";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { IngredientList } from "components/ingredient-list/ingredient-list";
@@ -10,7 +10,6 @@ import { useIngredients } from "hooks/use-ingredients";
 
 import { ingredientTypes } from "constants/ingredient-type";
 import { TIngredientType } from "types/ingredient-type";
-import { IBurgerIngredient } from "types/burger-ingredient";
 
 import styles from "./burger-ingredients.module.css";
 
@@ -18,11 +17,7 @@ export const BurgerIngredients: FC = (): JSX.Element => {
   const [currentIngredientType, setCurrentIngredientType] = useState(
     ingredientTypes.ru.bun
   );
-  // У burgerIngredients указал тип через as потому что еще не типизировал стор
-  const burgerIngredients = useSelector(selectGroupedBurgerIngredients) as [
-    TIngredientType,
-    IBurgerIngredient[]
-  ][];
+  const burgerIngredients = useSelector(selectGroupedBurgerIngredients);
   const { toggleModalWithIngredient } = useModals();
   const { saveSelectedIngredient } = useIngredients();
 

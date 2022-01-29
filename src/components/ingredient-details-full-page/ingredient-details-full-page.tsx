@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "hooks/use-selector";
 import { useParams } from "react-router-dom";
 
 import { IngredientDetails } from "components/ingredient-details/ingredient-details";
@@ -19,9 +19,10 @@ export const IngredientDetailsFullPage: FC = (): JSX.Element => {
   const { resetLoading } = useLoading();
   const { id } = useParams<{ id?: string }>();
 
-  const requestIngredient: IBurgerIngredient | null = burgerIngredients.length
-    ? burgerIngredients.find((i: IBurgerIngredient) => i._id === id)
-    : null;
+  const requestIngredient: IBurgerIngredient | null | undefined =
+    burgerIngredients.length
+      ? burgerIngredients.find((i: IBurgerIngredient) => i._id === id)
+      : null;
 
   useEffect(() => {
     return () => {
