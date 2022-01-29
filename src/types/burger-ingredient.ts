@@ -1,4 +1,4 @@
-import { TIngredientType } from "./ingredient-type";
+import { TIngredientType } from "types/ingredient-type";
 
 export interface IBurgerIngredient {
   _id: string;
