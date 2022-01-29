@@ -1,11 +1,13 @@
 import { createSelector } from "reselect";
 
+import { TStoreState } from "services/types/store";
+
 export const selectOrderNumber = createSelector(
-  (state) => state.order.number,
+  (state: TStoreState) => state.order.number,
   (order) => order
 );
 
 export const selectOrderPostingStatus = createSelector(
-  (state) => state.order.isOrderPosting,
+  (state: TStoreState) => state.order.isOrderPosting,
   (isOrderPosting) => isOrderPosting
 );

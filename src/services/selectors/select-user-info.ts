@@ -1,42 +1,44 @@
 import { createSelector } from "reselect";
 
+import { TStoreState } from "services/types/store";
+
 export const selectUserName = createSelector(
-  (state) => state.user.name,
+  (state: TStoreState) => state.user.name,
   (name) => name
 );
 
 export const selectUserEmail = createSelector(
-  (state) => state.user.email,
+  (state: TStoreState) => state.user.email,
   (email) => email
 );
 
 export const selectUserPassword = createSelector(
-  (state) => state.user.password,
+  (state: TStoreState) => state.user.password,
   (password) => password
 );
 
 export const selectUserAuthStatus = createSelector(
-  (state) => state.user.isLoggedIn,
+  (state: TStoreState) => state.user.isLoggedIn,
   (isLoggedIn) => isLoggedIn
 );
 
 export const selectEmailStatus = createSelector(
-  (state) => state.user.isEmailSent,
+  (state: TStoreState) => state.user.isEmailSent,
   (isEmailSent) => isEmailSent
 );
 
 export const selectToken = createSelector(
-  (state) => state.user.token,
+  (state: TStoreState) => state.user.token,
   (token) => token
 );
 
 export const selectPasswordStatus = createSelector(
-  (state) => state.user.isPasswordSent,
+  (state: TStoreState) => state.user.isPasswordSent,
   (isPasswordSent) => isPasswordSent
 );
 
 export const selectUserEditStatus = createSelector(
-  (state) => state.user.isUserInfoEdit,
+  (state: TStoreState) => state.user.isUserInfoEdit,
   (isUserInfoEdit) => isUserInfoEdit
 );
 
