@@ -10,7 +10,7 @@ export const getIngredientsRequest = async (): Promise<Response> =>
   fetch(`${ApiUrls.Base}${ApiUrls.Ingredients}`);
 
 export const postAnOrderRequest = async (
-  ingredientsIds: number[]
+  ingredientsIds: string[]
 ): Promise<Response> =>
   fetch(`${ApiUrls.Base}${ApiUrls.Orders}`, {
     method: "POST",
