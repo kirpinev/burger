@@ -5,6 +5,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientList } from "components/ingredient-list/ingredient-list";
 
 import { selectGroupedBurgerIngredients } from "services/selectors/select-burger-ingredients";
+
 import { useModals } from "hooks/use-modals";
 import { useIngredients } from "hooks/use-ingredients";
 
@@ -90,55 +91,51 @@ export const BurgerIngredients: FC = (): JSX.Element => {
   }, [selectTab]);
 
   return (
-    <>
-      <section className={`${styles.section} pt-10`}>
-        <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
-        <div ref={tabContainerRef} className={`${styles.tabs} mb-10`}>
-          <Tab
-            value={ingredientTypes.ru.bun}
-            active={currentIngredientType === ingredientTypes.ru.bun}
-            onClick={scrollIntoIngredient}
-          >
-            {ingredientTypes.ru.bun}
-          </Tab>
-          <Tab
-            value={ingredientTypes.ru.sauce}
-            active={currentIngredientType === ingredientTypes.ru.sauce}
-            onClick={scrollIntoIngredient}
-          >
-            {ingredientTypes.ru.sauce}
-          </Tab>
-          <Tab
-            value={ingredientTypes.ru.main}
-            active={currentIngredientType === ingredientTypes.ru.main}
-            onClick={scrollIntoIngredient}
-          >
-            {ingredientTypes.ru.main}
-          </Tab>
-        </div>
-        <div
-          ref={scrollContainerRef}
-          className={`${styles.container} custom-scroll`}
+    <section className={`${styles.section} pt-10`}>
+      <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
+      <div ref={tabContainerRef} className={`${styles.tabs} mb-10`}>
+        <Tab
+          value={ingredientTypes.ru.bun}
+          active={currentIngredientType === ingredientTypes.ru.bun}
+          onClick={scrollIntoIngredient}
         >
-          <ul className={styles.ingredientsList}>
-            {burgerIngredients[0] &&
-              burgerIngredients.map(
-                ([type, ingredients]): JSX.Element => (
-                  <li className="mb-10" key={type}>
-                    <IngredientList
-                      setRefForIngredientType={setRefForIngredientType}
-                      ingredients={ingredients}
-                      type={type}
-                      selectIngredientAndOpenModal={
-                        selectIngredientAndOpenModal
-                      }
-                    />
-                  </li>
-                )
-              )}
-          </ul>
-        </div>
-      </section>
-    </>
+          {ingredientTypes.ru.bun}
+        </Tab>
+        <Tab
+          value={ingredientTypes.ru.sauce}
+          active={currentIngredientType === ingredientTypes.ru.sauce}
+          onClick={scrollIntoIngredient}
+        >
+          {ingredientTypes.ru.sauce}
+        </Tab>
+        <Tab
+          value={ingredientTypes.ru.main}
+          active={currentIngredientType === ingredientTypes.ru.main}
+          onClick={scrollIntoIngredient}
+        >
+          {ingredientTypes.ru.main}
+        </Tab>
+      </div>
+      <div
+        ref={scrollContainerRef}
+        className={`${styles.container} custom-scroll`}
+      >
+        <ul className={styles.ingredientsList}>
+          {burgerIngredients[0] &&
+            burgerIngredients.map(
+              ([type, ingredients]): JSX.Element => (
+                <li className="mb-10" key={type}>
+                  <IngredientList
+                    setRefForIngredientType={setRefForIngredientType}
+                    ingredients={ingredients}
+                    type={type}
+                    selectIngredientAndOpenModal={selectIngredientAndOpenModal}
+                  />
+                </li>
+              )
+            )}
+        </ul>
+      </div>
+    </section>
   );
 };
