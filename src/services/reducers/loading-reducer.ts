@@ -7,7 +7,7 @@ import {
 
 import { TLoadingActions } from "services/actions/loading";
 
-type TLoadingState = {
+export type TLoadingState = {
   readonly isLoading: boolean;
   readonly isError: boolean;
   readonly isSuccess: boolean;

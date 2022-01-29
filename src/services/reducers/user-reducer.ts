@@ -14,7 +14,7 @@ import {
 
 import { TUserActions } from "services/actions/user";
 
-type TUserState<T, K> = {
+export type TUserState<T, K> = {
   readonly name: T;
   readonly email: T;
   readonly password: T;

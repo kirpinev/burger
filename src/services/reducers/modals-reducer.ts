@@ -6,7 +6,7 @@ import {
 
 import { TModalsActions } from "services/actions/modals";
 
-type TModalsState = {
+export type TModalsState = {
   readonly isIngredientModalOpen: boolean;
   readonly isErrorModalOpen: boolean;
   readonly isSuccessOrderModalOpen: boolean;

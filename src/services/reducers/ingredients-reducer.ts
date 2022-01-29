@@ -12,7 +12,7 @@ import { TIngredientsActions } from "services/actions/ingredients";
 
 import { IBurgerIngredient } from "types/burger-ingredient";
 
-type TIngredientsState = {
+export type TIngredientsState = {
   readonly burgerIngredients: ReadonlyArray<IBurgerIngredient>;
   readonly constructorIngredients: ReadonlyArray<IBurgerIngredient>;
   readonly selectedBun: null | IBurgerIngredient;

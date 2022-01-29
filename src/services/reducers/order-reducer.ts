@@ -6,7 +6,7 @@ import {
 
 import { TOrderActions } from "services/actions/order";
 
-type TOrderState = {
+export type TOrderState = {
   readonly name: string;
   readonly number: null | number;
   readonly isOrderPosting: boolean;
