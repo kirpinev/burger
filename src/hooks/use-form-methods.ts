@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch } from "hooks/use-dispatch";
 import { useCallback } from "react";
 
 import {
