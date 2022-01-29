@@ -5,33 +5,37 @@ import {
   reorderConstructorIngredients,
   saveFetchedIngredients,
 } from "services/actions/ingredients";
+import { TApplicationThunk } from "services/types/thunk";
+import { TStoreState } from "services/types/store";
 
-export const getIngredientsThunk = () => async (dispatch, getState) => {
-  try {
-    const ingredients = getState().ingredients.burgerIngredients;
+export const getIngredientsThunk: TApplicationThunk =
+  () => async (dispatch, getState) => {
+    try {
+      const state = getState() as unknown as TStoreState;
+      const ingredients = state.ingredients.burgerIngredients;
 
-    if (ingredients.length !== 0) {
-      return;
+      if (ingredients.length !== 0) {
+        return;
+      }
+
+      dispatch(setLoading());
+
+      const response = await getIngredientsRequest();
+
+      if (!isResponseOk(response)) {
+        throw new Error();
+      }
+
+      const { data } = await getJSON(response);
+
+      dispatch(saveFetchedIngredients(data));
+      dispatch(setSuccess());
+    } catch (e) {
+      dispatch(setError());
     }
+  };
 
-    dispatch(setLoading());
-
-    const response = await getIngredientsRequest();
-
-    if (!isResponseOk(response)) {
-      throw new Error();
-    }
-
-    const { data } = await getJSON(response);
-
-    dispatch(saveFetchedIngredients(data));
-    dispatch(setSuccess());
-  } catch (e) {
-    dispatch(setError());
-  }
-};
-
-export const moveIngredientThunk =
+export const moveIngredientThunk: TApplicationThunk =
   ({ item, index, monitor, ref }) =>
   (dispatch, getState) => {
     if (!ref.current) {
@@ -57,8 +61,8 @@ export const moveIngredientThunk =
       return;
     }
 
-    const constructorIngredients =
-      getState().ingredients.constructorIngredients;
+    const state = getState() as unknown as TStoreState;
+    const constructorIngredients = state.ingredients.constructorIngredients;
     const dragCard = constructorIngredients[dragIndex];
     const filteredIngredients = constructorIngredients.filter(
       (_, index) => index !== dragIndex
