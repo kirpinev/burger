@@ -4,7 +4,7 @@ import {
   TOGGLE_ORDER_POSTING,
 } from "services/constants/order";
 
-interface IOrderDetails {
+export interface IOrderDetails {
   readonly name: string;
   readonly order: {
     readonly number: number;
