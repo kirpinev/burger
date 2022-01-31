@@ -16,6 +16,7 @@ import { IngredientDetailsFullPage } from "components/ingredient-details-full-pa
 import { AppHeader } from "components/app-header/app-header";
 
 import { useIngredients } from "hooks/use-ingredients";
+import { useWsPublicFeed } from "hooks/use-ws-public-feed";
 import { AppRoutes } from "enums/app-routes";
 
 interface ILocationState {
@@ -31,12 +32,14 @@ interface ILocationState {
 export const App: FC = (): JSX.Element => {
   const location = useLocation<ILocationState>();
   const { getIngredients } = useIngredients();
+  const { startWsPublicFeedConnection } = useWsPublicFeed();
 
   const background = location.state && location.state.background;
 
   useEffect(() => {
     getIngredients();
-  }, [getIngredients]);
+    startWsPublicFeedConnection();
+  }, [getIngredients, startWsPublicFeedConnection]);
 
   return (
     <>
