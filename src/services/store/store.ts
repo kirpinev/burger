@@ -7,8 +7,15 @@ import { loadingReducer } from "services/reducers/loading-reducer";
 import { orderReducer } from "services/reducers/order-reducer";
 import { modalsReducer } from "services/reducers/modals-reducer";
 import { userReducer } from "services/reducers/user-reducer";
+import { wsPublicFeedReducer } from "services/reducers/ws-public-feed-reducer";
+import { socketMiddleware } from "services/middleware/socket-middleware";
+import { wsPublicFeedAction } from "services/constants/ws-public-feed";
 
-const enhancer = composeWithDevTools(applyMiddleware(thunk));
+import { wsPublicFeedUrl } from "constants/ws-public-feed-url";
+
+const enhancer = composeWithDevTools(
+  applyMiddleware(thunk, socketMiddleware(wsPublicFeedUrl, wsPublicFeedAction))
+);
 
 const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
@@ -16,6 +23,7 @@ const rootReducer = combineReducers({
   order: orderReducer,
   modals: modalsReducer,
   user: userReducer,
+  wsPublicFeed: wsPublicFeedReducer,
 });
 
 export const store = createStore(rootReducer, enhancer);
