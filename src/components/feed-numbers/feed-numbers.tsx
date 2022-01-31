@@ -1,14 +1,21 @@
 import { FC } from "react";
 
+import {
+  selectWsPublicDoneFeed,
+  selectWsPublicFeedTotal,
+  selectWsPublicFeedTotalToday,
+  selectWsPublicNotDoneFeed,
+} from "services/selectors/select-ws-public-feed";
+
+import { useSelector } from "hooks/use-selector";
+
 import styles from "./feed-numbers.module.css";
 
-import feedList from "mocks/feed-list.json";
-
 export const FeedNumbers: FC = (): JSX.Element => {
-  const doneFeed = feedList.orders.filter((order) => order.status === "done");
-  const notDoneFeed = feedList.orders.filter(
-    (order) => order.status === "not-done"
-  );
+  const total = useSelector(selectWsPublicFeedTotal);
+  const totalToday = useSelector(selectWsPublicFeedTotalToday);
+  const doneFeed = useSelector(selectWsPublicDoneFeed);
+  const notDoneFeed = useSelector(selectWsPublicNotDoneFeed);
 
   return (
     <section className={styles.container}>
@@ -69,9 +76,13 @@ export const FeedNumbers: FC = (): JSX.Element => {
         </div>
       </div>
       <h6 className="text text_type_main-medium">Выполнено за все время:</h6>
-      <p className="text text_type_digits-large mb-15">{feedList.total}</p>
+      <p className={`${styles.totalNumber} text text_type_digits-large mb-15`}>
+        {total}
+      </p>
       <h6 className="text text_type_main-medium">Выполнено сегодня:</h6>
-      <p className="text text_type_digits-large mb-15">{feedList.totalToday}</p>
+      <p className={`${styles.totalNumber} text text_type_digits-large mb-15`}>
+        {totalToday}
+      </p>
     </section>
   );
 };
