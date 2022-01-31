@@ -54,7 +54,7 @@ export const FeedItem: FC<IFeedItem> = ({
 
   const goToSelectedFeed = useCallback(
     () => history.push(`${AppRoutes.FeedPage}/${_id}`),
-    [history]
+    [history, _id]
   );
 
   return (
