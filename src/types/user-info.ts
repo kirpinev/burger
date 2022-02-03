@@ -1,5 +1,5 @@
 export interface IUserInfo {
-  name: string;
-  email: string;
-  password: string;
+  readonly name: string;
+  readonly email: string;
+  readonly password: string;
 }
