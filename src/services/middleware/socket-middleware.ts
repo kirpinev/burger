@@ -3,11 +3,15 @@ import { Middleware, MiddlewareAPI } from "redux";
 import { TApplicationActions } from "services/types/actions";
 import { TApplicationDispatch } from "services/types/dispatch";
 import { TStoreState } from "services/types/store";
-import { IWSPublicFeedAction } from "services/constants/ws-public-feed";
+import { IWSOrdersActions } from "services/constants/ws-orders";
+import { IWSUserOrdersActions } from "services/constants/ws-user-orders";
+
+import { getAccessToken } from "utils/local-storage";
 
 export const socketMiddleware = (
-  wsUrl: string,
-  wsActions: IWSPublicFeedAction
+  WSUrl: string,
+  WSActions: IWSOrdersActions | IWSUserOrdersActions,
+  token?: boolean
 ): Middleware =>
   ((store: MiddlewareAPI<TApplicationDispatch, TStoreState>) => {
     let socket: WebSocket | null = null;
@@ -15,34 +19,42 @@ export const socketMiddleware = (
     return (next) => (action: TApplicationActions) => {
       const { dispatch } = store;
 
-      if (action.type === wsActions.wsStart) {
-        socket = new WebSocket(wsUrl);
+      if (action.type === WSActions.WSStart && token) {
+        const accessToken = getAccessToken().split(" ")[1];
+
+        socket = new WebSocket(WSUrl + `?token=${accessToken}`);
+      } else if (action.type === WSActions.WSStart && !token) {
+        socket = new WebSocket(WSUrl);
       }
 
       if (socket) {
-        socket.onopen = (event) => {
-          dispatch({ type: wsActions.wsSuccess, payload: event });
+        socket.onopen = () => {
+          dispatch({ type: WSActions.WSSuccess });
         };
 
-        socket.onerror = (event) => {
-          dispatch({ type: wsActions.wsError, payload: event });
+        socket.onerror = () => {
+          dispatch({ type: WSActions.WSError });
         };
 
         socket.onmessage = (event) => {
           const { data } = event;
 
           dispatch({
-            type: wsActions.wsGetMessage,
+            type: WSActions.WSGetMessage,
             payload: JSON.parse(data),
           });
         };
 
-        socket.onclose = (event) => {
-          dispatch({ type: wsActions.wsClosed, payload: event });
+        socket.onclose = () => {
+          dispatch({ type: WSActions.WSClosed });
         };
 
-        if (action.type === wsActions.wsSendMessage) {
+        if (action.type === WSActions.WSSendMessage) {
           socket.send(JSON.stringify(action.payload));
+        }
+
+        if (action.type === WSActions.WSClosed) {
+          socket.close();
         }
       }
 

@@ -3,10 +3,12 @@ import { TLoadingActions } from "services/actions/loading";
 import { TModalsActions } from "services/actions/modals";
 import { TOrderActions } from "services/actions/order";
 import { TUserActions } from "services/actions/user";
-import { TWSActions } from "services/actions/ws-public-feed";
+import { TWSOrderActions } from "services/actions/ws-orders";
+import { TWSUserOrdersActions } from "services/actions/ws-user-orders";
 
 export type TApplicationActions =
-  | TWSActions
+  | TWSOrderActions
+  | TWSUserOrdersActions
   | TIngredientsActions
   | TLoadingActions
   | TModalsActions
