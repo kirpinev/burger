@@ -8,7 +8,6 @@ export enum AppRoutes {
   ProfileOrders = "/orders",
   IngredientsPage = "/ingredients/:id",
   FeedPage = "/feed",
-  CurrentFeedPage = "/feed/:id",
-  NotFoundPage = "/not-found",
+  SelectedFeedPage = "/feed/:id",
   LogoutPage = "/logout",
 }
