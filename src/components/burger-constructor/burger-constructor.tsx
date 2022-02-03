@@ -10,7 +10,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { BurgerItem } from "components/burger-item/burger-item";
-import { OrderDetails } from "components/order-details/order-details";
+import { CreatedOrder } from "components/created-order/created-order";
 import { Modal } from "components/modal/modal";
 import { RequestErrorDetails } from "components/request-error-details/request-error-details";
 import { EmptyConstructor } from "components/empty-constructor/empty-constructor";
@@ -77,7 +77,7 @@ export const BurgerConstructor: FC = (): JSX.Element => {
     <>
       {isSuccessOrderModalOpen && (
         <Modal handleModalCloseClick={toggleSuccessModal}>
-          <OrderDetails orderNumber={orderNumber} />
+          <CreatedOrder orderNumber={orderNumber} />
         </Modal>
       )}
       {isErrorModalOpen && (

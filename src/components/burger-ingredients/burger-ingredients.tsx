@@ -6,9 +6,6 @@ import { IngredientList } from "components/ingredient-list/ingredient-list";
 
 import { selectGroupedBurgerIngredients } from "services/selectors/select-burger-ingredients";
 
-import { useModals } from "hooks/use-modals";
-import { useIngredients } from "hooks/use-ingredients";
-
 import { ingredientTypes } from "constants/ingredient-type";
 import { TIngredientType } from "types/ingredient-type";
 
@@ -19,22 +16,12 @@ export const BurgerIngredients: FC = (): JSX.Element => {
     ingredientTypes.ru.bun
   );
   const burgerIngredients = useSelector(selectGroupedBurgerIngredients);
-  const { toggleModalWithIngredient } = useModals();
-  const { saveSelectedIngredient } = useIngredients();
 
   const tabContainerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const bunRef = useRef<HTMLHeadingElement>(null);
   const mainRef = useRef<HTMLHeadingElement>(null);
   const sauceRef = useRef<HTMLHeadingElement>(null);
-
-  const selectIngredientAndOpenModal = useCallback(
-    (ingredient) => {
-      saveSelectedIngredient(ingredient);
-      toggleModalWithIngredient();
-    },
-    [saveSelectedIngredient, toggleModalWithIngredient]
-  );
 
   const setRefForIngredientType = useCallback(
     (name: TIngredientType): RefObject<HTMLHeadingElement> | undefined => {
@@ -129,7 +116,6 @@ export const BurgerIngredients: FC = (): JSX.Element => {
                     setRefForIngredientType={setRefForIngredientType}
                     ingredients={ingredients}
                     type={type}
-                    selectIngredientAndOpenModal={selectIngredientAndOpenModal}
                   />
                 </li>
               )

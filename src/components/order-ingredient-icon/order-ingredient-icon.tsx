@@ -4,22 +4,22 @@ import { selectBurgerIngredients } from "services/selectors/select-burger-ingred
 
 import { useSelector } from "hooks/use-selector";
 
-import styles from "./feed-item-ingredient-icon.module.css";
+import styles from "./order-ingredient-icon.module.css";
 
-interface IFeedIngredient {
+interface IOrderIngredient {
   readonly zIndex: number;
 
   readonly ingredientId?: string;
   readonly remainIngredientsLength?: number;
 }
 
-export const FeedItemIngredientIcon: FC<IFeedIngredient> = ({
+export const OrderIngredientIcon: FC<IOrderIngredient> = ({
   ingredientId,
   zIndex,
   remainIngredientsLength,
 }): JSX.Element => {
   const storeIngredients = useSelector(selectBurgerIngredients);
-  const maxIngredientsLength = 5;
+  const maxIngredientsLength = 100;
 
   const ingredientObject = useMemo(
     () =>

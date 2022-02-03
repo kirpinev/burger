@@ -2,13 +2,13 @@ import { FC } from "react";
 
 import gif from "images/done.gif";
 
-import styles from "./order-details.module.css";
+import styles from "./created-order.module.css";
 
-interface IOrderDetails {
+interface ICreatedOrder {
   orderNumber: number | null;
 }
 
-export const OrderDetails: FC<IOrderDetails> = ({
+export const CreatedOrder: FC<ICreatedOrder> = ({
   orderNumber,
 }): JSX.Element => (
   <div className={`${styles.container}`}>

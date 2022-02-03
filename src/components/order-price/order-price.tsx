@@ -5,13 +5,13 @@ import { selectBurgerIngredients } from "services/selectors/select-burger-ingred
 
 import { useSelector } from "hooks/use-selector";
 
-import styles from "./feed-list-item-price.module.css";
+import styles from "./order-price.module.css";
 
 interface IFeedListItemPrice {
-  ingredients: ReadonlyArray<string>;
+  readonly ingredients: ReadonlyArray<string>;
 }
 
-export const FeedListItemPrice: FC<IFeedListItemPrice> = ({
+export const OrderPrice: FC<IFeedListItemPrice> = ({
   ingredients,
 }): JSX.Element => {
   const constructorIngredients = useSelector(selectBurgerIngredients);

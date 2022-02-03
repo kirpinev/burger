@@ -1,9 +1,14 @@
-.section {
+.ordersSection {
     width: 100%;
     max-width: 600px;
 }
 
-.container {
+.userOrdersSection {
+    composes: ordersSection;
+    max-width: 860px;
+}
+
+.ordersContainer {
     display: flex;
     flex-direction: column;
 
@@ -13,8 +18,12 @@
     height: calc(100vh - 235px);
 }
 
+.userContainer {
+    composes: ordersContainer;
+    height: calc(100vh - 175px);
+}
 
-.feedList {
+.ordersList {
     margin: 0;
     padding: 0;
 
