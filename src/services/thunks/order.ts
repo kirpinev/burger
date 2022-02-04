@@ -12,8 +12,7 @@ import {
   saveOrder,
   toggleOrderPosting,
 } from "services/actions/order";
-import { TApplicationThunk } from "services/types/thunk";
-import { TStoreState } from "services/types/store";
+import { TStoreState, TApplicationThunk } from "services/types/store";
 
 import { isAccessTokenValid } from "utils/validate-token";
 import { resetStorage } from "utils/local-storage";

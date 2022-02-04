@@ -5,8 +5,7 @@ import {
   reorderConstructorIngredients,
   saveFetchedIngredients,
 } from "services/actions/ingredients";
-import { TApplicationThunk } from "services/types/thunk";
-import { TStoreState } from "services/types/store";
+import { TStoreState, TApplicationThunk } from "services/types/store";
 
 export const getIngredientsThunk: TApplicationThunk =
   () => async (dispatch, getState) => {

@@ -1,8 +1,7 @@
 import { Middleware, MiddlewareAPI } from "redux";
 
 import { TApplicationActions } from "services/types/actions";
-import { TApplicationDispatch } from "services/types/dispatch";
-import { TStoreState } from "services/types/store";
+import { TStoreState, TApplicationDispatch } from "services/types/store";
 import { IWSOrdersActions } from "services/constants/ws-orders";
 import { IWSUserOrdersActions } from "services/constants/ws-user-orders";
 

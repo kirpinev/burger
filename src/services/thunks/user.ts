@@ -19,9 +19,11 @@ import {
   updateUserEmail,
   updateUserName,
 } from "services/actions/user";
-import { TApplicationThunk } from "services/types/thunk";
-import { TStoreState } from "services/types/store";
-import { TApplicationDispatch } from "services/types/dispatch";
+import {
+  TStoreState,
+  TApplicationDispatch,
+  TApplicationThunk,
+} from "services/types/store";
 
 import { saveTokenToStorage } from "utils/local-storage";
 import { isAccessTokenValid } from "utils/validate-token";

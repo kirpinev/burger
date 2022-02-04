@@ -1,6 +1,6 @@
 import { useDispatch as dispatchHook } from "react-redux";
-import { TApplicationDispatch } from "services/types/dispatch";
-import { TApplicationThunk } from "services/types/thunk";
+
+import { TApplicationDispatch, TApplicationThunk } from "services/types/store";
 
 export const useDispatch = () =>
   dispatchHook<TApplicationDispatch | TApplicationThunk>();
