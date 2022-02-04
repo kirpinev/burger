@@ -43,7 +43,7 @@ export const AppHeader: FC = (): JSX.Element => {
                 <HeaderNavLink
                   text="Лента заказов"
                   Icon={ListIcon}
-                  path={AppRoutes.ProfileOrders}
+                  path={AppRoutes.FeedPage}
                   exact={false}
                 />
               </li>

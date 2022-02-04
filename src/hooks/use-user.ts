@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "hooks/use-dispatch";
 
-import { getUserInfoThunk, logoutUserThunk } from "services/actions/user";
+import { getUserInfoThunk, logoutUserThunk } from "services/thunks/user";
 
 export const useUser = () => {
   const dispatch = useDispatch();

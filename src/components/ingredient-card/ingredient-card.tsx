@@ -1,6 +1,6 @@
 import { FC, useMemo } from "react";
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
+import { useSelector } from "hooks/use-selector";
 import {
   Counter,
   CurrencyIcon,
@@ -43,11 +43,12 @@ export const IngredientCard: FC<IIngredientCard> = ({
   );
   const ingredientCount = useMemo(
     () =>
-      ingredient.type !== "bun" &&
-      constructorIngredients.filter(
-        (constructorIngredient: IBurgerIngredient) =>
-          constructorIngredient._id === ingredient._id
-      ).length,
+      ingredient.type !== "bun"
+        ? constructorIngredients.filter(
+            (constructorIngredient: IBurgerIngredient) =>
+              constructorIngredient._id === ingredient._id
+          ).length
+        : 0,
     [constructorIngredients, ingredient._id, ingredient.type]
   );
 

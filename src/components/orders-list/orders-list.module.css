@@ -1,0 +1,31 @@
+.ordersSection {
+    width: 100%;
+    max-width: 600px;
+}
+
+.userOrdersSection {
+    composes: ordersSection;
+    max-width: 860px;
+}
+
+.ordersContainer {
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+
+    height: calc(100vh - 235px);
+}
+
+.userContainer {
+    composes: ordersContainer;
+    height: calc(100vh - 175px);
+}
+
+.ordersList {
+    margin: 0;
+    padding: 0;
+
+    list-style-type: none;
+}

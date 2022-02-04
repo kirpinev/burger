@@ -1,5 +1,5 @@
 export interface ITokenTypes {
-  success: string;
+  readonly success: string;
   accessToken: string;
-  refreshToken: string;
+  readonly refreshToken: string;
 }

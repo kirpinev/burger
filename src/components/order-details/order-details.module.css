@@ -1,5 +1,29 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    width: 100%;
+    max-width: 640px;
+
+    margin: 0 auto;
+}
+
+.ready {
+    color: #00CCCC;
+}
+
+.list {
+    padding: 0;
+
+    list-style-type: none;
+
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    max-height: 320px;
+}
+
+.listItem {
+    display: flex;
+    align-items: center;
+}
+
+.timeAndPrice {
+    display: flex;
 }

@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    flex-direction: column;
+
+    background: #1c1c21;
+
+    border-radius: 40px;
+
+    cursor: pointer;
+}
+
+.numberAndDate {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ingredientsAndPrice {
+    display: flex;
+    align-items: center;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.done {
+    color: #00CCCC;
+}

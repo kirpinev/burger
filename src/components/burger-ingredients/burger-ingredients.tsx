@@ -1,16 +1,13 @@
 import { FC, RefObject, useCallback, useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "hooks/use-selector";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { IngredientList } from "components/ingredient-list/ingredient-list";
 
 import { selectGroupedBurgerIngredients } from "services/selectors/select-burger-ingredients";
-import { useModals } from "hooks/use-modals";
-import { useIngredients } from "hooks/use-ingredients";
 
 import { ingredientTypes } from "constants/ingredient-type";
 import { TIngredientType } from "types/ingredient-type";
-import { IBurgerIngredient } from "types/burger-ingredient";
 
 import styles from "./burger-ingredients.module.css";
 
@@ -18,27 +15,13 @@ export const BurgerIngredients: FC = (): JSX.Element => {
   const [currentIngredientType, setCurrentIngredientType] = useState(
     ingredientTypes.ru.bun
   );
-  // У burgerIngredients указал тип через as потому что еще не типизировал стор
-  const burgerIngredients = useSelector(selectGroupedBurgerIngredients) as [
-    TIngredientType,
-    IBurgerIngredient[]
-  ][];
-  const { toggleModalWithIngredient } = useModals();
-  const { saveSelectedIngredient } = useIngredients();
+  const burgerIngredients = useSelector(selectGroupedBurgerIngredients);
 
   const tabContainerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const bunRef = useRef<HTMLHeadingElement>(null);
   const mainRef = useRef<HTMLHeadingElement>(null);
   const sauceRef = useRef<HTMLHeadingElement>(null);
-
-  const selectIngredientAndOpenModal = useCallback(
-    (ingredient) => {
-      saveSelectedIngredient(ingredient);
-      toggleModalWithIngredient();
-    },
-    [saveSelectedIngredient, toggleModalWithIngredient]
-  );
 
   const setRefForIngredientType = useCallback(
     (name: TIngredientType): RefObject<HTMLHeadingElement> | undefined => {
@@ -95,55 +78,50 @@ export const BurgerIngredients: FC = (): JSX.Element => {
   }, [selectTab]);
 
   return (
-    <>
-      <section className={`${styles.section} pt-10`}>
-        <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
-        <div ref={tabContainerRef} className={`${styles.tabs} mb-10`}>
-          <Tab
-            value={ingredientTypes.ru.bun}
-            active={currentIngredientType === ingredientTypes.ru.bun}
-            onClick={scrollIntoIngredient}
-          >
-            {ingredientTypes.ru.bun}
-          </Tab>
-          <Tab
-            value={ingredientTypes.ru.sauce}
-            active={currentIngredientType === ingredientTypes.ru.sauce}
-            onClick={scrollIntoIngredient}
-          >
-            {ingredientTypes.ru.sauce}
-          </Tab>
-          <Tab
-            value={ingredientTypes.ru.main}
-            active={currentIngredientType === ingredientTypes.ru.main}
-            onClick={scrollIntoIngredient}
-          >
-            {ingredientTypes.ru.main}
-          </Tab>
-        </div>
-        <div
-          ref={scrollContainerRef}
-          className={`${styles.container} custom-scroll`}
+    <section className={`${styles.section} pt-10`}>
+      <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
+      <div ref={tabContainerRef} className={`${styles.tabs} mb-10`}>
+        <Tab
+          value={ingredientTypes.ru.bun}
+          active={currentIngredientType === ingredientTypes.ru.bun}
+          onClick={scrollIntoIngredient}
         >
-          <ul className={styles.ingredientsList}>
-            {burgerIngredients[0] &&
-              burgerIngredients.map(
-                ([type, ingredients]): JSX.Element => (
-                  <li className="mb-10" key={type}>
-                    <IngredientList
-                      setRefForIngredientType={setRefForIngredientType}
-                      ingredients={ingredients}
-                      type={type}
-                      selectIngredientAndOpenModal={
-                        selectIngredientAndOpenModal
-                      }
-                    />
-                  </li>
-                )
-              )}
-          </ul>
-        </div>
-      </section>
-    </>
+          {ingredientTypes.ru.bun}
+        </Tab>
+        <Tab
+          value={ingredientTypes.ru.sauce}
+          active={currentIngredientType === ingredientTypes.ru.sauce}
+          onClick={scrollIntoIngredient}
+        >
+          {ingredientTypes.ru.sauce}
+        </Tab>
+        <Tab
+          value={ingredientTypes.ru.main}
+          active={currentIngredientType === ingredientTypes.ru.main}
+          onClick={scrollIntoIngredient}
+        >
+          {ingredientTypes.ru.main}
+        </Tab>
+      </div>
+      <div
+        ref={scrollContainerRef}
+        className={`${styles.container} custom-scroll`}
+      >
+        <ul className={styles.ingredientsList}>
+          {burgerIngredients[0] &&
+            burgerIngredients.map(
+              ([type, ingredients]): JSX.Element => (
+                <li className="mb-10" key={type}>
+                  <IngredientList
+                    setRefForIngredientType={setRefForIngredientType}
+                    ingredients={ingredients}
+                    type={type}
+                  />
+                </li>
+              )
+            )}
+        </ul>
+      </div>
+    </section>
   );
 };

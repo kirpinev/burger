@@ -1,5 +1,6 @@
 import { FC, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "hooks/use-dispatch";
+import { useSelector } from "hooks/use-selector";
 import { Link, Redirect } from "react-router-dom";
 
 import {
@@ -13,7 +14,7 @@ import { RequestErrorDetails } from "components/request-error-details/request-er
 import { HelmetOptions } from "components/helmet-options/helmet-options";
 
 import { selectModalStatus } from "services/selectors/select-modal-status";
-import { sendPasswordAndTokenThunk } from "services/actions/user";
+import { sendPasswordAndTokenThunk } from "services/thunks/user";
 import { selectUserInfo } from "services/selectors/select-user-info";
 
 import { useFormMethods } from "hooks/use-form-methods";

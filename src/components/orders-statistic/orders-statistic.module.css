@@ -1,0 +1,45 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    width: 100%;
+    max-width: 600px;
+
+    padding-top: 100px;
+}
+
+.readyStateContainer {
+    display: flex;
+    width: 100%;
+}
+
+.readyState {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.readyNumber {
+    color: #00CCCC;
+}
+
+.orderList {
+    padding: 0;
+    margin: 0;
+
+    list-style-type: none;
+}
+
+.orderListContainer {
+    display: flex;
+
+    gap: 25px;
+}
+
+.totalNumber  {
+    text-shadow: 0 0 16px rgb(51 51 255 / 25%),
+                 0 0 8px rgb(51 51 255 / 25%),
+                 0 4px 32px rgb(51 51 255 / 50%);
+}

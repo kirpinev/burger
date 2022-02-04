@@ -1,18 +1,20 @@
-import { useDispatch } from "react-redux";
+import { useDispatch } from "hooks/use-dispatch";
 import { useCallback } from "react";
 
 import {
   updateUserEmail,
   updateUserName,
   updateUserPassword,
-  updateUserInfoThunk,
-  authorizeUserThunk,
-  registerUserThunk,
   updateUserToken,
   updateUserEditStatus,
   resetUserEditStatus,
   resetUserPassword,
 } from "services/actions/user";
+import {
+  updateUserInfoThunk,
+  authorizeUserThunk,
+  registerUserThunk,
+} from "services/thunks/user";
 import { getInputValue } from "utils/get-input-value";
 
 export const useFormMethods = () => {

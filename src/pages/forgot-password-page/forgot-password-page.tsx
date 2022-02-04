@@ -1,5 +1,6 @@
 import { FC, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "hooks/use-dispatch";
+import { useSelector } from "hooks/use-selector";
 import { Link, Redirect } from "react-router-dom";
 
 import {
@@ -17,7 +18,7 @@ import { getAccessToken } from "utils/local-storage";
 import { selectUserInfo } from "services/selectors/select-user-info";
 import { useFormMethods } from "hooks/use-form-methods";
 import { useModals } from "hooks/use-modals";
-import { sendResetEmailThunk } from "services/actions/user";
+import { sendResetEmailThunk } from "services/thunks/user";
 
 import styles from "global-styles/form.module.css";
 

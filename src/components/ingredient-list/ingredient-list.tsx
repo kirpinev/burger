@@ -10,19 +10,17 @@ import { TIngredientType } from "types/ingredient-type";
 import styles from "./ingredient-list.module.css";
 
 interface IIngredientList {
-  setRefForIngredientType: (
+  readonly setRefForIngredientType: (
     type: TIngredientType
   ) => RefObject<HTMLHeadingElement> | undefined;
-  type: TIngredientType;
-  ingredients: IBurgerIngredient[];
-  selectIngredientAndOpenModal: (ingredient: IBurgerIngredient) => void;
+  readonly type: TIngredientType;
+  readonly ingredients: IBurgerIngredient[];
 }
 
 export const IngredientList: FC<IIngredientList> = ({
   setRefForIngredientType,
   type,
   ingredients,
-  selectIngredientAndOpenModal,
 }): JSX.Element => {
   const location = useLocation();
 
@@ -36,10 +34,7 @@ export const IngredientList: FC<IIngredientList> = ({
       </h2>
       <ul className={`${styles.ingredientsListByType}`}>
         {ingredients.map((ingredient) => (
-          <li
-            key={ingredient._id}
-            onClick={() => selectIngredientAndOpenModal(ingredient)}
-          >
+          <li key={ingredient._id}>
             <Link
               className={styles.link}
               to={{
