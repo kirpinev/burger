@@ -2,7 +2,7 @@
   background: #1c1c21;
 }
 
-.ul {
+.headerList {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,15 +16,7 @@
 
   color: white;
 }
-
-.link {
-  display: flex;
-  align-items: center;
-
-  text-decoration: none;
-}
-
-.logo {
+.headerLogo {
   display: flex;
 
   margin-left: -175px;

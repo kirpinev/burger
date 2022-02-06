@@ -5,7 +5,7 @@ import { TStoreState, TApplicationDispatch } from "services/types/store";
 import { IWSOrdersActions } from "services/constants/ws-orders";
 import { IWSUserOrdersActions } from "services/constants/ws-user-orders";
 
-import { getAccessToken } from "utils/local-storage";
+import { getAccessToken } from "utils/token";
 
 export const socketMiddleware = (
   WSUrl: string,

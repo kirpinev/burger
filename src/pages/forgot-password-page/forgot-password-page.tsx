@@ -14,7 +14,7 @@ import { HelmetOptions } from "components/helmet-options/helmet-options";
 
 import { selectModalStatus } from "services/selectors/select-modal-status";
 import { AppRoutes } from "enums/app-routes";
-import { getAccessToken } from "utils/local-storage";
+import { getAccessToken } from "utils/token";
 import { selectUserInfo } from "services/selectors/select-user-info";
 import { useFormMethods } from "hooks/use-form-methods";
 import { useModals } from "hooks/use-modals";

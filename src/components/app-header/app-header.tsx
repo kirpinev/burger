@@ -28,9 +28,9 @@ export const AppHeader: FC = (): JSX.Element => {
   return (
     <header className={`${styles.header} pt-4 pb-4`}>
       <nav>
-        <ul className={styles.ul}>
+        <ul className={styles.headerList}>
           <li>
-            <ul className={styles.ul}>
+            <ul className={styles.headerList}>
               <li className="mr-2">
                 <HeaderNavLink
                   text="Конструктор"
@@ -49,7 +49,7 @@ export const AppHeader: FC = (): JSX.Element => {
               </li>
             </ul>
           </li>
-          <li className={styles.logo} onClick={goToMainPage}>
+          <li className={styles.headerLogo} onClick={goToMainPage}>
             <Logo />
           </li>
           <li>

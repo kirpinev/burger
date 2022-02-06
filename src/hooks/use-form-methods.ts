@@ -1,5 +1,5 @@
 import { useDispatch } from "hooks/use-dispatch";
-import { useCallback } from "react";
+import { ChangeEvent, useCallback } from "react";
 
 import {
   updateUserEmail,
@@ -15,7 +15,9 @@ import {
   authorizeUserThunk,
   registerUserThunk,
 } from "services/thunks/user";
-import { getInputValue } from "utils/get-input-value";
+
+export const getInputValue = (e: ChangeEvent<HTMLInputElement>): string =>
+  e.target.value;
 
 export const useFormMethods = () => {
   const dispatch = useDispatch();

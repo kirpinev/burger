@@ -1,10 +1,10 @@
-.wrapper {
+.fullPage {
     margin: 0 auto;
 
     width: 100%;
 }
 
-.container {
+.fullPageContainer {
     display: flex;
     flex-direction: column;
 }

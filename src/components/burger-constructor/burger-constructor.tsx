@@ -25,7 +25,7 @@ import { selectModalStatus } from "services/selectors/select-modal-status";
 import { selectConstructorIngredients } from "services/selectors/select-constructor-ingredients";
 import { logOutUser } from "services/actions/user";
 
-import { getAccessToken, getRefreshToken } from "utils/local-storage";
+import { getAccessToken, getRefreshToken } from "utils/token";
 import { useModals } from "hooks/use-modals";
 import { useIngredients } from "hooks/use-ingredients";
 import { AppRoutes } from "enums/app-routes";
@@ -91,7 +91,7 @@ export const BurgerConstructor: FC = (): JSX.Element => {
       {!selectedBun && constructorIngredients.length === 0 ? (
         <EmptyConstructor dropRef={dropRef} isHover={isHover} />
       ) : (
-        <section ref={dropRef} className={`${styles.section} pt-25`}>
+        <section ref={dropRef} className={`${styles.burgerConstructor} pt-25`}>
           <div className="ml-8 mb-4 pl-4 pr-4" style={{ opacity }}>
             {selectedBun && (
               <ConstructorElement
