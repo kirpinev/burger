@@ -9,7 +9,7 @@ import { useUser } from "hooks/use-user";
 import { AppRoutes } from "enums/app-routes";
 
 interface IProtectedRoute {
-  path: string;
+  readonly path: string;
 }
 
 export const ProtectedRoute: FC<IProtectedRoute> = ({

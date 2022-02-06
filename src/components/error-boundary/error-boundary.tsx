@@ -3,7 +3,7 @@ import { Component, ErrorInfo } from "react";
 import { StatusContainer } from "components/status-container/status-container";
 
 interface IErrorBoundaryState {
-  hasError: boolean;
+  readonly hasError: boolean;
 }
 
 export class ErrorBoundary extends Component<{}, IErrorBoundaryState> {

@@ -9,10 +9,10 @@ import { useSelector } from "hooks/use-selector";
 import { useLoading } from "hooks/use-loading";
 
 interface IWSLoadingHandlerWithSocket {
-  openConnection: () => void;
-  closeConnection: () => void;
-  isWSConnectionError: boolean;
-  isWSConnected: boolean;
+  readonly openConnection: () => void;
+  readonly closeConnection: () => void;
+  readonly isWSConnectionError: boolean;
+  readonly isWSConnected: boolean;
 }
 
 export const WSLoadingHandlerWithSocket: FC<IWSLoadingHandlerWithSocket> = ({

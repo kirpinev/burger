@@ -7,7 +7,7 @@ import { IOrderItem } from "types/order-item";
 import styles from "./orders-list.module.css";
 
 interface IOrdersList {
-  ordersList: ReadonlyArray<IOrderItem>;
+  readonly ordersList: ReadonlyArray<IOrderItem>;
 
   readonly hideTitle?: boolean;
   readonly showStatus?: boolean;

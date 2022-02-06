@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Helmet } from "react-helmet";
 
 interface IHelmetOptions {
-  title?: string;
+  readonly title?: string;
 }
 
 export const HelmetOptions: FC<IHelmetOptions> = ({

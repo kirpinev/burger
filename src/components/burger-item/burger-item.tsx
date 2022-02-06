@@ -12,9 +12,9 @@ import { IBurgerIngredient } from "types/burger-ingredient";
 import styles from "./burger-item.module.css";
 
 interface IBurgerItem {
-  ingredient: IBurgerIngredient;
-  deleteIngredient: () => void;
-  index: number;
+  readonly ingredient: IBurgerIngredient;
+  readonly deleteIngredient: () => void;
+  readonly index: number;
 }
 
 export const BurgerItem: FC<IBurgerItem> = ({

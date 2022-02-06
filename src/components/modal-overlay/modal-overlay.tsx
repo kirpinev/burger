@@ -3,7 +3,7 @@ import { FC, MouseEventHandler } from "react";
 import styles from "./modal-overlay.module.css";
 
 interface IModalOverlay {
-  closeModal: MouseEventHandler<HTMLDivElement>;
+  readonly closeModal: MouseEventHandler<HTMLDivElement>;
 }
 
 export const ModalOverlay: FC<IModalOverlay> = ({

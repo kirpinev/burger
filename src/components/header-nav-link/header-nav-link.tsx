@@ -5,11 +5,12 @@ import { TIconProps } from "@ya.praktikum/react-developer-burger-ui-components/d
 import styles from "./header-nav-link.module.css";
 
 interface IHeaderNavLink {
-  text: string;
-  Icon: ({ type }: TIconProps) => JSX.Element;
-  path: string;
-  exact: boolean;
-  matchPaths?: string[];
+  readonly text: string;
+  readonly Icon: ({ type }: TIconProps) => JSX.Element;
+  readonly path: string;
+  readonly exact: boolean;
+
+  readonly matchPaths?: string[];
 }
 
 export const HeaderNavLink: FC<IHeaderNavLink> = ({

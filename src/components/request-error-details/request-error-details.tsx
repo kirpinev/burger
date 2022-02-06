@@ -3,8 +3,8 @@ import { FC } from "react";
 import styles from "./request-error-details.module.css";
 
 interface IRequestErrorDetails {
-  title: string;
-  subtitle: string;
+  readonly title: string;
+  readonly subtitle: string;
 }
 
 export const RequestErrorDetails: FC<IRequestErrorDetails> = ({

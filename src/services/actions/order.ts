@@ -14,8 +14,8 @@ export interface IOrderDetails {
 export interface ISaveOrder {
   readonly type: typeof SAVE_ORDER;
   readonly payload: {
-    name: string;
-    number: number;
+    readonly name: string;
+    readonly number: number;
   };
 }
 

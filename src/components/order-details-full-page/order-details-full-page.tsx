@@ -23,7 +23,7 @@ import { useWSOrders } from "hooks/use-ws-orders";
 import { IOrderItem } from "types/order-item";
 
 interface IOrderDetailsFullPage {
-  userOrders?: boolean;
+  readonly userOrders?: boolean;
 }
 
 export const OrderDetailsFullPage: FC<IOrderDetailsFullPage> = ({

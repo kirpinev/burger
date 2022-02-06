@@ -4,9 +4,10 @@ import { NavLink } from "react-router-dom";
 import styles from "./profile-nav-link.module.css";
 
 interface IProfileNavLink {
-  path: string;
-  text: string;
-  onClick?: () => void;
+  readonly path: string;
+  readonly text: string;
+
+  readonly onClick?: () => void;
 }
 
 export const ProfileNavLink: FC<IProfileNavLink> = ({

@@ -4,9 +4,10 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./status-container.module.css";
 
 interface IStatusContainer {
-  title: string;
-  buttonText?: string;
-  onButtonClick?: () => void;
+  readonly title: string;
+
+  readonly onButtonClick?: () => void;
+  readonly buttonText?: string;
 }
 
 export const StatusContainer: FC<IStatusContainer> = ({

@@ -3,7 +3,7 @@ import { FC } from "react";
 import styles from "./profile-nav-signature.module.css";
 
 interface IProfileNavSignature {
-  text: string;
+  readonly text: string;
 }
 
 export const ProfileNavSignature: FC<IProfileNavSignature> = ({

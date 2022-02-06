@@ -14,7 +14,7 @@ import { DndTypes } from "enums/dnd-types";
 import styles from "./ingredient-card.module.css";
 
 interface IIngredientCard {
-  ingredient: IBurgerIngredient;
+  readonly ingredient: IBurgerIngredient;
 }
 
 export const IngredientCard: FC<IIngredientCard> = ({

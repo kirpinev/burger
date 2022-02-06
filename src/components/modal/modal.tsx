@@ -7,7 +7,7 @@ import { ModalOverlay } from "components/modal-overlay/modal-overlay";
 import styles from "./modal.module.css";
 
 interface IModal {
-  handleModalCloseClick: () => void;
+  readonly handleModalCloseClick: () => void;
 }
 
 export const Modal: FC<IModal> = ({

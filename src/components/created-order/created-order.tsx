@@ -5,7 +5,7 @@ import gif from "images/done.gif";
 import styles from "./created-order.module.css";
 
 interface ICreatedOrder {
-  orderNumber: number | null;
+  readonly orderNumber: number | null;
 }
 
 export const CreatedOrder: FC<ICreatedOrder> = ({

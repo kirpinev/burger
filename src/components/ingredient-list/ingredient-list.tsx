@@ -14,7 +14,7 @@ interface IIngredientList {
     type: TIngredientType
   ) => RefObject<HTMLHeadingElement> | undefined;
   readonly type: TIngredientType;
-  readonly ingredients: IBurgerIngredient[];
+  readonly ingredients: ReadonlyArray<IBurgerIngredient>;
 }
 
 export const IngredientList: FC<IIngredientList> = ({

@@ -14,7 +14,7 @@ import { AppRoutes } from "enums/app-routes";
 import { IOrderItem } from "types/order-item";
 
 interface IOrderModal {
-  userOrders?: boolean;
+  readonly userOrders?: boolean;
 }
 
 export const OrderModal: FC<IOrderModal> = ({ userOrders }) => {

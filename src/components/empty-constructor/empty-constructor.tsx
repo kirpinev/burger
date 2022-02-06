@@ -4,8 +4,8 @@ import { ConnectDropTarget } from "react-dnd";
 import styles from "./empty-constructor.module.css";
 
 interface IEmptyConstructor {
-  dropRef: ConnectDropTarget;
-  isHover: boolean;
+  readonly dropRef: ConnectDropTarget;
+  readonly isHover: boolean;
 }
 
 export const EmptyConstructor: FC<IEmptyConstructor> = ({

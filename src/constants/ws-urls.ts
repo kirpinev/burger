@@ -1,6 +1,6 @@
 export interface IWSUrls {
-  orders: string;
-  userOrders: string;
+  readonly orders: string;
+  readonly userOrders: string;
 }
 
 export const WSUrls: IWSUrls = {

@@ -12,12 +12,12 @@ export const WS_USER_ORDERS_SEND_MESSAGE: "WS_USER_ORDERS_SEND_MESSAGE" =
   "WS_USER_ORDERS_SEND_MESSAGE";
 
 export interface IWSUserOrdersActions {
-  WSStart: typeof WS_USER_ORDERS_CONNECTION_START;
-  WSSuccess: typeof WS_USER_ORDERS_CONNECTION_SUCCESS;
-  WSError: typeof WS_USER_ORDERS_CONNECTION_ERROR;
-  WSClosed: typeof WS_USER_ORDERS_CONNECTION_CLOSED;
-  WSGetMessage: typeof WS_USER_ORDERS_GET_MESSAGE;
-  WSSendMessage: typeof WS_USER_ORDERS_SEND_MESSAGE;
+  readonly WSStart: typeof WS_USER_ORDERS_CONNECTION_START;
+  readonly WSSuccess: typeof WS_USER_ORDERS_CONNECTION_SUCCESS;
+  readonly WSError: typeof WS_USER_ORDERS_CONNECTION_ERROR;
+  readonly WSClosed: typeof WS_USER_ORDERS_CONNECTION_CLOSED;
+  readonly WSGetMessage: typeof WS_USER_ORDERS_GET_MESSAGE;
+  readonly WSSendMessage: typeof WS_USER_ORDERS_SEND_MESSAGE;
 }
 
 export const WSUserOrdersActions: IWSUserOrdersActions = {
