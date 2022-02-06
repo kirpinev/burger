@@ -25,10 +25,12 @@ import {
   TApplicationThunk,
 } from "services/types/store";
 
-import { saveTokenToStorage } from "utils/local-storage";
-import { isAccessTokenValid } from "utils/validate-token";
-import { refreshTokens } from "utils/refresh-tokens";
-import { resetStorage } from "utils/local-storage";
+import {
+  saveTokenToStorage,
+  refreshTokens,
+  isAccessTokenValid,
+  resetStorage,
+} from "utils/token";
 
 import { Token } from "enums/token-names";
 import { ITokenTypes } from "types/token-types";

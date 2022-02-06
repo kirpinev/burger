@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 import { OrderDetails } from "components/order-details/order-details";
 import { WSLoadingHandlerWithSocket } from "components/ws-loading-handler-with-socket/ws-loading-handler-with-socket";
+import { FullPageContainer } from "components/full-page-container/full-page-container";
 
 import {
   selectWSConnectedStatus,
@@ -20,8 +21,6 @@ import { useSelector } from "hooks/use-selector";
 import { useWSOrders } from "hooks/use-ws-orders";
 
 import { IOrderItem } from "types/order-item";
-
-import styles from "./order-details-full-page.module.css";
 
 interface IOrderDetailsFullPage {
   userOrders?: boolean;
@@ -64,11 +63,9 @@ export const OrderDetailsFullPage: FC<IOrderDetailsFullPage> = ({
         userOrders ? isWSUserOrdersConnectionError : isWSOrdersConnectionError
       }
     >
-      <div className={`${styles.wrapper} body`}>
-        <main className={styles.container}>
-          <OrderDetails orderItem={orderItem} fullPage />
-        </main>
-      </div>
+      <FullPageContainer>
+        <OrderDetails orderItem={orderItem} fullPage />
+      </FullPageContainer>
     </WSLoadingHandlerWithSocket>
   );
 };

@@ -14,9 +14,7 @@ import {
 } from "services/actions/order";
 import { TStoreState, TApplicationThunk } from "services/types/store";
 
-import { isAccessTokenValid } from "utils/validate-token";
-import { resetStorage } from "utils/local-storage";
-import { refreshTokens } from "utils/refresh-tokens";
+import { resetStorage, refreshTokens, isAccessTokenValid } from "utils/token";
 
 export const postAnOrderThunk: TApplicationThunk =
   () => async (dispatch, getState) => {

@@ -1,5 +1,5 @@
 import { ApiUrls } from "enums/api-urls";
-import { getAccessToken, getRefreshToken } from "utils/local-storage";
+import { getAccessToken, getRefreshToken } from "utils/token";
 import { IUserInfo } from "types/user-info";
 
 const JSONHeaders = {

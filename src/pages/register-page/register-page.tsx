@@ -18,7 +18,7 @@ import { selectModalStatus } from "services/selectors/select-modal-status";
 import { useFormMethods } from "hooks/use-form-methods";
 import { useModals } from "hooks/use-modals";
 import { AppRoutes } from "enums/app-routes";
-import { getAccessToken } from "utils/local-storage";
+import { getAccessToken } from "utils/token";
 
 import styles from "global-styles/form.module.css";
 
