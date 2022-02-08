@@ -16,7 +16,7 @@ export type WSState = {
   readonly totalToday: number;
 };
 
-const initialState: WSState = {
+export const initialState: WSState = {
   WSConnected: false,
   isWSConnectionError: false,
   orders: [],

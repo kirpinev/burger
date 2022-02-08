@@ -25,7 +25,7 @@ export type TUserState<T, K> = {
   readonly isUserInfoEdit: K;
 };
 
-const initialState: TUserState<string, boolean> = {
+export const initialState: TUserState<string, boolean> = {
   name: "",
   email: "",
   password: "",
