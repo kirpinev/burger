@@ -7,7 +7,7 @@ import {
 import { resetConstructorIngredients } from "services/actions/ingredients";
 import { logOutUser } from "services/actions/user";
 import {
-  IOrderDetails,
+  ICreatedOrder,
   resetOrder,
   saveOrder,
   toggleOrderPosting,
@@ -38,7 +38,7 @@ export const postAnOrderThunk: TApplicationThunk =
           throw new Error();
         }
 
-        const orderDetails = (await getJSON(response)) as IOrderDetails;
+        const orderDetails = (await getJSON(response)) as ICreatedOrder;
 
         dispatch(saveOrder(orderDetails));
         dispatch(toggleOrderPosting(false));
