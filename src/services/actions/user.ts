@@ -113,10 +113,10 @@ export const logOutUser = (): ILogOutUser => ({
   type: LOG_OUT_USER,
 });
 
-export const emailSent = (): IEmailSent => ({
+export const sendEmail = (): IEmailSent => ({
   type: EMAIL_SENT,
 });
 
-export const passwordSent = (): IPasswordSent => ({
+export const sendPassword = (): IPasswordSent => ({
   type: PASSWORD_SENT,
 });
