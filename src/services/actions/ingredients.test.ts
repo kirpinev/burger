@@ -1,25 +1,9 @@
 import * as actions from "services/actions/ingredients";
 import * as types from "services/constants/ingredients";
 
-import { IBurgerIngredient } from "types/burger-ingredient";
+import { ingredient, ingredientIndex } from "mocks/ingredient";
 
 describe("Экшен криэйтеры ингредиентов", () => {
-  const ingredient: IBurgerIngredient = {
-    _id: "60d3b41abdacab0026a733c6",
-    name: "Краторная булка N-200i",
-    type: "bun",
-    proteins: 80,
-    fat: 24,
-    carbohydrates: 53,
-    calories: 420,
-    price: 1255,
-    image: "https://code.s3.yandex.net/react/code/bun-02.png",
-    image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-    image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
-    __v: 0,
-  };
-  const ingredientIndex = 1;
-
   it("должны корректно возвращать экшен с полученными игредиентами от сервера", () => {
     const expectedAction = {
       type: types.SAVE_INGREDIENTS,

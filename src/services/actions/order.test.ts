@@ -1,27 +1,16 @@
 import * as action from "services/actions/order";
 import * as types from "services/constants/order";
 
-import { IOrderDetails } from "services/actions/order";
+import { createdOrder, createdOrderPayload } from "mocks/order";
 
 describe("Экшен криэйторы заказа", () => {
-  const order: IOrderDetails = {
-    name: "Краторная булка N-200i",
-    order: {
-      number: 1234567890,
-    },
-  };
-  const orderPayload = {
-    name: order.name,
-    number: order.order.number,
-  };
-
   it("должны корректно возвращать экшен с сохраненным заказом", () => {
     const expectedAction = {
       type: types.SAVE_ORDER,
-      payload: orderPayload,
+      payload: createdOrderPayload,
     };
 
-    expect(action.saveOrder(order)).toEqual(expectedAction);
+    expect(action.saveOrder(createdOrder)).toEqual(expectedAction);
   });
 
   it("должны корректно возвращать экшен с очисткой информации о заказе", () => {

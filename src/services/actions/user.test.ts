@@ -1,12 +1,9 @@
 import * as actions from "services/actions/user";
 import * as types from "services/constants/user";
 
-describe("Экшен криэйторы пользователя", () => {
-  const userName = "Cat";
-  const userPassword = "qwerty";
-  const userEmail = "catcat@cat.ru";
-  const token = "sdsjgh11t2hkdbhhb644hkbjk6jkb6";
+import { userName, userEmail, userPassword, token } from "mocks/user";
 
+describe("Экшен криэйторы пользователя", () => {
   it("должны корректно возвращать экшен с обновленным именем", () => {
     const expectedAction = {
       type: types.UPDATE_USER_NAME,
