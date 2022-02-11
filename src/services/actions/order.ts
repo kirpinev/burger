@@ -4,7 +4,7 @@ import {
   TOGGLE_ORDER_POSTING,
 } from "services/constants/order";
 
-export interface IOrderDetails {
+export interface ICreatedOrder {
   readonly name: string;
   readonly order: {
     readonly number: number;
@@ -30,11 +30,11 @@ export interface IToggleOrderPosting {
 
 export type TOrderActions = ISaveOrder | IResetOrder | IToggleOrderPosting;
 
-export const saveOrder = (orderDetails: IOrderDetails): ISaveOrder => ({
+export const saveOrder = (createdOrder: ICreatedOrder): ISaveOrder => ({
   type: SAVE_ORDER,
   payload: {
-    name: orderDetails.name,
-    number: orderDetails.order.number,
+    name: createdOrder.name,
+    number: createdOrder.order.number,
   },
 });
 

@@ -12,10 +12,10 @@ import {
 
 import { toggleErrorModal } from "services/actions/modals";
 import {
-  emailSent,
+  sendEmail,
   logInUser,
   logOutUser,
-  passwordSent,
+  sendPassword,
   updateUserEmail,
   updateUserName,
 } from "services/actions/user";
@@ -176,7 +176,7 @@ export const sendResetEmailThunk: TApplicationThunk =
         throw new Error();
       }
 
-      dispatch(emailSent());
+      dispatch(sendEmail());
     } catch (e) {
       dispatch(toggleErrorModal());
     }
@@ -194,7 +194,7 @@ export const sendPasswordAndTokenThunk: TApplicationThunk =
         throw new Error();
       }
 
-      dispatch(passwordSent());
+      dispatch(sendPassword());
     } catch (e) {
       dispatch(toggleErrorModal());
     }

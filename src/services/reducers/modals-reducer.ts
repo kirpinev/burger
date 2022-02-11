@@ -12,7 +12,7 @@ export type TModalsState = {
   readonly isSuccessOrderModalOpen: boolean;
 };
 
-const initialState: TModalsState = {
+export const initialState: TModalsState = {
   isIngredientModalOpen: false,
   isErrorModalOpen: false,
   isSuccessOrderModalOpen: false,

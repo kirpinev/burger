@@ -12,7 +12,7 @@ export type TOrderState = {
   readonly isOrderPosting: boolean;
 };
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
   name: "",
   number: null,
   isOrderPosting: false,

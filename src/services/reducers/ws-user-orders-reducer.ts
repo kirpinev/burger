@@ -11,10 +11,10 @@ import { IOrderItem } from "types/order-item";
 export type WSState = {
   readonly WSConnected: boolean;
   readonly isWSConnectionError: boolean;
-  orders: Array<IOrderItem>;
+  readonly orders: ReadonlyArray<IOrderItem>;
 };
 
-const initialState: WSState = {
+export const initialState: WSState = {
   WSConnected: false,
   isWSConnectionError: false,
   orders: [],

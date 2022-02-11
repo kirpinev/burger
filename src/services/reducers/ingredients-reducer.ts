@@ -19,7 +19,7 @@ export type TIngredientsState = {
   readonly selectedIngredient: null | IBurgerIngredient;
 };
 
-const initialState: TIngredientsState = {
+export const initialState: TIngredientsState = {
   burgerIngredients: [],
   constructorIngredients: [],
   selectedBun: null,

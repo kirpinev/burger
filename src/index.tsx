@@ -13,7 +13,7 @@ import reportWebVitals from "./reportWebVitals";
 ReactDOM.render(
   <ErrorBoundary>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/burger">
         <App />
       </BrowserRouter>
     </Provider>

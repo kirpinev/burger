@@ -13,7 +13,7 @@ export type TLoadingState = {
   readonly isSuccess: boolean;
 };
 
-const initialState: TLoadingState = {
+export const initialState: TLoadingState = {
   isLoading: false,
   isError: false,
   isSuccess: false,

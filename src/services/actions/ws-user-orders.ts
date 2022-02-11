@@ -8,6 +8,7 @@ import {
 } from "services/constants/ws-user-orders";
 
 import { IOrderItem } from "types/order-item";
+import { IWSOrderList } from "types/ws-order-list";
 
 export interface IOnStart {
   readonly type: typeof WS_USER_ORDERS_CONNECTION_START;
@@ -24,7 +25,7 @@ export interface IMessageSend {
 
 export interface IGetMessage {
   readonly type: typeof WS_USER_ORDERS_GET_MESSAGE;
-  readonly payload: ReadonlyArray<IOrderItem>;
+  readonly payload: Pick<IWSOrderList, "orders">;
 }
 
 export interface IConnectionClosed {
