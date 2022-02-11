@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import "@ya.praktikum/react-developer-burger-ui-components";
 
 import { App } from "components/app/app";
@@ -13,9 +13,9 @@ import reportWebVitals from "./reportWebVitals";
 ReactDOM.render(
   <ErrorBoundary>
     <Provider store={store}>
-      <HashRouter>
+      <BrowserRouter basename="/burger">
         <App />
-      </HashRouter>
+      </BrowserRouter>
     </Provider>
   </ErrorBoundary>,
   document.getElementById("root")
